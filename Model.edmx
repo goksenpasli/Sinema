@@ -1,0 +1,772 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Filmler">
+          <Key>
+            <PropertyRef Name="FilmID" />
+          </Key>
+          <Property Name="FilmID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FilmAdi" Type="nvarchar" MaxLength="255" />
+          <Property Name="FilmTipi" Type="nvarchar" MaxLength="255" />
+          <Property Name="Yonetmeni" Type="nvarchar" MaxLength="255" />
+          <Property Name="Oyuncular" Type="nvarchar" MaxLength="255" />
+          <Property Name="Sure" Type="int" />
+          <Property Name="Dili" Type="nvarchar" MaxLength="255" />
+          <Property Name="CekimTipi" Type="nvarchar" MaxLength="255" />
+          <Property Name="VideoYolu" Type="nvarchar" MaxLength="255" />
+          <Property Name="ResimYolu" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Koltuklar">
+          <Key>
+            <PropertyRef Name="KoltukID" />
+          </Key>
+          <Property Name="KoltukID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KoltukNo" Type="int" />
+          <Property Name="KoltukAktifMi" Type="bit" />
+          <Property Name="KoltukTipi" Type="int" />
+          <Property Name="SalonID" Type="int" />
+          <Property Name="KoltukGorunmezMi" Type="bit" />
+        </EntityType>
+        <EntityType Name="KoltukTipleri">
+          <Key>
+            <PropertyRef Name="KoltukTipleriID" />
+          </Key>
+          <Property Name="KoltukTipleriID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KoltukTipi" Type="nvarchar" MaxLength="50" />
+          <Property Name="KoltukFiyati" Type="float" />
+          <Property Name="KoltukRenk" Type="int" />
+        </EntityType>
+        <EntityType Name="Kullanicilar">
+          <Key>
+            <PropertyRef Name="KullaniciID" />
+          </Key>
+          <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="KullaniciSifre" Type="nvarchar" MaxLength="100" />
+          <Property Name="KullaniciYetkisi" Type="int" />
+          <Property Name="SifreEtkinMi" Type="bit" />
+          <Property Name="KullaniciID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KullaniciTc" Type="nvarchar" MaxLength="50" />
+          <Property Name="Resim" Type="image" />
+        </EntityType>
+        <EntityType Name="Musteriler">
+          <Key>
+            <PropertyRef Name="MusteriID" />
+          </Key>
+          <Property Name="MusteriID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MusteriAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="MusteriSoyadi" Type="nvarchar" MaxLength="50" />
+          <Property Name="MusteriYasi" Type="int" />
+          <Property Name="SeansID" Type="int" />
+          <Property Name="KoltukID" Type="int" />
+          <Property Name="KoltukGrup" Type="nvarchar" MaxLength="50" />
+          <Property Name="KullaniciID" Type="int" />
+          <Property Name="Resim" Type="image" />
+        </EntityType>
+        <EntityType Name="Salonlar">
+          <Key>
+            <PropertyRef Name="SalonID" />
+          </Key>
+          <Property Name="SalonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SalonAdi" Type="nvarchar" MaxLength="255" />
+          <Property Name="AktifMi" Type="bit" />
+          <Property Name="En" Type="int" />
+          <Property Name="Boy" Type="int" />
+          <Property Name="KoltukDetay" Type="bit" />
+        </EntityType>
+        <EntityType Name="Seanslar">
+          <Key>
+            <PropertyRef Name="SeansID" />
+          </Key>
+          <Property Name="SeansID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FilmID" Type="int" />
+          <Property Name="FilmSaati" Type="datetime" Nullable="false" />
+          <Property Name="SalonID" Type="int" />
+          <Property Name="Renk" Type="int" />
+        </EntityType>
+        <EntityType Name="Siparisler">
+          <Key>
+            <PropertyRef Name="SiparisID" />
+          </Key>
+          <Property Name="SiparisID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MusteriID" Type="int" />
+          <Property Name="SiparisAdet" Type="float" />
+          <Property Name="UrunID" Type="int" />
+          <Property Name="ToplamTutar" Type="float" />
+          <Property Name="SiparisBirimFiyat" Type="float" />
+        </EntityType>
+        <EntityType Name="Tahsilatlar">
+          <Key>
+            <PropertyRef Name="TahsilatID" />
+          </Key>
+          <Property Name="TahsilatID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MusteriID" Type="int" />
+          <Property Name="Tutar" Type="float" />
+          <Property Name="TahsilatTarihi" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Urunler">
+          <Key>
+            <PropertyRef Name="UrunID" />
+          </Key>
+          <Property Name="UrunID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UrunAdi" Type="nvarchar" MaxLength="100" />
+          <Property Name="BirimFiyati" Type="float" />
+          <Property Name="UrunSatilabilirmi" Type="bit" />
+        </EntityType>
+        <Association Name="Foreign_key01">
+          <End Role="Salonlar" Type="Self.Salonlar" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Seanslar" Type="Self.Seanslar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salonlar">
+              <PropertyRef Name="SalonID" />
+            </Principal>
+            <Dependent Role="Seanslar">
+              <PropertyRef Name="SalonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key02">
+          <End Role="Seanslar" Type="Self.Seanslar" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Musteriler" Type="Self.Musteriler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seanslar">
+              <PropertyRef Name="SeansID" />
+            </Principal>
+            <Dependent Role="Musteriler">
+              <PropertyRef Name="SeansID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key03">
+          <End Role="Musteriler" Type="Self.Musteriler" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tahsilatlar" Type="Self.Tahsilatlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteriler">
+              <PropertyRef Name="MusteriID" />
+            </Principal>
+            <Dependent Role="Tahsilatlar">
+              <PropertyRef Name="MusteriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key04">
+          <End Role="Salonlar" Type="Self.Salonlar" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Koltuklar" Type="Self.Koltuklar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salonlar">
+              <PropertyRef Name="SalonID" />
+            </Principal>
+            <Dependent Role="Koltuklar">
+              <PropertyRef Name="SalonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key05">
+          <End Role="Koltuklar" Type="Self.Koltuklar" Multiplicity="0..1" />
+          <End Role="Musteriler" Type="Self.Musteriler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Koltuklar">
+              <PropertyRef Name="KoltukID" />
+            </Principal>
+            <Dependent Role="Musteriler">
+              <PropertyRef Name="KoltukID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key06">
+          <End Role="KoltukTipleri" Type="Self.KoltukTipleri" Multiplicity="0..1" />
+          <End Role="Koltuklar" Type="Self.Koltuklar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KoltukTipleri">
+              <PropertyRef Name="KoltukTipleriID" />
+            </Principal>
+            <Dependent Role="Koltuklar">
+              <PropertyRef Name="KoltukTipi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key07">
+          <End Role="Filmler" Type="Self.Filmler" Multiplicity="0..1" />
+          <End Role="Seanslar" Type="Self.Seanslar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filmler">
+              <PropertyRef Name="FilmID" />
+            </Principal>
+            <Dependent Role="Seanslar">
+              <PropertyRef Name="FilmID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key11">
+          <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="0..1" />
+          <End Role="Musteriler" Type="Self.Musteriler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanicilar">
+              <PropertyRef Name="KullaniciID" />
+            </Principal>
+            <Dependent Role="Musteriler">
+              <PropertyRef Name="KullaniciID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key12">
+          <End Role="Musteriler" Type="Self.Musteriler" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Siparisler" Type="Self.Siparisler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteriler">
+              <PropertyRef Name="MusteriID" />
+            </Principal>
+            <Dependent Role="Siparisler">
+              <PropertyRef Name="MusteriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key13">
+          <End Role="Urunler" Type="Self.Urunler" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Siparisler" Type="Self.Siparisler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urunler">
+              <PropertyRef Name="UrunID" />
+            </Principal>
+            <Dependent Role="Siparisler">
+              <PropertyRef Name="UrunID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Filmler" EntityType="Self.Filmler" store:Type="Tables" />
+          <EntitySet Name="Koltuklar" EntityType="Self.Koltuklar" store:Type="Tables" />
+          <EntitySet Name="KoltukTipleri" EntityType="Self.KoltukTipleri" store:Type="Tables" />
+          <EntitySet Name="Kullanicilar" EntityType="Self.Kullanicilar" store:Type="Tables" />
+          <EntitySet Name="Musteriler" EntityType="Self.Musteriler" store:Type="Tables" />
+          <EntitySet Name="Salonlar" EntityType="Self.Salonlar" store:Type="Tables" />
+          <EntitySet Name="Seanslar" EntityType="Self.Seanslar" store:Type="Tables" />
+          <EntitySet Name="Siparisler" EntityType="Self.Siparisler" store:Type="Tables" />
+          <EntitySet Name="Tahsilatlar" EntityType="Self.Tahsilatlar" store:Type="Tables" />
+          <EntitySet Name="Urunler" EntityType="Self.Urunler" store:Type="Tables" />
+          <AssociationSet Name="Foreign_key01" Association="Self.Foreign_key01">
+            <End Role="Salonlar" EntitySet="Salonlar" />
+            <End Role="Seanslar" EntitySet="Seanslar" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key02" Association="Self.Foreign_key02">
+            <End Role="Seanslar" EntitySet="Seanslar" />
+            <End Role="Musteriler" EntitySet="Musteriler" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key03" Association="Self.Foreign_key03">
+            <End Role="Musteriler" EntitySet="Musteriler" />
+            <End Role="Tahsilatlar" EntitySet="Tahsilatlar" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key04" Association="Self.Foreign_key04">
+            <End Role="Salonlar" EntitySet="Salonlar" />
+            <End Role="Koltuklar" EntitySet="Koltuklar" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key05" Association="Self.Foreign_key05">
+            <End Role="Koltuklar" EntitySet="Koltuklar" />
+            <End Role="Musteriler" EntitySet="Musteriler" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key06" Association="Self.Foreign_key06">
+            <End Role="KoltukTipleri" EntitySet="KoltukTipleri" />
+            <End Role="Koltuklar" EntitySet="Koltuklar" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key07" Association="Self.Foreign_key07">
+            <End Role="Filmler" EntitySet="Filmler" />
+            <End Role="Seanslar" EntitySet="Seanslar" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key11" Association="Self.Foreign_key11">
+            <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+            <End Role="Musteriler" EntitySet="Musteriler" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key12" Association="Self.Foreign_key12">
+            <End Role="Musteriler" EntitySet="Musteriler" />
+            <End Role="Siparisler" EntitySet="Siparisler" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key13" Association="Self.Foreign_key13">
+            <End Role="Urunler" EntitySet="Urunler" />
+            <End Role="Siparisler" EntitySet="Siparisler" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Filmler">
+          <Key>
+            <PropertyRef Name="FilmID" />
+          </Key>
+          <Property Name="FilmID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FilmAdi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FilmTipi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Yonetmeni" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Oyuncular" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Sure" Type="Int32" />
+          <Property Name="Dili" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CekimTipi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="VideoYolu" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ResimYolu" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Seanslar" Relationship="Self.Foreign_key07" FromRole="Filmler" ToRole="Seanslar" />
+        </EntityType>
+        <EntityType Name="Koltuklar">
+          <Key>
+            <PropertyRef Name="KoltukID" />
+          </Key>
+          <Property Name="KoltukID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KoltukNo" Type="Int32" />
+          <Property Name="KoltukAktifMi" Type="Boolean" />
+          <Property Name="KoltukTipi" Type="Int32" />
+          <Property Name="SalonID" Type="Int32" />
+          <NavigationProperty Name="Salonlar" Relationship="Self.Foreign_key04" FromRole="Koltuklar" ToRole="Salonlar" />
+          <NavigationProperty Name="Musteriler" Relationship="Self.Foreign_key05" FromRole="Koltuklar" ToRole="Musteriler" />
+          <NavigationProperty Name="KoltukTipleri" Relationship="Self.Foreign_key06" FromRole="Koltuklar" ToRole="KoltukTipleri" />
+          <Property Name="KoltukGorunmezMi" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="KoltukTipleri">
+          <Key>
+            <PropertyRef Name="KoltukTipleriID" />
+          </Key>
+          <Property Name="KoltukTipleriID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KoltukTipi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KoltukFiyati" Type="Double" />
+          <Property Name="KoltukRenk" Type="Int32" />
+          <NavigationProperty Name="Koltuklar" Relationship="Self.Foreign_key06" FromRole="KoltukTipleri" ToRole="Koltuklar" />
+        </EntityType>
+        <EntityType Name="Musteriler">
+          <Key>
+            <PropertyRef Name="MusteriID" />
+          </Key>
+          <Property Name="MusteriID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MusteriAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MusteriSoyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MusteriYasi" Type="Int32" />
+          <Property Name="SeansID" Type="Int32" />
+          <Property Name="KoltukID" Type="Int32" />
+          <Property Name="KoltukGrup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Koltuklar" Relationship="Self.Foreign_key05" FromRole="Musteriler" ToRole="Koltuklar" />
+          <NavigationProperty Name="Seanslar" Relationship="Self.Foreign_key02" FromRole="Musteriler" ToRole="Seanslar" />
+          <NavigationProperty Name="Tahsilatlar" Relationship="Self.Foreign_key03" FromRole="Musteriler" ToRole="Tahsilatlar" />
+          <Property Name="KullaniciID" Type="Int32" />
+          <NavigationProperty Name="Kullanicilar" Relationship="Model.Foreign_key11" FromRole="Musteriler" ToRole="Kullanicilar" />
+          <NavigationProperty Name="Siparisler" Relationship="Model.Foreign_key12" FromRole="Musteriler" ToRole="Siparisler" />
+          <Property Name="Resim" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Salonlar">
+          <Key>
+            <PropertyRef Name="SalonID" />
+          </Key>
+          <Property Name="SalonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SalonAdi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AktifMi" Type="Boolean" />
+          <Property Name="En" Type="Int32" />
+          <Property Name="Boy" Type="Int32" />
+          <NavigationProperty Name="Koltuklar" Relationship="Self.Foreign_key04" FromRole="Salonlar" ToRole="Koltuklar" />
+          <NavigationProperty Name="Seanslar" Relationship="Self.Foreign_key01" FromRole="Salonlar" ToRole="Seanslar" />
+          <Property Name="KoltukDetay" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Seanslar">
+          <Key>
+            <PropertyRef Name="SeansID" />
+          </Key>
+          <Property Name="SeansID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FilmID" Type="Int32" />
+          <Property Name="FilmSaati" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SalonID" Type="Int32" />
+          <NavigationProperty Name="Filmler" Relationship="Self.Foreign_key07" FromRole="Seanslar" ToRole="Filmler" />
+          <NavigationProperty Name="Musteriler" Relationship="Self.Foreign_key02" FromRole="Seanslar" ToRole="Musteriler" />
+          <NavigationProperty Name="Salonlar" Relationship="Self.Foreign_key01" FromRole="Seanslar" ToRole="Salonlar" />
+          <Property Name="Renk" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tahsilatlar">
+          <Key>
+            <PropertyRef Name="TahsilatID" />
+          </Key>
+          <Property Name="TahsilatID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MusteriID" Type="Int32" />
+          <Property Name="Tutar" Type="Double" />
+          <Property Name="TahsilatTarihi" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Musteriler" Relationship="Self.Foreign_key03" FromRole="Tahsilatlar" ToRole="Musteriler" />
+        </EntityType>
+        <Association Name="Foreign_key07">
+          <End Role="Filmler" Type="Self.Filmler" Multiplicity="0..1" />
+          <End Role="Seanslar" Type="Self.Seanslar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filmler">
+              <PropertyRef Name="FilmID" />
+            </Principal>
+            <Dependent Role="Seanslar">
+              <PropertyRef Name="FilmID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key04">
+          <End Role="Salonlar" Type="Self.Salonlar" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Koltuklar" Type="Self.Koltuklar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salonlar">
+              <PropertyRef Name="SalonID" />
+            </Principal>
+            <Dependent Role="Koltuklar">
+              <PropertyRef Name="SalonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key05">
+          <End Role="Koltuklar" Type="Self.Koltuklar" Multiplicity="0..1" />
+          <End Role="Musteriler" Type="Self.Musteriler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Koltuklar">
+              <PropertyRef Name="KoltukID" />
+            </Principal>
+            <Dependent Role="Musteriler">
+              <PropertyRef Name="KoltukID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key06">
+          <End Role="KoltukTipleri" Type="Self.KoltukTipleri" Multiplicity="0..1" />
+          <End Role="Koltuklar" Type="Self.Koltuklar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KoltukTipleri">
+              <PropertyRef Name="KoltukTipleriID" />
+            </Principal>
+            <Dependent Role="Koltuklar">
+              <PropertyRef Name="KoltukTipi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key02">
+          <End Role="Seanslar" Type="Self.Seanslar" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Musteriler" Type="Self.Musteriler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seanslar">
+              <PropertyRef Name="SeansID" />
+            </Principal>
+            <Dependent Role="Musteriler">
+              <PropertyRef Name="SeansID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key03">
+          <End Role="Musteriler" Type="Self.Musteriler" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tahsilatlar" Type="Self.Tahsilatlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteriler">
+              <PropertyRef Name="MusteriID" />
+            </Principal>
+            <Dependent Role="Tahsilatlar">
+              <PropertyRef Name="MusteriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key01">
+          <End Role="Salonlar" Type="Self.Salonlar" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Seanslar" Type="Self.Seanslar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salonlar">
+              <PropertyRef Name="SalonID" />
+            </Principal>
+            <Dependent Role="Seanslar">
+              <PropertyRef Name="SalonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Filmler" EntityType="Self.Filmler" />
+          <EntitySet Name="Koltuklar" EntityType="Self.Koltuklar" />
+          <EntitySet Name="KoltukTipleri" EntityType="Self.KoltukTipleri" />
+          <EntitySet Name="Musteriler" EntityType="Self.Musteriler" />
+          <EntitySet Name="Salonlar" EntityType="Self.Salonlar" />
+          <EntitySet Name="Seanslar" EntityType="Self.Seanslar" />
+          <EntitySet Name="Tahsilatlar" EntityType="Self.Tahsilatlar" />
+          <AssociationSet Name="Foreign_key07" Association="Self.Foreign_key07">
+            <End Role="Filmler" EntitySet="Filmler" />
+            <End Role="Seanslar" EntitySet="Seanslar" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key04" Association="Self.Foreign_key04">
+            <End Role="Salonlar" EntitySet="Salonlar" />
+            <End Role="Koltuklar" EntitySet="Koltuklar" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key05" Association="Self.Foreign_key05">
+            <End Role="Koltuklar" EntitySet="Koltuklar" />
+            <End Role="Musteriler" EntitySet="Musteriler" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key06" Association="Self.Foreign_key06">
+            <End Role="KoltukTipleri" EntitySet="KoltukTipleri" />
+            <End Role="Koltuklar" EntitySet="Koltuklar" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key02" Association="Self.Foreign_key02">
+            <End Role="Seanslar" EntitySet="Seanslar" />
+            <End Role="Musteriler" EntitySet="Musteriler" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key03" Association="Self.Foreign_key03">
+            <End Role="Musteriler" EntitySet="Musteriler" />
+            <End Role="Tahsilatlar" EntitySet="Tahsilatlar" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key01" Association="Self.Foreign_key01">
+            <End Role="Salonlar" EntitySet="Salonlar" />
+            <End Role="Seanslar" EntitySet="Seanslar" />
+          </AssociationSet>
+          <EntitySet Name="Kullanicilar" EntityType="Model.Kullanicilar" />
+          <AssociationSet Name="Foreign_key11" Association="Model.Foreign_key11">
+            <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+            <End Role="Musteriler" EntitySet="Musteriler" />
+          </AssociationSet>
+          <EntitySet Name="Siparisler" EntityType="Model.Siparisler" />
+          <EntitySet Name="Urunler" EntityType="Model.Urunler" />
+          <AssociationSet Name="Foreign_key12" Association="Model.Foreign_key12">
+            <End Role="Musteriler" EntitySet="Musteriler" />
+            <End Role="Siparisler" EntitySet="Siparisler" />
+          </AssociationSet>
+          <AssociationSet Name="Foreign_key13" Association="Model.Foreign_key13">
+            <End Role="Urunler" EntitySet="Urunler" />
+            <End Role="Siparisler" EntitySet="Siparisler" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Kullanicilar">
+          <Key>
+            <PropertyRef Name="KullaniciID" />
+          </Key>
+          <Property Name="KullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KullaniciSifre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="KullaniciYetkisi" Type="Int32" />
+          <Property Name="SifreEtkinMi" Type="Boolean" />
+          <Property Name="KullaniciID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KullaniciTc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Musteriler" Relationship="Model.Foreign_key11" FromRole="Kullanicilar" ToRole="Musteriler" />
+          <Property Name="Resim" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="Foreign_key11">
+          <End Type="Model.Kullanicilar" Role="Kullanicilar" Multiplicity="0..1" />
+          <End Type="Model.Musteriler" Role="Musteriler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanicilar">
+              <PropertyRef Name="KullaniciID" />
+            </Principal>
+            <Dependent Role="Musteriler">
+              <PropertyRef Name="KullaniciID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Siparisler">
+          <Key>
+            <PropertyRef Name="SiparisID" />
+          </Key>
+          <Property Name="SiparisID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MusteriID" Type="Int32" />
+          <Property Name="SiparisAdet" Type="Double" />
+          <Property Name="UrunID" Type="Int32" />
+          <NavigationProperty Name="Musteriler" Relationship="Model.Foreign_key12" FromRole="Siparisler" ToRole="Musteriler" />
+          <NavigationProperty Name="Urunler" Relationship="Model.Foreign_key13" FromRole="Siparisler" ToRole="Urunler" />
+          <Property Name="ToplamTutar" Type="Double" />
+          <Property Name="SiparisBirimFiyat" Type="Double" />
+        </EntityType>
+        <EntityType Name="Urunler">
+          <Key>
+            <PropertyRef Name="UrunID" />
+          </Key>
+          <Property Name="UrunID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UrunAdi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BirimFiyati" Type="Double" />
+          <NavigationProperty Name="Siparisler" Relationship="Model.Foreign_key13" FromRole="Urunler" ToRole="Siparisler" />
+          <Property Name="UrunSatilabilirmi" Type="Boolean" />
+        </EntityType>
+        <Association Name="Foreign_key12">
+          <End Type="Model.Musteriler" Role="Musteriler" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Siparisler" Role="Siparisler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteriler">
+              <PropertyRef Name="MusteriID" />
+            </Principal>
+            <Dependent Role="Siparisler">
+              <PropertyRef Name="MusteriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Foreign_key13">
+          <End Type="Model.Urunler" Role="Urunler" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Siparisler" Role="Siparisler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urunler">
+              <PropertyRef Name="UrunID" />
+            </Principal>
+            <Dependent Role="Siparisler">
+              <PropertyRef Name="UrunID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Filmler">
+            <EntityTypeMapping TypeName="Model.Filmler">
+              <MappingFragment StoreEntitySet="Filmler">
+                <ScalarProperty Name="FilmID" ColumnName="FilmID" />
+                <ScalarProperty Name="FilmAdi" ColumnName="FilmAdi" />
+                <ScalarProperty Name="FilmTipi" ColumnName="FilmTipi" />
+                <ScalarProperty Name="Yonetmeni" ColumnName="Yonetmeni" />
+                <ScalarProperty Name="Oyuncular" ColumnName="Oyuncular" />
+                <ScalarProperty Name="Sure" ColumnName="Sure" />
+                <ScalarProperty Name="Dili" ColumnName="Dili" />
+                <ScalarProperty Name="CekimTipi" ColumnName="CekimTipi" />
+                <ScalarProperty Name="VideoYolu" ColumnName="VideoYolu" />
+                <ScalarProperty Name="ResimYolu" ColumnName="ResimYolu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Koltuklar">
+            <EntityTypeMapping TypeName="Model.Koltuklar">
+              <MappingFragment StoreEntitySet="Koltuklar">
+                <ScalarProperty Name="KoltukGorunmezMi" ColumnName="KoltukGorunmezMi" />
+                <ScalarProperty Name="KoltukID" ColumnName="KoltukID" />
+                <ScalarProperty Name="KoltukNo" ColumnName="KoltukNo" />
+                <ScalarProperty Name="KoltukAktifMi" ColumnName="KoltukAktifMi" />
+                <ScalarProperty Name="KoltukTipi" ColumnName="KoltukTipi" />
+                <ScalarProperty Name="SalonID" ColumnName="SalonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KoltukTipleri">
+            <EntityTypeMapping TypeName="Model.KoltukTipleri">
+              <MappingFragment StoreEntitySet="KoltukTipleri">
+                <ScalarProperty Name="KoltukTipleriID" ColumnName="KoltukTipleriID" />
+                <ScalarProperty Name="KoltukTipi" ColumnName="KoltukTipi" />
+                <ScalarProperty Name="KoltukFiyati" ColumnName="KoltukFiyati" />
+                <ScalarProperty Name="KoltukRenk" ColumnName="KoltukRenk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Musteriler">
+            <EntityTypeMapping TypeName="Model.Musteriler">
+              <MappingFragment StoreEntitySet="Musteriler">
+                <ScalarProperty Name="Resim" ColumnName="Resim" />
+                <ScalarProperty Name="KullaniciID" ColumnName="KullaniciID" />
+                <ScalarProperty Name="MusteriID" ColumnName="MusteriID" />
+                <ScalarProperty Name="MusteriAdi" ColumnName="MusteriAdi" />
+                <ScalarProperty Name="MusteriSoyadi" ColumnName="MusteriSoyadi" />
+                <ScalarProperty Name="MusteriYasi" ColumnName="MusteriYasi" />
+                <ScalarProperty Name="SeansID" ColumnName="SeansID" />
+                <ScalarProperty Name="KoltukID" ColumnName="KoltukID" />
+                <ScalarProperty Name="KoltukGrup" ColumnName="KoltukGrup" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Salonlar">
+            <EntityTypeMapping TypeName="Model.Salonlar">
+              <MappingFragment StoreEntitySet="Salonlar">
+                <ScalarProperty Name="KoltukDetay" ColumnName="KoltukDetay" />
+                <ScalarProperty Name="SalonID" ColumnName="SalonID" />
+                <ScalarProperty Name="SalonAdi" ColumnName="SalonAdi" />
+                <ScalarProperty Name="AktifMi" ColumnName="AktifMi" />
+                <ScalarProperty Name="En" ColumnName="En" />
+                <ScalarProperty Name="Boy" ColumnName="Boy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seanslar">
+            <EntityTypeMapping TypeName="Model.Seanslar">
+              <MappingFragment StoreEntitySet="Seanslar">
+                <ScalarProperty Name="Renk" ColumnName="Renk" />
+                <ScalarProperty Name="SeansID" ColumnName="SeansID" />
+                <ScalarProperty Name="FilmID" ColumnName="FilmID" />
+                <ScalarProperty Name="FilmSaati" ColumnName="FilmSaati" />
+                <ScalarProperty Name="SalonID" ColumnName="SalonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tahsilatlar">
+            <EntityTypeMapping TypeName="Model.Tahsilatlar">
+              <MappingFragment StoreEntitySet="Tahsilatlar">
+                <ScalarProperty Name="TahsilatID" ColumnName="TahsilatID" />
+                <ScalarProperty Name="MusteriID" ColumnName="MusteriID" />
+                <ScalarProperty Name="Tutar" ColumnName="Tutar" />
+                <ScalarProperty Name="TahsilatTarihi" ColumnName="TahsilatTarihi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanicilar">
+            <EntityTypeMapping TypeName="Model.Kullanicilar">
+              <MappingFragment StoreEntitySet="Kullanicilar">
+                <ScalarProperty Name="Resim" ColumnName="Resim" />
+                <ScalarProperty Name="KullaniciTc" ColumnName="KullaniciTc" />
+                <ScalarProperty Name="KullaniciID" ColumnName="KullaniciID" />
+                <ScalarProperty Name="SifreEtkinMi" ColumnName="SifreEtkinMi" />
+                <ScalarProperty Name="KullaniciYetkisi" ColumnName="KullaniciYetkisi" />
+                <ScalarProperty Name="KullaniciSifre" ColumnName="KullaniciSifre" />
+                <ScalarProperty Name="KullaniciAdi" ColumnName="KullaniciAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Siparisler">
+            <EntityTypeMapping TypeName="Model.Siparisler">
+              <MappingFragment StoreEntitySet="Siparisler">
+                <ScalarProperty Name="SiparisBirimFiyat" ColumnName="SiparisBirimFiyat" />
+                <ScalarProperty Name="ToplamTutar" ColumnName="ToplamTutar" />
+                <ScalarProperty Name="UrunID" ColumnName="UrunID" />
+                <ScalarProperty Name="SiparisAdet" ColumnName="SiparisAdet" />
+                <ScalarProperty Name="MusteriID" ColumnName="MusteriID" />
+                <ScalarProperty Name="SiparisID" ColumnName="SiparisID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Urunler">
+            <EntityTypeMapping TypeName="Model.Urunler">
+              <MappingFragment StoreEntitySet="Urunler">
+                <ScalarProperty Name="UrunSatilabilirmi" ColumnName="UrunSatilabilirmi" />
+                <ScalarProperty Name="BirimFiyati" ColumnName="BirimFiyati" />
+                <ScalarProperty Name="UrunAdi" ColumnName="UrunAdi" />
+                <ScalarProperty Name="UrunID" ColumnName="UrunID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="CopyToOutputDirectory" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

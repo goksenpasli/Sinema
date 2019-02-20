@@ -1,0 +1,934 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Canvas
+        x:Key="Dikey"
+        Width="85"
+        Height="93.25"
+        x:Shared="false">
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="-5.96046e-008"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="Red"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="Red"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="Red"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="Red"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="Red"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+    </Canvas>
+    <Canvas
+        x:Key="Gizli"
+        Width="85"
+        Height="93.25"
+        x:Shared="false">
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="-5.96046e-008"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#1AC24D4D"
+            Stretch="Fill"
+            Stroke="#1A000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#1AC24D4D"
+            Stretch="Fill"
+            Stroke="#1A000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#1AC24D4D"
+            Stretch="Fill"
+            Stroke="#1A000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#1AC24D4D"
+            Stretch="Fill"
+            Stroke="#1A000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="#1AC24D4D"
+            Stretch="Fill"
+            Stroke="#1A000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#1AC24D4D"
+            Stretch="Fill"
+            Stroke="#1A000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#1AC24D4D"
+            Stretch="Fill"
+            Stroke="#1A000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#1AC24D4D"
+            Stretch="Fill"
+            Stroke="#1A000000"
+            StrokeLineJoin="Round" />
+    </Canvas>
+    <Canvas
+        x:Key="Pasif"
+        Width="85"
+        Height="93.25"
+        x:Shared="false">
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="-5.96046e-008"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="#FF969182"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FF969182"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="#FF969182"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FF969182"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+    </Canvas>
+    <Canvas
+        x:Key="Kare"
+        Width="85"
+        Height="93.25"
+        x:Shared="false">
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="Red"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="-5.96046e-008"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="Red"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="Red"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="Red"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="Red"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="Red"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+    </Canvas>
+    <Canvas
+        x:Key="Yatay"
+        Width="85"
+        Height="93.25"
+        x:Shared="false">
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="-5.96046e-008"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="Red"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="Red"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="Red"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="23.1667"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="66"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="8.9407e-007"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="0"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="19.4167"
+            Width="19"
+            Height="17.25"
+            Fill="Red"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="38.9167"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="57.6667"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+        <Rectangle
+            Canvas.Left="44.25"
+            Canvas.Top="76"
+            Width="19"
+            Height="17.25"
+            Fill="#FFC24D4D"
+            Stretch="Fill"
+            Stroke="#FF000000"
+            StrokeLineJoin="Round" />
+    </Canvas>
+    <StreamGeometry x:Key="FaceIcon">M11.2668,-1.90735E-06C9.27488,0.387909 7.79958,1.90556 7.47587,3.90481 7.42619,4.23901 7.42619,4.57345 7.47587,5.26872 7.51954,5.77015 7.5631,6.23827 7.58188,6.29854 7.60667,6.37875 7.56922,6.43902 7.46976,6.47901 7.33274,6.53248 7.11504,6.75974 7.02169,6.93353 7.00292,6.97352 6.95313,7.16748 6.92212,7.35475 6.79133,8.10361 7.10882,9.32727 7.58821,9.89565 7.7439,10.083 7.89958,10.2301 7.94293,10.2301 7.9866,10.2301 8.05505,10.4573 8.11739,10.785 8.23563,11.4803 8.48466,12.0819 8.87682,12.6302L9.17564,13.0514 9.15074,13.9338C9.12585,14.8634 9.06995,15.0639 8.77736,15.3581 8.69656,15.4383 8.52822,15.5521 8.40386,15.6055 8.09893,15.746 5.80798,16.5014 4.65016,16.8491 3.58569,17.1701 2.96938,17.4508 2.4092,17.8786 1.09569,18.8882 0.224139,20.747 3.61416E-07,23.0138 -0.0689902,23.6758 -0.0625525,23.7428 0.0431329,23.8698 0.155149,24.0033 0.173925,24.0033 12.0262,24.0033 23.4493,24.0033 23.9036,23.9968 23.9971,23.8829 24.128,23.7292 24.128,23.5086 24.0033,22.6193 23.7604,20.8407 23.0881,19.2828 22.1669,18.3535 21.3948,17.5711 20.8224,17.2769 18.9859,16.7221 16.8632,16.0735 15.5436,15.599 15.3256,15.405 14.9893,15.0975 14.9272,14.8969 14.9023,13.9341L14.8774,13.0517 15.1762,12.6305C15.5684,12.0823 15.8175,11.4806 15.9357,10.7852 15.9919,10.4777 16.0665,10.2303 16.1037,10.2303 16.2219,10.2303 16.6203,9.74214 16.776,9.39457 17.1183,8.6524 17.2615,7.55585 17.0748,7.05419 16.9814,6.8002 16.7699,6.55945 16.5767,6.47924 16.471,6.43245 16.4397,6.37898 16.4646,6.26523 16.4833,6.18502 16.5331,5.72359 16.5767,5.23541 16.6264,4.56677 16.6264,4.24581 16.5767,3.90481 16.2842,2.11276 15.0205,0.648476 13.3211,0.133566 12.8107,-0.0201702 11.7337,-0.0936966 11.2668,-1.90735E-06z</StreamGeometry>
+</ResourceDictionary>

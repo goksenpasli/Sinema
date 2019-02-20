@@ -1,0 +1,269 @@
+﻿<Window
+    x:Class="Sinema.Yönetici"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:ice="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    xmlns:local="clr-namespace:Sinema"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="window"
+    Title="Yönetici"
+    Width="720"
+    Height="480"
+    d:DataContext="{d:DesignInstance {x:Type local:SinemaModel}}"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    UseLayoutRounding="True"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <local:ObjectToBoolConverter x:Key="ObjectToBoolConverter" />
+        <local:AdminToBoolConverter x:Key="AdminToBoolConverter" />
+        <local:Kullanicilar x:Key="Kullanicilar" />
+        <local:Tahsilatlar x:Key="Tahsilatlar" />
+        <local:Salonlar x:Key="Salonlar" />
+        <ObjectDataProvider x:Key="Yetkiler" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local:İzinTipleri" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="Close" Executed="OnCloseExecuted" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="Close" />
+    </Window.InputBindings>
+    <Grid x:Name="LayoutRoot">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="74*" />
+            <ColumnDefinition Width="61*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" MinHeight="95" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <GroupBox
+            x:Name="GbKullanıcılar"
+            Header="KULLANICI BİLGİLERİ"
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="2"
+            DataContext="{StaticResource Kullanicilar}"
+            Template="{StaticResource TintedGroupBox}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="18" />
+                    <RowDefinition Height="18" />
+                    <RowDefinition Height="18" />
+                    <RowDefinition Height="22" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="122.062" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="KULLANICI ADI" Grid.Row="0" Grid.Column="0" />
+                <TextBox
+                    x:Name="TxKullaniciAdi"
+                    Text="{Binding KullaniciAdi}"
+                    Grid.Row="0"
+                    Grid.Column="1" />
+                <TextBlock Text="KULLANICI TC" Grid.Row="1" Grid.Column="0" />
+                <TextBox
+                    x:Name="TxKullaniciTc"
+                    Text="{Binding KullaniciTc}"
+                    Grid.Row="1"
+                    Grid.Column="1" />
+                <TextBlock Text="KULLANICI ŞİFRE" Grid.Row="2" Grid.Column="0" />
+                <PasswordBox x:Name="PbŞifre" Grid.Row="2" Grid.Column="1" />
+                <TextBlock />
+                <Button
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Command="{Binding KullanıcıEkle}"
+                    CommandParameter="{Binding ElementName=window, Mode=OneWay}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" ice:Freeze="True" Source="Icons/shell32_16785.png" />
+                        <AccessText Text="_EKLE" />
+                    </StackPanel>
+                </Button>
+
+            </Grid>
+        </GroupBox>
+        <GroupBox
+            Header="MEVCUT KULLANICILAR"
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Margin="2"
+            Template="{StaticResource TintedGroupBox}">
+            <DataGrid
+                x:Name="DgKullanicilar"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                CanUserDeleteRows="False"
+                DataContext="{Binding DataContext, ElementName=window}"
+                ItemsSource="{Binding KullanicilarCollection}">
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Setter Property="IsEnabled" Value="True" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=KullaniciAdi}" Value="ADMIN">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding YetkiGöster, Mode=OneWay}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Binding="{Binding KullaniciAdi}"
+                        Header="KULLANICI ADI"
+                        ClipboardContentBinding="{x:Null}"
+                        IsReadOnly="True" />
+                    <DataGridTextColumn
+                        Binding="{Binding KullaniciTc}"
+                        Header="KULLANICI TC"
+                        ClipboardContentBinding="{x:Null}"
+                        IsReadOnly="True" />
+                    <DataGridCheckBoxColumn Binding="{Binding SifreEtkinMi, UpdateSourceTrigger=PropertyChanged}" Header="AKTİF Mİ" ClipboardContentBinding="{x:Null}" />
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding KullanıcıGüncelle}" CommandParameter="{Binding Mode=OneWay}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="16" ice:Freeze="True" Source="Icons/update.png" />
+                                        <AccessText Text="_GÜNCELLE" />
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding KullanıcıSil}" CommandParameter="{Binding Mode=OneWay}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="16" ice:Freeze="True" Source="Icons/shell32_240.png" />
+                                        <AccessText Text="Sİ_L" />
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+        <UniformGrid
+            Grid.Row="3"
+            Grid.Column="0"
+            Margin="2"
+            Columns="2">
+            <Button Command="{Binding TümMüşteriResimleriniKaydet, Mode=OneWay}" IsTabStop="False">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="32" Source="Icons/shell32_16802.png" />
+                        <TextBlock Text="TÜM MÜŞTERİ&#xA;RESİMLERİNİ KAYDET" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding TümMüşteriResimleriniSil, Mode=OneWay}" IsTabStop="False">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="32" Source="Icons/shell32_240.png" />
+                        <TextBlock Text="TÜM MÜŞTERİ&#xA;RESİMLERİNİ SİL" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </UniformGrid>
+        <GroupBox
+            Header="YETKİLER"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            Margin="2"
+            Template="{StaticResource TintedGroupBox}">
+            <Grid DataContext="{Binding DataContext, ElementName=window}">
+                <c1:C1CheckList
+                    x:Name="C1ChkListYetkiler"
+                    IsEnabled="{Binding SelectedItem, Converter={StaticResource AdminToBoolConverter}, ElementName=DgKullanicilar}"
+                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource Yetkiler}}"
+                    SelectAllCaption="TÜMÜNÜ SEÇ"
+                    SelectedBackground="{x:Null}"
+                    ShowCheckBoxes="True"
+                    ShowSelectAll="True"
+                    UnSelectAllCaption="TÜMÜNÜN SEÇİMİNİ KALDIR" />
+            </Grid>
+        </GroupBox>
+        <GroupBox
+            Header="SALONLARA İLAVE KOLTUK EKLE"
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="2"
+            DataContext="{Binding ElementName=window}"
+            Template="{StaticResource TintedGroupBox}">
+
+            <UniformGrid Columns="3" Rows="3">
+                <TextBlock Text="SALON" HorizontalAlignment="Center" />
+                <TextBlock Text="İLAVE KOLTUK" HorizontalAlignment="Center" />
+                <TextBlock Text="(DİKEY*YATAY)" HorizontalAlignment="Center" />
+                <ComboBox x:Name="CbSalon" DisplayMemberPath="SalonAdi" ItemsSource="{Binding DataContext.SalonlarCollection}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <ei:CallMethodAction MethodName="ComboBoxChanged" TargetObject="{Binding İlaveKoltukEkle}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <c1:C1NumericBox x:Name="C1İlaveKoltuk" Background="{StaticResource FilePickerBackground}" Minimum="0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <ei:CallMethodAction MethodName="C1NumericBoxChanged" TargetObject="{Binding İlaveKoltukEkle}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </c1:C1NumericBox>
+                <ComboBox x:Name="CbDizilim" IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbSalon}" />
+                <TextBlock />
+                <TextBlock />
+                <Button
+                    x:Name="BtUygula"
+                    Command="{Binding İlaveKoltukEkle}"
+                    CommandParameter="{Binding ElementName=window, Mode=OneWay}"
+                    IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbDizilim}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" ice:Freeze="True" Source="Icons/shell32_16802.png" />
+                        <AccessText Text="_UYGULA" />
+                    </StackPanel>
+                </Button>
+            </UniformGrid>
+        </GroupBox>
+        <UniformGrid
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="2"
+            Columns="2"
+            DataContext="{StaticResource Tahsilatlar}"
+            Rows="1">
+            <Button Command="{Binding GünlükTahsilatGrafik}">
+                <StackPanel Orientation="Horizontal">
+                    <Image ice:Freeze="True" Source="Icons/rapor.png" />
+                    <AccessText Text="GÜNLÜK&#xA;TAHS_İLAT&#xA;DURUMU" />
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding AylıkTahsilatGrafik}">
+                <StackPanel Orientation="Horizontal">
+                    <Image ice:Freeze="True" Source="Icons/rapor.png" />
+                    <AccessText Text="AYLIK&#xA;TAHS_İLAT&#xA;DURUMU" />
+                </StackPanel>
+            </Button>
+        </UniformGrid>
+    </Grid>
+</Window>

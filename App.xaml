@@ -1,0 +1,920 @@
+﻿<Application
+    x:Class="Sinema.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/interactivedesigner/2006"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:ice="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    xmlns:local="clr-namespace:Sinema"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    StartupUri="GirişWindow.xaml"
+    mc:Ignorable="d">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/PresentationFramework.Aero,Version=4.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35,processorArchitecture=MSIL;component/themes/Aero.NormalColor.xaml" />
+                <ResourceDictionary Source="Icons/Icon.xaml" />
+                <ResourceDictionary Source="Icons/Common.xaml" />
+                <ResourceDictionary Source="Icons/DataGrid.xaml" />
+                <ResourceDictionary Source="Icons/ScrollBar.xaml" />
+                <ResourceDictionary Source="Icons/Slider.xaml" />
+                <ResourceDictionary Source="Icons/CheckBox.xaml" />
+                <ResourceDictionary Source="Icons/ComboBox.xaml" />
+                <ResourceDictionary Source="Icons/HeaderedItemsControl.xaml" />
+                <ResourceDictionary Source="Icons/RadioButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <local:IntToBrushConverter x:Key="IntToBrushConverter" />
+            <local:IntToColorConverter x:Key="IntToColorConverter" />
+            <local:SeansTarihGeçtiConverter x:Key="SeansTarihGeçtiConverter" />
+            <local:PathToUriConverter x:Key="PathToUriConverter" />
+            <local:SeansTarihGeçtiVisibilityConverter x:Key="SeansTarihGeçtiVisibilityConverter" />
+            <Style TargetType="{x:Type local:Resizer}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type local:Resizer}">
+                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type local:ResizablePanel}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type local:ResizablePanel}">
+                            <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="5" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="5" />
+                                </Grid.RowDefinitions>
+                                <local:Resizer
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Width="3"
+                                    Height="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeNWSE"
+                                    ThumbDirection="TopLeft" />
+
+                                <local:Resizer
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Width="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeWE"
+                                    ThumbDirection="Left" />
+
+                                <local:Resizer
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Width="3"
+                                    Height="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeNESW"
+                                    ThumbDirection="BottomLeft" />
+
+                                <local:Resizer
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Height="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeNS"
+                                    ThumbDirection="Bottom" />
+
+                                <local:Resizer
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    Width="3"
+                                    Height="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeNWSE"
+                                    ThumbDirection="BottomRight" />
+
+                                <local:Resizer
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Width="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeWE"
+                                    ThumbDirection="Right" />
+
+                                <local:Resizer
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Width="3"
+                                    Height="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeNESW"
+                                    ThumbDirection="TopRight" />
+
+                                <local:Resizer
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Height="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeNS"
+                                    ThumbDirection="Top" />
+
+                                <ContentPresenter
+                                    Content="{TemplateBinding Content}"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="{TemplateBinding Padding}" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="DataGridTextBoxUpperStyle" TargetType="{x:Type TextBox}">
+                <Setter Property="CharacterCasing" Value="Upper" />
+            </Style>
+            <DataTemplate x:Key="Toplam">
+                <c1:C1NumericBox
+                    Culture="tr-TR"
+                    FontWeight="Bold"
+                    Foreground="Red"
+                    Format="C"
+                    IsReadOnly="True"
+                    ShowButtons="False"
+                    Value="{Binding}" />
+            </DataTemplate>
+            <Style TargetType="{x:Type TabItem}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TabItem}">
+                            <Border
+                                x:Name="Border"
+                                Margin="2,0"
+                                BorderBrush="Gainsboro"
+                                BorderThickness="1,1,1,0"
+                                CornerRadius="9,9,0,0">
+                                <ContentPresenter
+                                    x:Name="ContentSite"
+                                    Margin="2,2"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    ContentSource="Header" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Border" Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop ice:Freeze="True" Offset="1" Color="#E561A5F7" />
+                                                <GradientStop ice:Freeze="True" Color="#E561A5F7" />
+                                                <GradientStop Offset="0.5" Color="#E50074FF" />
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter TargetName="Border" Property="Background" Value="GhostWhite" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="TextTrimming" Value="WordEllipsis" />
+            </Style>
+            <Style x:Key="PasifGrid" TargetType="{x:Type DataGridRow}">
+                <Setter Property="IsEnabled" Value="True" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding AktifMi, UpdateSourceTrigger=PropertyChanged}" Value="false">
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="GridSeansStyle" TargetType="{x:Type DataGridRow}">
+                <Setter Property="Background" Value="LightGreen" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding FilmSaati, Converter={StaticResource SeansTarihGeçtiConverter}}" Value="false">
+                        <Setter Property="Background" Value="Red" />
+                    </DataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding FilmSaati, Converter={StaticResource SeansTarihGeçtiConverter}}" Value="false" />
+                            <Condition Binding="{Binding ElementName=CbSeans, Path=IsChecked}" Value="true" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </MultiDataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="GridSeansEklemeEkranıStyle" TargetType="{x:Type DataGridRow}">
+                <Setter Property="Background" Value="LightGreen" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding FilmSaati, Converter={StaticResource SeansTarihGeçtiConverter}}" Value="false">
+                        <Setter Property="Background" Value="Red" />
+                    </DataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding FilmSaati, Converter={StaticResource SeansTarihGeçtiConverter}}" Value="false" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </MultiDataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="GridSalonDurumlarıStyle" TargetType="{x:Type c1:DataGridRowPresenter}">
+                <Setter Property="Background" Value="LightGreen" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Row.DataItem.FilmSaati, Converter={StaticResource SeansTarihGeçtiConverter}}" Value="false">
+                        <Setter Property="Background" Value="Red" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="ComboboxKoltukStyle" BasedOn="{StaticResource {x:Type ComboBoxItem}}" TargetType="{x:Type ComboBoxItem}">
+                <Setter Property="IsEnabled" Value="True" />
+                <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                <Setter Property="ToolTip">
+                    <Setter.Value>
+                        <StackPanel>
+                            <TextBlock Text="{Binding KoltukTipleri.KoltukTipi, StringFormat=Koltuk Tipi: \{0\}}" />
+                            <TextBlock Text="{Binding KoltukTipleri.KoltukFiyati, StringFormat=Koltuk Fiyatı: \{0:C\}}" />
+                            <ListView Margin="5" ItemsSource="{Binding Musteriler}">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Setter Property="Visibility" Value="{Binding Path=Seanslar.FilmSaati, Converter={StaticResource SeansTarihGeçtiVisibilityConverter}}" />
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Ellipse Width="16" Height="16" Fill="{Binding Seanslar.Renk, Converter={StaticResource IntToColorConverter}}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="ADI" DisplayMemberBinding="{Binding MusteriAdi}" />
+                                        <GridViewColumn Header="SOYADI" DisplayMemberBinding="{Binding MusteriSoyadi}" />
+                                        <GridViewColumn Header="FİLM" DisplayMemberBinding="{Binding Seanslar.Filmler.FilmAdi}" />
+                                        <GridViewColumn Header="TARİH" DisplayMemberBinding="{Binding Seanslar.FilmSaati}" />
+                                        <GridViewColumn Header="TAHSİLAT" DisplayMemberBinding="{Binding Tahsilatlar/Tutar, StringFormat=\{0:C\}}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </StackPanel>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="ComboboxKullanıcıGirişStyle" BasedOn="{StaticResource {x:Type ComboBoxItem}}" TargetType="{x:Type ComboBoxItem}">
+                <Setter Property="IsEnabled" Value="True" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding SifreEtkinMi}" Value="false">
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="ComboboxSeansStyle" BasedOn="{StaticResource {x:Type ComboBoxItem}}" TargetType="{x:Type ComboBoxItem}">
+                <Setter Property="IsEnabled" Value="True" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding FilmSaati, Converter={StaticResource SeansTarihGeçtiConverter}}" Value="false">
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="ComboboxÜrünStyle" BasedOn="{StaticResource {x:Type ComboBoxItem}}" TargetType="{x:Type ComboBoxItem}">
+                <Setter Property="IsEnabled" Value="True" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding UrunSatilabilirmi}" Value="false">
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="MüşteriEkleCellStyle" TargetType="{x:Type c1:DataGridCellPresenter}">
+                <Setter Property="IsEnabled" Value="True" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=c1:DataGridRowPresenter}, Path=Row.DataItem.Seanslar.FilmSaati, Converter={StaticResource SeansTarihGeçtiConverter}}" Value="false">
+                        <Setter Property="Background" Value="Red" />
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Rectangle
+                x:Key="ContextRectangle"
+                Width="20"
+                Height="20"
+                x:Shared="False"
+                Fill="{Binding KoltukRenk, Converter={StaticResource IntToBrushConverter}}" />
+            <Style x:Key="GridButtonRenkleriStyle" BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding KoltukTipleri.KoltukRenk, Mode=OneWay}" Value="1">
+                        <Setter Property="Background" Value="Red" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KoltukTipleri.KoltukRenk, Mode=OneWay}" Value="2">
+                        <Setter Property="Background" Value="Green" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KoltukTipleri.KoltukRenk, Mode=OneWay}" Value="3">
+                        <Setter Property="Background" Value="Blue" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KoltukTipleri.KoltukRenk, Mode=OneWay}" Value="4">
+                        <Setter Property="Background" Value="Cyan" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KoltukTipleri.KoltukRenk, Mode=OneWay}" Value="5">
+                        <Setter Property="Background" Value="Magenta" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KoltukTipleri.KoltukRenk, Mode=OneWay}" Value="6">
+                        <Setter Property="Background" Value="Yellow" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KoltukTipleri.KoltukRenk, Mode=OneWay}" Value="7">
+                        <Setter Property="Background" Value="Orange" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KoltukTipleri.KoltukRenk, Mode=OneWay}" Value="8">
+                        <Setter Property="Background" Value="Purple" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KoltukTipleri.KoltukRenk, Mode=OneWay}" Value="9">
+                        <Setter Property="Background" Value="Lime" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KoltukTipleri.KoltukRenk, Mode=OneWay}" Value="10">
+                        <Setter Property="Background" Value="DarkCyan" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="CharacterCasing" Value="Upper" />
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Border>
+                                    <AdornedElementPlaceholder x:Name="adorner" />
+                                </Border>
+                                <Canvas
+                                    Width="15.27"
+                                    Height="15.3"
+                                    Margin="0,-7.5,-7.5,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    ToolTip="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent}">
+                                    <Ellipse
+                                        Canvas.Left="0"
+                                        Canvas.Top="0"
+                                        Width="15.27"
+                                        Height="15.3"
+                                        Fill="#FFFF5000"
+                                        Stretch="Fill"
+                                        Stroke="#FFFF0000"
+                                        StrokeLineJoin="Round" />
+                                    <Rectangle
+                                        Canvas.Left="2.27"
+                                        Canvas.Top="6.17"
+                                        Width="10.87"
+                                        Height="3.25"
+                                        Fill="#FFFFFFFF"
+                                        Stretch="Fill"
+                                        Stroke="#FFFFFFFF"
+                                        StrokeLineJoin="Round" />
+                                </Canvas>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="BorderBrush" Value="MediumSeaGreen" />
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop Color="White" />
+                            <GradientStop Offset="1" Color="#FE00B6E8" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="{x:Type PasswordBox}">
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Border>
+                                    <AdornedElementPlaceholder x:Name="adorner" />
+                                </Border>
+                                <Canvas
+                                    Width="15.27"
+                                    Height="15.3"
+                                    Margin="0,-7.5,-7.5,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    ToolTip="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent}">
+                                    <Ellipse
+                                        Canvas.Left="0"
+                                        Canvas.Top="0"
+                                        Width="15.27"
+                                        Height="15.3"
+                                        Fill="#FFFF5000"
+                                        Stretch="Fill"
+                                        Stroke="#FFFF0000"
+                                        StrokeLineJoin="Round" />
+                                    <Rectangle
+                                        Canvas.Left="2.27"
+                                        Canvas.Top="6.17"
+                                        Width="10.87"
+                                        Height="3.25"
+                                        Fill="#FFFFFFFF"
+                                        Stretch="Fill"
+                                        Stroke="#FFFFFFFF"
+                                        StrokeLineJoin="Round" />
+                                </Canvas>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="BorderBrush" Value="MediumSeaGreen" />
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop Color="White" />
+                            <GradientStop Offset="1" Color="#FE00B6E8" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+            <ControlTemplate x:Key="TintedGroupBox" TargetType="{x:Type GroupBox}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Border
+                        Grid.Row="0"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        CornerRadius="2,2,0,0">
+                        <Border.Background>
+                            <LinearGradientBrush ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop ice:Freeze="True" Offset="1" Color="#E561A5F7" />
+                                <GradientStop ice:Freeze="True" Color="#E561A5F7" />
+                                <GradientStop Offset="0.5" Color="#E50074FF" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <ContentPresenter Margin="4" ContentSource="Header" RecognizesAccessKey="True" />
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        BorderBrush="Black"
+                        BorderThickness="1,0,1,3"
+                        CornerRadius="0,0,2,2">
+                        <Border.Background>
+                            <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop ice:Freeze="True" Offset="1" Color="#FE00B6E8" />
+                                <GradientStop ice:Freeze="True" Color="#FF48F3CA" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <ContentPresenter Margin="4" />
+                    </Border>
+                </Grid>
+            </ControlTemplate>
+            <Style x:Key="SatışProgressBarStyle" TargetType="ProgressBar">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ProgressBar">
+                            <Border>
+                                <Grid x:Name="PART_Track">
+                                    <Rectangle
+                                        x:Name="PART_Indicator"
+                                        HorizontalAlignment="Left"
+                                        Fill="Black"
+                                        Stroke="White"
+                                        StrokeThickness="3" />
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Orientation" Value="Vertical">
+                                    <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Canvas
+                x:Key="Sahne"
+                Width="545.003"
+                Height="157.764"
+                x:Shared="false">
+                <Path Canvas.Left="65.052" Canvas.Top="99.8654" Width="34.6672" Height="37.2906" Data="M 65.052,99.8654L 89.4958,137.156C 93.1466,135.13 96.5998,132.861 99.7191,130.319C 88.3077,117.47 78.9344,107.166 72.3869,100.045C 69.8381,100.012 67.4005,99.9513 65.052,99.8654 Z " Fill="#92A3BFD9" Stretch="Fill" />
+                <Path Canvas.Left="28.1893" Canvas.Top="14.5456" Width="154.428" Height="17.1338" Data="M 105.403,27.4891C 73.5306,27.4891 47.1903,21.8224 43.5799,14.5456L 28.1893,14.5456C 31.758,24.1382 65.0172,31.6794 105.403,31.6794C 145.788,31.6794 179.046,24.1382 182.617,14.5456L 167.225,14.5456C 163.611,21.8224 137.272,27.4891 105.403,27.4891 Z " Fill="#92759DBA" Stretch="Fill" />
+                <Path Canvas.Left="55.3379" Canvas.Top="14.5456" Width="100.127" Height="9.52252" Data="M 72.8586,14.5456L 55.3379,14.5456C 59.0638,19.9308 80.0934,24.0682 105.403,24.0682C 130.709,24.0682 151.74,19.9308 155.465,14.5456L 137.951,14.5456C 134.687,18.1463 121.335,20.8535 105.4,20.8535C 89.468,20.8535 76.1212,18.1463 72.8586,14.5456 Z " Fill="#92A3BFD9" Stretch="Fill" />
+                <Path Canvas.Left="64.6735" Canvas.Top="26.0232" Width="112.496" Height="60.7639" Data="M 132.547,34.0428C 120.738,65.081 82.6742,80.8904 64.6735,86.7871C 65.0255,86.7805 65.3386,86.7726 65.6043,86.7646C 119.444,76.9473 148.562,57.491 163.519,42.8476C 169.795,36.701 174.161,30.881 177.169,26.0232C 166.149,29.7521 150.596,32.598 132.547,34.0428 Z " Fill="#92A3BFD9" Stretch="Fill" />
+                <Path Canvas.Left="222.435" Canvas.Top="14.5456" Width="100.127" Height="9.52252" Data="M 239.949,14.5456L 222.435,14.5456C 226.16,19.9308 247.195,24.0682 272.5,24.0682C 297.805,24.0682 318.837,19.9308 322.562,14.5456L 305.051,14.5456C 301.784,18.1463 288.435,20.8535 272.5,20.8535C 256.565,20.8535 243.213,18.1463 239.949,14.5456 Z " Fill="#92A3BFD9" Stretch="Fill" />
+                <Path Canvas.Left="85.365" Canvas.Top="14.5456" Width="40.117" Height="2.88687" Data="M 125.482,14.5456L 85.365,14.5456C 88.6402,16.2191 96.476,17.4325 105.4,17.4325C 114.333,17.4325 122.199,16.2191 125.482,14.5456 Z " Fill="#92759DBA" Stretch="Fill" />
+                <Path Canvas.Left="195.287" Canvas.Top="14.5456" Width="154.427" Height="17.1338" Data="M 272.5,27.4891C 240.628,27.4891 214.286,21.8224 210.677,14.5456L 195.287,14.5456C 198.858,24.1382 232.115,31.6794 272.503,31.6794C 312.885,31.6794 346.146,24.1382 349.713,14.5456L 334.323,14.5456C 330.708,21.8224 304.372,27.4891 272.5,27.4891 Z " Fill="#92759DBA" Stretch="Fill" />
+                <Path Canvas.Left="47.3615" Canvas.Top="98.6559" Width="33.1743" Height="50.1838" Data="M 47.3615,98.6559L 58.1065,148.84C 65.2314,147.099 73.0436,144.729 80.5358,141.522L 52.7611,99.157C 50.8801,99.0036 49.0728,98.837 47.3615,98.6559 Z " Fill="#92759DBA" Stretch="Fill" />
+                <Path Canvas.Left="27.214" Canvas.Top="95.3037" Width="19.7649" Height="58.5894" Data="M 27.214,95.3037L 27.214,153.893C 31.9862,153.462 39.0053,152.659 46.9789,151.203L 35.3712,96.997C 32.2296,96.4458 29.5124,95.8681 27.214,95.3037 Z " Fill="#92A3BFD9" Stretch="Fill" />
+                <Path Canvas.Left="29.6335" Canvas.Top="25.4112" Width="38.2832" Height="58.0554" Data="M 33.0547,83.4666C 41.1173,78.2559 62.2401,62.1069 67.9167,33.0302C 53.3594,31.337 40.9323,28.6893 31.9194,25.4112C 39.9528,52.2578 33.7907,72.7359 29.6335,82.2148C 30.7061,82.6788 31.8554,83.0926 33.0547,83.4666 Z " Fill="#92A3BFD9" Stretch="Fill" />
+                <Path Canvas.Left="42.606" Canvas.Top="34.1248" Width="77.966" Height="52.2393" Data="M 79.2808,74.7517C 93.9021,67.204 112.647,54.2234 120.572,34.7725C 115.64,34.9853 110.574,35.099 105.403,35.099C 96.3327,35.099 87.5786,34.7566 79.3295,34.1248C 73.0116,64.6237 50.4154,80.7872 42.606,85.5578C 45.0394,85.916 47.4937,86.1777 49.8589,86.3641C 54.4864,85.0686 66.4071,81.3966 79.2808,74.7517 Z " Fill="#92759DBA" Stretch="Fill" />
+                <Path Canvas.Left="27.214" Canvas.Top="86.651" Width="41.9618" Height="9.90852" Data="M 27.214,87.0687L 27.214,90.3653C 30.1719,91.6224 42.0912,95.8655 69.1758,96.5595C 66.4725,93.6356 64.476,91.4968 63.2933,90.2318C 62.7507,90.2371 62.1859,90.2398 61.582,90.2398C 53.2648,90.2398 39.0554,89.7163 27.4505,86.651C 27.3684,86.8016 27.2863,86.9417 27.214,87.0687 Z " Fill="#92759DBA" Stretch="Fill" />
+                <Path Canvas.Left="477.078" Canvas.Top="25.4178" Width="38.2804" Height="58.0528" Data="M 515.358,82.2069C 511.201,72.7279 505.042,52.2578 513.072,25.4178C 504.054,28.6933 491.631,31.3383 477.078,33.0302C 482.772,62.1942 503.87,78.2823 511.931,83.4706C 513.136,83.0939 514.283,82.6735 515.358,82.2069 Z " Fill="#92A3BFD9" Stretch="Fill" />
+                <Path Canvas.Left="498.021" Canvas.Top="95.309" Width="19.7648" Height="58.5868" Data="M 498.021,151.191C 506.028,152.659 513.032,153.466 517.786,153.896L 517.786,95.309C 515.482,95.8734 512.773,96.4538 509.627,97.0049L 498.021,151.191 Z " Fill="#92A3BFD9" Stretch="Fill" />
+                <Path Canvas.Left="464.459" Canvas.Top="98.6612" Width="33.1757" Height="50.1693" Data="M 464.459,141.526C 471.773,144.653 479.5,147.032 486.892,148.831L 497.634,98.6612C 495.915,98.8437 494.117,99.0155 492.228,99.1675L 464.459,141.526 Z " Fill="#92759DBA" Stretch="Fill" />
+                <Path Canvas.Left="475.824" Canvas.Top="86.6456" Width="41.959" Height="9.91125" Data="M 483.418,90.2398C 482.81,90.2398 482.249,90.2371 481.707,90.2318C 480.524,91.4968 478.528,93.6356 475.824,96.5569C 502.899,95.8642 514.821,91.6224 517.783,90.3653L 517.783,87.0687C 517.709,86.9404 517.626,86.799 517.544,86.6456C 505.939,89.711 491.735,90.2398 483.418,90.2398 Z " Fill="#92759DBA" Stretch="Fill" />
+                <Rectangle
+                    Canvas.Left="11.6105"
+                    Canvas.Top="3.42097"
+                    Width="521.776"
+                    Height="7.70369"
+                    Fill="#92BBA795"
+                    Stretch="Fill" />
+                <Path Canvas.Left="445.278" Canvas.Top="99.8746" Width="34.6588" Height="37.2827" Data="M 472.608,100.048C 463.423,110.077 454.326,120.179 445.278,130.319L 455.497,137.157L 479.937,99.8746L 472.608,100.048 Z " Fill="#92A3BFD9" Stretch="Fill" />
+                <Path Canvas.Left="419.518" Canvas.Top="14.5456" Width="40.1545" Height="2.88687" Data="M 459.673,14.5456L 419.518,14.5456C 422.799,16.2191 430.667,17.4325 439.595,17.4325C 448.524,17.4325 456.393,16.2191 459.673,14.5456 Z " Fill="#92759DBA" Stretch="Fill" />
+                <Path Canvas.Left="252.421" Canvas.Top="14.5456" Width="40.1559" Height="2.88687" Data="M 292.577,14.5456L 252.421,14.5456C 255.7,16.2191 263.568,17.4325 272.5,17.4325C 281.431,17.4325 289.3,16.2191 292.577,14.5456 Z " Fill="#92759DBA" Stretch="Fill" />
+                <Path Canvas.Left="367.837" Canvas.Top="26.0245" Width="112.498" Height="60.7665" Data="M 480.335,86.7911C 462.338,80.8956 424.262,65.0863 412.453,34.0428C 394.406,32.5993 378.856,29.7534 367.837,26.0245C 370.854,30.9034 375.24,36.75 381.547,42.9137C 396.507,57.536 425.616,76.9605 479.401,86.766C 479.67,86.7752 479.977,86.7831 480.335,86.7911 Z " Fill="#92A3BFD9" Stretch="Fill" />
+                <Path Canvas.Left="389.534" Canvas.Top="14.5456" Width="100.124" Height="9.52252" Data="M 407.045,14.5456L 389.534,14.5456C 393.257,19.9308 414.288,24.0682 439.595,24.0682C 464.904,24.0682 485.935,19.9308 489.658,14.5456L 472.147,14.5456C 468.88,18.1463 455.529,20.8535 439.595,20.8535C 423.661,20.8535 410.31,18.1463 407.045,14.5456 Z " Fill="#92A3BFD9" Stretch="Fill" />
+                <Path Canvas.Left="362.383" Canvas.Top="14.5456" Width="154.402" Height="17.1338" Data="M 362.383,14.5456C 365.951,24.1382 399.212,31.6794 439.595,31.6794C 479.979,31.6794 513.216,24.1369 516.784,14.5456L 501.419,14.5456C 497.808,21.8224 471.468,27.4891 439.595,27.4891C 407.724,27.4891 381.385,21.8224 377.775,14.5456L 362.383,14.5456 Z " Fill="#92759DBA" Stretch="Fill" />
+                <Path Canvas.Left="424.424" Canvas.Top="34.1248" Width="77.9786" Height="52.2499" Data="M 439.595,35.099C 434.423,35.099 429.359,34.9853 424.424,34.7725C 438.255,68.7663 484.948,83.5155 495.173,86.3747C 497.533,86.1883 499.979,85.9253 502.402,85.5644C 494.611,80.8071 471.988,64.6409 465.663,34.1248C 457.417,34.7566 448.666,35.099 439.595,35.099 Z " Fill="#92759DBA" Stretch="Fill" />
+                <Path Canvas.Left="-1.023e-008" Canvas.Top="0" Width="545" Height="157.764" Data="M 539.195,0L 5.80454,0C 2.59757,0 -1.023e-008,0.766724 -1.023e-008,1.71043L -1.023e-008,12.8351C -1.023e-008,13.7789 2.59757,14.5456 5.80454,14.5456L 16.295,14.5456C 32.8919,53.3286 15.6021,86.9325 15.6021,86.9325L 15.6021,156.053C 15.6021,156.543 16.3159,157.01 17.5583,157.334C 18.6268,157.612 19.9986,157.764 21.4094,157.764C 21.6404,157.764 21.8769,157.76 22.1093,157.752C 24.5496,157.664 82.1887,155.331 111.267,130.963C 111.65,130.642 111.7,130.293 111.405,129.963C 91.9236,108.019 78.2819,93.3725 74.3556,89.1863C 118.207,80.8308 152.831,65.1841 174.64,43.8311C 183.267,35.3819 188.35,27.6266 191.273,21.9994C 205.289,29.7164 236.419,35.099 272.5,35.099C 308.585,35.099 339.713,29.7151 353.727,21.9981C 356.65,27.6279 361.729,35.3819 370.36,43.8311C 392.166,65.1841 426.788,80.8308 470.64,89.1863C 466.714,93.3725 453.071,108.019 433.594,129.963C 433.299,130.293 433.348,130.642 433.732,130.963C 462.809,155.331 520.45,157.664 522.889,157.752C 523.123,157.76 523.357,157.764 523.586,157.764C 524.999,157.764 526.369,157.612 527.439,157.334C 528.683,157.009 529.395,156.543 529.395,156.053L 529.395,86.9338L 529.373,86.9338C 529.371,86.8082 512.093,53.3431 528.699,14.5456L 539.195,14.5456C 542.401,14.5456 545,13.7802 545,12.8351L 545,1.71043C 545.003,0.766724 542.402,0 539.195,0 Z M 27.214,153.893L 27.214,95.3037C 29.5138,95.8681 32.2296,96.4458 35.3712,96.997L 46.9789,151.202C 39.0011,152.659 31.9862,153.462 27.214,153.893 Z M 31.9194,25.4112C 40.935,28.6893 53.3622,31.337 67.9167,33.0302C 62.2401,62.1069 41.1159,78.2559 33.0547,83.4666C 31.8554,83.0926 30.7048,82.6788 29.6335,82.2148C 33.7907,72.7359 39.9528,52.2578 31.9194,25.4112 Z M 79.3295,34.1248C 87.5786,34.7566 96.3327,35.099 105.403,35.099C 110.574,35.099 115.64,34.9853 120.572,34.7725C 112.647,54.2234 93.9021,67.204 79.2808,74.7517C 66.4071,81.3966 54.4864,85.0686 49.8589,86.3641C 47.4937,86.1777 45.0408,85.916 42.606,85.5578C 50.4154,80.7872 73.0116,64.6237 79.3295,34.1248 Z M 61.5806,90.2398C 62.1859,90.2398 62.7507,90.2371 63.2892,90.2318C 64.476,91.4968 66.4725,93.6356 69.1758,96.5595C 42.0912,95.8655 30.1719,91.6224 27.214,90.3653L 27.214,87.0687C 27.2849,86.9417 27.3656,86.8016 27.4505,86.6497C 39.0554,89.7163 53.262,90.2398 61.5806,90.2398 Z M 58.1065,148.84L 47.3615,98.6559C 49.0728,98.837 50.8801,99.0036 52.7611,99.1556L 80.5358,141.521C 73.0436,144.729 65.2314,147.099 58.1065,148.84 Z M 99.7191,130.319C 96.5998,132.861 93.1466,135.13 89.4958,137.156L 65.052,99.8654C 67.4005,99.9513 69.8381,100.012 72.3911,100.045C 78.9386,107.166 88.3077,117.47 99.7191,130.319 Z M 163.519,42.8476C 148.561,57.491 119.441,76.9473 65.6043,86.7646C 65.3386,86.7726 65.0255,86.7805 64.6735,86.7871C 82.6742,80.8904 120.738,65.081 132.547,34.0428C 150.596,32.598 166.149,29.7521 177.169,26.0232C 174.161,30.881 169.795,36.701 163.519,42.8476 Z M 105.403,31.6794C 65.0172,31.6794 31.758,24.1382 28.1893,14.5456L 43.5771,14.5456C 47.1903,21.8224 73.5278,27.4891 105.4,27.4891C 137.272,27.4891 163.611,21.8224 167.224,14.5456L 182.615,14.5456C 179.046,24.1382 145.788,31.6794 105.403,31.6794 Z M 105.4,20.8535C 121.335,20.8535 134.687,18.1463 137.951,14.5456L 155.465,14.5456C 151.74,19.9308 130.709,24.0682 105.403,24.0682C 80.0934,24.0682 59.0638,19.9308 55.3379,14.5456L 72.8586,14.5456C 76.1212,18.1463 89.468,20.8535 105.4,20.8535 Z M 85.365,14.5456L 125.479,14.5456C 122.199,16.2191 114.333,17.4325 105.4,17.4325C 96.476,17.4325 88.6402,16.2191 85.365,14.5456 Z M 272.5,31.6794C 232.115,31.6794 198.854,24.1382 195.287,14.5456L 210.677,14.5456C 214.286,21.8224 240.627,27.4891 272.5,27.4891C 304.369,27.4891 330.708,21.8224 334.317,14.5456L 349.711,14.5456C 346.142,24.1382 312.885,31.6794 272.5,31.6794 Z M 272.5,20.8535C 288.435,20.8535 301.784,18.1463 305.051,14.5456L 322.562,14.5456C 318.837,19.9308 297.805,24.0682 272.5,24.0682C 247.195,24.0682 226.16,19.9308 222.435,14.5456L 239.949,14.5456C 243.213,18.1463 256.565,20.8535 272.5,20.8535 Z M 252.421,14.5456L 292.577,14.5456C 289.3,16.2191 281.431,17.4325 272.5,17.4325C 263.568,17.4325 255.7,16.2191 252.421,14.5456 Z M 439.595,20.8535C 455.529,20.8535 468.88,18.1463 472.147,14.5456L 489.658,14.5456C 485.935,19.9308 464.904,24.0682 439.595,24.0682C 414.288,24.0682 393.257,19.9308 389.534,14.5456L 407.045,14.5456C 410.31,18.1463 423.661,20.8535 439.595,20.8535 Z M 419.518,14.5456L 459.673,14.5456C 456.393,16.2191 448.524,17.4325 439.597,17.4325C 430.667,17.4325 422.799,16.2191 419.518,14.5456 Z M 439.595,27.4891C 471.468,27.4891 497.805,21.8224 501.419,14.5456L 516.784,14.5456C 513.213,24.1369 479.979,31.6794 439.595,31.6794C 399.208,31.6794 365.951,24.1382 362.381,14.5456L 377.77,14.5456C 381.385,21.8224 407.723,27.4891 439.595,27.4891 Z M 477.078,33.0302C 491.631,31.3383 504.054,28.6933 513.072,25.4178C 505.042,52.2578 511.201,72.7279 515.358,82.2069C 514.283,82.6735 513.136,83.0939 511.931,83.4706C 503.87,78.2823 482.772,62.1942 477.078,33.0302 Z M 502.407,85.5644C 499.979,85.9253 497.533,86.1883 495.176,86.3747C 484.953,83.5155 438.255,68.7663 424.428,34.7725C 429.359,34.9853 434.423,35.099 439.595,35.099C 448.666,35.099 457.417,34.7566 465.665,34.1248C 471.988,64.6409 494.611,80.8071 502.407,85.5644 Z M 381.547,42.9137C 375.24,36.75 370.854,30.9047 367.837,26.0245C 378.854,29.7534 394.406,32.5993 412.453,34.0428C 424.262,65.0863 462.338,80.8956 480.335,86.7911C 479.977,86.7831 479.674,86.7752 479.401,86.7673C 425.616,76.9618 396.507,57.536 381.547,42.9137 Z M 445.278,130.319C 456.688,117.471 466.06,107.169 472.608,100.048C 475.149,100.016 477.598,99.9579 479.941,99.8746L 455.501,137.157C 451.841,135.123 448.39,132.857 445.278,130.319 Z M 486.892,148.831C 479.5,147.032 471.773,144.655 464.463,141.526L 492.229,99.1675C 494.12,99.0141 495.916,98.8437 497.637,98.6612L 486.892,148.831 Z M 517.786,153.896C 513.032,153.466 506.028,152.659 498.021,151.191L 509.627,97.0049C 512.773,96.4538 515.482,95.8734 517.786,95.309L 517.786,153.896 Z M 517.786,90.3653C 514.821,91.6224 502.899,95.8642 475.824,96.5569C 478.528,93.6356 480.524,91.4968 481.707,90.2318C 482.249,90.2371 482.814,90.2398 483.418,90.2398C 491.738,90.2398 505.94,89.711 517.544,86.6456C 517.632,86.799 517.714,86.9404 517.786,87.0687L 517.786,90.3653 Z M 533.389,11.1247L 11.6105,11.1247L 11.6105,3.41965L 533.389,3.41965L 533.389,11.1247 Z " Fill="#927C5F53" Stretch="Fill" />
+            </Canvas>
+            <Style TargetType="{x:Type local:ShowCapLock}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type local:ShowCapLock}">
+                            <Grid>
+                                <ContentPresenter Name="Presenter" />
+                                <Popup
+                                    IsOpen="{TemplateBinding ShowMessage}"
+                                    Placement="Right"
+                                    PlacementTarget="{Binding ElementName=Presenter}"
+                                    PopupAnimation="Fade">
+                                    <Border Background="LightGoldenrodYellow" BorderBrush="Black" BorderThickness="1">
+                                        <TextBlock Text="Caps Lock Tuşu Açık." Foreground="Black" />
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <LinearGradientBrush x:Key="FilePickerBackground" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop Color="White" />
+                <GradientStop Offset="1" Color="#FE00B6E8" />
+            </LinearGradientBrush>
+            <x:Array x:Key="Diller" Type="{x:Type sys:Object}">
+                <sys:String>TÜRKÇE</sys:String>
+                <sys:String>ALMANCA</sys:String>
+                <sys:String>ARAPÇA</sys:String>
+                <sys:String>FRANSIZCA</sys:String>
+                <sys:String>İNGİLİZCE</sys:String>
+                <sys:String>İTALYANCA</sys:String>
+                <sys:String>İSPANYOLCA</sys:String>
+                <sys:String>RUSÇA</sys:String>
+                <Separator IsEnabled="False" />
+                <sys:String>AFRİKAANCA</sys:String>
+                <sys:String>AMHARCA</sys:String>
+                <sys:String>ARNAVUTÇA</sys:String>
+                <sys:String>AZERİCE</sys:String>
+                <sys:String>BASKÇA</sys:String>
+                <sys:String>BATI FRİZCESİ</sys:String>
+                <sys:String>BELARUSÇA</sys:String>
+                <sys:String>BENGALCE</sys:String>
+                <sys:String>BİRMAN DİLİ</sys:String>
+                <sys:String>BOŞNAKÇA</sys:String>
+                <sys:String>BULGARCA</sys:String>
+                <sys:String>CAVA DİLİ</sys:String>
+                <sys:String>CEBUANO</sys:String>
+                <sys:String>ÇEKÇE</sys:String>
+                <sys:String>ÇİNCE (BASİTLEŞTİRİLMİŞ)</sys:String>
+                <sys:String>ÇİNCE (GELENEKSEL)</sys:String>
+                <sys:String>DANCA</sys:String>
+                <sys:String>ENDONEZCE</sys:String>
+                <sys:String>ERMENİCE</sys:String>
+                <sys:String>ESPERANTO</sys:String>
+                <sys:String>ESTONCA</sys:String>
+                <sys:String>FARSÇA</sys:String>
+                <sys:String>FELEMENKÇE</sys:String>
+                <sys:String>FİLİPİNCE</sys:String>
+                <sys:String>FİNCE</sys:String>
+                <sys:String>GALCE</sys:String>
+                <sys:String>GALİÇYACA</sys:String>
+                <sys:String>GÜCERATÇA</sys:String>
+                <sys:String>GÜNEY SOTHO DİLİ</sys:String>
+                <sys:String>GÜRCÜCE</sys:String>
+                <sys:String>HAİTİ KREYOLU</sys:String>
+                <sys:String>HAUSA DİLİ</sys:String>
+                <sys:String>HAWAİİ DİLİ</sys:String>
+                <sys:String>HIRVATÇA</sys:String>
+                <sys:String>HİNTÇE</sys:String>
+                <sys:String>HMONG DİLİ</sys:String>
+                <sys:String>İBO DİLİ</sys:String>
+                <sys:String>İBRANİCE</sys:String>
+                <sys:String>İRLANDACA</sys:String>
+                <sys:String>İSKOÇ GAELCESİ</sys:String>
+                <sys:String>İSVEÇÇE</sys:String>
+                <sys:String>İZLANDACA</sys:String>
+                <sys:String>JAPONCA</sys:String>
+                <sys:String>KANNADA DİLİ</sys:String>
+                <sys:String>KATALANCA</sys:String>
+                <sys:String>KAZAKÇA</sys:String>
+                <sys:String>KHMER DİLİ</sys:String>
+                <sys:String>KIRGIZCA</sys:String>
+                <sys:String>KORECE</sys:String>
+                <sys:String>KORSİKACA</sys:String>
+                <sys:String>KÜRTÇE</sys:String>
+                <sys:String>LAO DİLİ</sys:String>
+                <sys:String>LATİNCE</sys:String>
+                <sys:String>LEHÇE</sys:String>
+                <sys:String>LETONCA</sys:String>
+                <sys:String>LİTVANCA</sys:String>
+                <sys:String>LÜKSEMBURGCA</sys:String>
+                <sys:String>MACARCA</sys:String>
+                <sys:String>MAKEDONCA</sys:String>
+                <sys:String>MALAYALAM DİLİ</sys:String>
+                <sys:String>MALAYCA</sys:String>
+                <sys:String>MALGAŞÇA</sys:String>
+                <sys:String>MALTACA</sys:String>
+                <sys:String>MAORİ DİLİ</sys:String>
+                <sys:String>MARATHİ DİLİ</sys:String>
+                <sys:String>MOĞOLCA</sys:String>
+                <sys:String>NEPALCE</sys:String>
+                <sys:String>NORVEÇÇE</sys:String>
+                <sys:String>NYANJA</sys:String>
+                <sys:String>ÖZBEKÇE</sys:String>
+                <sys:String>PENCAPÇA</sys:String>
+                <sys:String>PEŞTUCA</sys:String>
+                <sys:String>PORTEKİZCE</sys:String>
+                <sys:String>RUMENCE</sys:String>
+                <sys:String>SAMOA DİLİ</sys:String>
+                <sys:String>SHONA</sys:String>
+                <sys:String>SIRPÇA</sys:String>
+                <sys:String>SİNDHİ DİLİ</sys:String>
+                <sys:String>SİNHALİ DİLİ</sys:String>
+                <sys:String>SLOVAKÇA</sys:String>
+                <sys:String>SLOVENCE</sys:String>
+                <sys:String>SOMALİCE</sys:String>
+                <sys:String>SUNDA DİLİ</sys:String>
+                <sys:String>SVAHİLİ DİLİ</sys:String>
+                <sys:String>TACİKÇE</sys:String>
+                <sys:String>TAMİLCE</sys:String>
+                <sys:String>TAYCA</sys:String>
+                <sys:String>TELUGU DİLİ</sys:String>
+                <sys:String>UKRAYNACA</sys:String>
+                <sys:String>URDUCA</sys:String>
+                <sys:String>VİETNAMCA</sys:String>
+                <sys:String>YİDİŞ</sys:String>
+                <sys:String>YORUBACA</sys:String>
+                <sys:String>YUNANCA</sys:String>
+                <sys:String>ZOSA DİLİ</sys:String>
+                <sys:String>ZULUCA</sys:String>
+            </x:Array>
+            <x:Array x:Key="FilmTipleri" Type="{x:Type sys:String}">
+                <sys:String>AKSİYON FİLMİ</sys:String>
+                <sys:String>CASUS FİLMİ</sys:String>
+                <sys:String>DÖVÜŞ FİLMİ</sys:String>
+                <sys:String>FELAKET FİLMİ</sys:String>
+                <sys:String>BELGESEL FİLM</sys:String>
+                <sys:String>DOĞA FİLMİ</sys:String>
+                <sys:String>GEZİ FİLMİ</sys:String>
+                <sys:String>YARI BELGESEL FİLM</sys:String>
+                <sys:String>BİLİM KURGU FİLMİ</sys:String>
+                <sys:String>ALTERNATİF TARİH FİLMİ</sys:String>
+                <sys:String>ASKERÎ BİLİM KURGU FİLMİ</sys:String>
+                <sys:String>BİLİM KURGU-AKSİYON FİLMİ</sys:String>
+                <sys:String>BİLİM KURGU-MACERA FİLMİ</sys:String>
+                <sys:String>KIYAMET SONRASI BİLİM KURGUSU FİLMİ</sys:String>
+                <sys:String>STEAMPUNK FİLMİ</sys:String>
+                <sys:String>UZAY OPERASI FİLMİ</sys:String>
+                <sys:String>DİNİ FİLM</sys:String>
+                <sys:String>DRAMATİK FİLM</sys:String>
+                <sys:String>EROTİK DRAM FİLMİ</sys:String>
+                <sys:String>MELODRAM FİLMİ</sys:String>
+                <sys:String>POLİTİK DRAM FİLMİ</sys:String>
+                <sys:String>TARİHİ DRAM FİLMİ</sys:String>
+                <sys:String>TRAJEDİ FİLMİ</sys:String>
+                <sys:String>EĞİTİM FİLMİ</sys:String>
+                <sys:String>EROTİK FİLM</sys:String>
+                <sys:String>FANTASTİK FİLM</sys:String>
+                <sys:String>MASAL FİLMİ</sys:String>
+                <sys:String>MİTOLOJİK FİLM</sys:String>
+                <sys:String>SÜPER KAHRAMAN FİLMİ</sys:String>
+                <sys:String>TARİHSEL FANTEZİ FİLMİ</sys:String>
+                <sys:String>GERİLİM FİLMİ</sys:String>
+                <sys:String>AKSİYON-GERİLİM FİLMİ</sys:String>
+                <sys:String>EROTİK GERİLİM FİLMİ</sys:String>
+                <sys:String>POLİTİK GERİLİM FİLMİ</sys:String>
+                <sys:String>PSİKOLOJİK GERİLİM FİLMİ</sys:String>
+                <sys:String>KOMEDİ FİLMİ</sys:String>
+                <sys:String>ABSÜRT KOMEDİ FİLMİ</sys:String>
+                <sys:String>AKSİYON KOMEDİSİ FİLMİ</sys:String>
+                <sys:String>ASKERİ KOMEDİ FİLMİ</sys:String>
+                <sys:String>BİLİM KURGU-KOMEDİ FİLMİ</sys:String>
+                <sys:String>DİNİ KOMEDİ FİLMİ</sys:String>
+                <sys:String>FANTASTİK KOMEDİ FİLMİ</sys:String>
+                <sys:String>KABA KOMEDİ FİLMİ</sys:String>
+                <sys:String>KARA MİZAH FİLMİ</sys:String>
+                <sys:String>KARAKTER KOMEDİSİ FİLMİ</sys:String>
+                <sys:String>KOMEDİ-DRAMA FİLMİ</sys:String>
+                <sys:String>KORKU KOMEDİSİ FİLM</sys:String>
+                <sys:String>MÜZİKAL KOMEDİ FİLMİ</sys:String>
+                <sys:String>PARODİ FİLMİ</sys:String>
+                <sys:String>POLİTİK KOMEDİ FİLMİ</sys:String>
+                <sys:String>ROMANTİK KOMEDİ FİLMİ</sys:String>
+                <sys:String>SEKS KOMEDİSİ FİLMİ</sys:String>
+                <sys:String>WESTERN KOMEDİSİ FİLMİ</sys:String>
+                <sys:String>YANLIŞLIKLAR KOMEDİSİ FİLMİ</sys:String>
+                <sys:String>ZOMBİ KOMEDİSİ FİLMİ</sys:String>
+                <sys:String>KORKU FİLMİ</sys:String>
+                <sys:String>BİLİM KURGU-KORKU FİLMİ</sys:String>
+                <sys:String>BİYOLOJİK KORKU FİLMİ</sys:String>
+                <sys:String>BÜYÜCÜ FİLMİ</sys:String>
+                <sys:String>CADI FİLMİ</sys:String>
+                <sys:String>CANAVAR FİLMİ</sys:String>
+                <sys:String>CİN FİLMİ</sys:String>
+                <sys:String>ÇİN KORKU FİLMİ</sys:String>
+                <sys:String>DOĞAL KORKU FİLMİ</sys:String>
+                <sys:String>DOĞAÜSTÜ FİLM</sys:String>
+                <sys:String>EROTİK KORKU FİLMİ</sys:String>
+                <sys:String>FRANKENSTEİN FİLMİ</sys:String>
+                <sys:String>GOLEM FİLMİ</sys:String>
+                <sys:String>GOTİK FİLM</sys:String>
+                <sys:String>HAYALET FİLMİ</sys:String>
+                <sys:String>İŞKENCECİ FİLMİ</sys:String>
+                <sys:String>JAPON KORKU FİLMİ</sys:String>
+                <sys:String>KORE KORKU FİLMİ</sys:String>
+                <sys:String>KURT ADAM FİLMİ</sys:String>
+                <sys:String>LOVECRAFTVARİ KORKU FİLMİ</sys:String>
+                <sys:String>MUMYA FİLMİ</sys:String>
+                <sys:String>PERİLİ EV FİLMİ</sys:String>
+                <sys:String>PSİKOLOJİK KORKU FİLMİ</sys:String>
+                <sys:String>ŞEYTAN FİLMİ</sys:String>
+                <sys:String>VAMPİR FİLMİ</sys:String>
+                <sys:String>YAMYAMLIK FİLMİ</sys:String>
+                <sys:String>YARATIK FİLMİ</sys:String>
+                <sys:String>ZOMBİ FİLMİ</sys:String>
+                <sys:String>MACERA FİLMİ</sys:String>
+                <sys:String>KORSAN FİLMİ</sys:String>
+                <sys:String>MÜZİK FİLMİ</sys:String>
+                <sys:String>MÜZİKAL FİLM</sys:String>
+                <sys:String>POLİTİK FİLM</sys:String>
+                <sys:String>PORNOGRAFİK FİLM</sys:String>
+                <sys:String>HARDCORE PORNO</sys:String>
+                <sys:String>SOFTCORE PORNO</sys:String>
+                <sys:String>PROPAGANDA FİLMİ</sys:String>
+                <sys:String>ROMANTİK FİLM</sys:String>
+                <sys:String>ROMANTİK DRAM FİLMİ</sys:String>
+                <sys:String>ROMANTİK GERİLİM FİLMİ</sys:String>
+                <sys:String>ROMANTİK MACERA FİLMİ</sys:String>
+                <sys:String>SAVAŞ FİLMİ</sys:String>
+                <sys:String>SPOR FİLMİ</sys:String>
+                <sys:String>SUÇ FİLMİ</sys:String>
+                <sys:String>GİZEMLİ FİLM</sys:String>
+                <sys:String>KARA FİLM</sys:String>
+                <sys:String>MAFYA FİLMİ</sys:String>
+                <sys:String>POLİSİYE FİLM</sys:String>
+                <sys:String>TARİHİ FİLM</sys:String>
+                <sys:String>WESTERN FİLMİ</sys:String>
+                <sys:String>ACİD WESTERN FİLMİ</sys:String>
+                <sys:String>AVRUPA WESTERN FİLMİ</sys:String>
+                <sys:String>BİLİM KURGU-WESTERN FİLMİ</sys:String>
+                <sys:String>ÇAĞDAŞ WESTERN FİLMİ</sys:String>
+                <sys:String>EPİK WESTERN FİLMİ</sys:String>
+                <sys:String>KIZIL WESTERN FİLMİ</sys:String>
+                <sys:String>KLASİK WESTERN FİLMİ</sys:String>
+                <sys:String>KÖRİ WESTERN FİLMİ</sys:String>
+                <sys:String>KUZEY WESTERN FİLMİ</sys:String>
+                <sys:String>MÜZİKAL WESTERN FİLMİ</sys:String>
+                <sys:String>REVİZYONİST WESTERN FİLMİ</sys:String>
+                <sys:String>ROMANTİK WESTERN FİLMİ</sys:String>
+                <sys:String>SPAGETTİ WESTERN FİLMİ</sys:String>
+                <sys:String>YEŞİLÇAM WESTERN FİLMİ</sys:String>
+                <sys:String>YAŞAM ÖYKÜSEL FİLM</sys:String>
+            </x:Array>
+            <x:Array x:Key="ÇekimTipleri" Type="{x:Type sys:String}">
+                <sys:String>ANİMASYON FİLM</sys:String>
+                <sys:String>B FİLMİ</sys:String>
+                <sys:String>BAĞIMSIZ FİLM</sys:String>
+                <sys:String>DİZİ FİLM</sys:String>
+                <sys:String>DÜŞÜK BÜTÇELİ FİLM</sys:String>
+                <sys:String>KISA FİLM</sys:String>
+                <sys:String>KÜLT FİLM</sys:String>
+                <sys:String>RENKLİ FİLM</sys:String>
+                <sys:String>SANAT FİLMİ</sys:String>
+                <sys:String>SESLİ FİLM</sys:String>
+                <sys:String>SESSİZ FİLM</sys:String>
+                <sys:String>SİYAH BEYAZ FİLM</sys:String>
+                <sys:String>TV FİLMİ</sys:String>
+                <sys:String>UZUN METRAJ</sys:String>
+                <sys:String>ÜÇ BOYUTLU FİLM</sys:String>
+                <sys:String>YERALTI SİNEMASI</sys:String>
+                <sys:String>YÜKSEK BÜTÇELİ FİLM</sys:String>
+            </x:Array>
+            <GroupBox x:Key="FilmBilgileri" Header="FİLM BİLGİLERİ" Template="{StaticResource TintedGroupBox}">
+                <DataGrid
+                    x:Name="DgMovieDetails"
+                    AutoGenerateColumns="False"
+                    DataContext="{DynamicResource Film}"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding Mode=OneWay, XPath=/root}"
+                    RowHeight="150"
+                    VirtualizingStackPanel.IsVirtualizing="True"
+                    VirtualizingStackPanel.VirtualizationMode="Recycling">
+                    <DataGrid.Resources>
+                        <XmlDataProvider x:Key="Film" IsAsynchronous="True" IsInitialLoadEnabled="True" />
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding XPath=/root/movie/@title}" Header="AD" />
+                        <DataGridTextColumn Binding="{Binding XPath=/root/movie/@language}" Header="DİL" Width="60">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding XPath=/root/movie/@year}" Header="YIL" />
+                        <DataGridTextColumn Binding="{Binding XPath=/root/movie/@runtime}" Header="SÜRE" />
+                        <DataGridTextColumn Binding="{Binding XPath=/root/movie/@director}" Header="YÖNETMEN" />
+                        <DataGridTextColumn Binding="{Binding XPath=/root/movie/@country}" Header="ÜLKE" />
+                        <DataGridTextColumn Binding="{Binding XPath=/root/movie/@actors}" Header="OYUNCULAR" Width="100">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding XPath=/root/movie/@plot}" Header="ÖZET" Width="150">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTemplateColumn Header="RESİM">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Width="80" Source="{Binding IsAsync=True, XPath=/root/movie/@poster}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+            <ContextMenu x:Key="DataGridFilmlerHeaderContext">
+                <MenuItem Header="{Binding Mode=OneWay, Path=Columns[4].Header, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" IsCheckable="true" IsChecked="False">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <ei:ChangePropertyAction PropertyName="Visibility" TargetObject="{Binding Columns[4], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="Visible" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="Unchecked">
+                            <ei:ChangePropertyAction PropertyName="Visibility" TargetObject="{Binding Columns[4], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="Collapsed" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </MenuItem>
+                <MenuItem Header="{Binding Mode=OneWay, Path=Columns[5].Header, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" IsCheckable="true" IsChecked="False">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <ei:ChangePropertyAction PropertyName="Visibility" TargetObject="{Binding Columns[5], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="Visible" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="Unchecked">
+                            <ei:ChangePropertyAction PropertyName="Visibility" TargetObject="{Binding Columns[5], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="Collapsed" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </MenuItem>
+                <MenuItem Header="{Binding Mode=OneWay, Path=Columns[6].Header, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" IsCheckable="true" IsChecked="False">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <ei:ChangePropertyAction PropertyName="Visibility" TargetObject="{Binding Columns[6], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="Visible" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="Unchecked">
+                            <ei:ChangePropertyAction PropertyName="Visibility" TargetObject="{Binding Columns[6], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="Collapsed" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </MenuItem>
+                <MenuItem Header="{Binding Mode=OneWay, Path=Columns[7].Header, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" IsCheckable="true" IsChecked="False">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <ei:ChangePropertyAction PropertyName="Visibility" TargetObject="{Binding Columns[7], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="Visible" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="Unchecked">
+                            <ei:ChangePropertyAction PropertyName="Visibility" TargetObject="{Binding Columns[7], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="Collapsed" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </MenuItem>
+                <MenuItem Header="{Binding Mode=OneWay, Path=Columns[8].Header, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" IsCheckable="true" IsChecked="False">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <ei:ChangePropertyAction PropertyName="Visibility" TargetObject="{Binding Columns[8], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="Visible" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="Unchecked">
+                            <ei:ChangePropertyAction PropertyName="Visibility" TargetObject="{Binding Columns[8], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="Collapsed" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </MenuItem>
+            </ContextMenu>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

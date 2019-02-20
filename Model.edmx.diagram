@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7b530f9f3817435ab44bffed69b1d4b8" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="Model.Filmler" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Koltuklar" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KoltukTipleri" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Musteriler" Width="1.5" PointX="8.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Salonlar" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Seanslar" Width="1.5" PointX="6" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Tahsilatlar" Width="1.5" PointX="10.5" PointY="5.375" IsExpanded="true" />
+        <AssociationConnector Association="Model.Foreign_key07" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.Foreign_key04" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.Foreign_key05" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.Foreign_key06" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.Foreign_key02" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.Foreign_key03" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.Foreign_key01" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.Kullanicilar" Width="1.5" PointX="10.5" PointY="2.125" />
+        <AssociationConnector Association="Model.Foreign_key11" />
+        <EntityTypeShape EntityType="Model.Siparisler" Width="1.5" PointX="13.5" PointY="5" />
+        <EntityTypeShape EntityType="Model.Urunler" Width="1.5" PointX="11.25" PointY="8.25" />
+        <AssociationConnector Association="Model.Foreign_key12" />
+        <AssociationConnector Association="Model.Foreign_key13" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,1699 @@
+﻿<Window
+    x:Class="Sinema.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:WPFMediaKit="clr-namespace:WPFMediaKit.DirectShow.Controls;assembly=WPFMediaKit"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:ice="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    xmlns:local="clr-namespace:Sinema"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="window"
+    Title="Sinema"
+    Width="800"
+    Height="600"
+    d:DesignHeight="600"
+    d:DesignWidth="1280"
+    UseLayoutRounding="True"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <local:YetkilerToListConverter x:Key="YetkilerToListConverter" />
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <local:KoltukNoSıraConverter x:Key="KoltukNoSıraConverter" />
+        <local:MüşterilerKoltukNoSıraConverter x:Key="MüşterilerKoltukNoSıraConverter" />
+        <local:EnglishtoTurkishTranslateConverter x:Key="EnglishtoTurkishTranslateConverter" />
+        <local:NullToCollapsedVisibilityConverter x:Key="NullToCollapsedVisibilityConverter" />
+        <local:VideoRendererConverter x:Key="VideoRendererConverter" />
+        <local:PathToUriConverter x:Key="PathToUriConverter" />
+        <local:ByteArrayToImageSource x:Key="ByteArrayToImageSource" />
+        <local:BooleanAllNotNullConverter x:Key="BooleanAllNotNullConverter" />
+        <local:SeansButtonVisibilityConverter x:Key="SeansButtonVisibilityConverter" />
+        <local:CloneConverter x:Key="CloneConverter" />
+        <local:PathToFileInfoConverter x:Key="PathToFileInfoConverter" />
+        <local:SeansTarihGeçtiVisibilityConverter x:Key="SeansTarihGeçtiVisibilityConverter" />
+        <local:ObjectToBoolConverter x:Key="ObjectToBoolConverter" />
+        <local:IntToBrushConverter x:Key="IntToBrushConverter" />
+        <local:NegateBooleanConverter x:Key="NegateBooleanConverter" />
+        <local:Kullanicilar x:Key="Kullanicilar" />
+        <local:SinemaModel x:Key="SinemaModel" />
+        <local:Koltuklar x:Key="Koltuklar" />
+        <local:KoltukTipleri x:Key="KoltukTipleri" />
+        <local:Filmler x:Key="Filmler" />
+        <local:Salonlar x:Key="Salonlar" />
+        <local:Seanslar x:Key="Seanslar" />
+        <local:Urunler x:Key="Urunler" />
+        <local:SeansTarihAndSalonAktifConverter x:Key="SeansTarihAndSalonAktifConverter" />
+        <PopupAnimation x:Key="{x:Static SystemParameters.ToolTipPopupAnimationKey}">Fade</PopupAnimation>
+    </Window.Resources>
+    <Grid x:Name="LayoutRoot">
+        <Image
+            x:Name="ImgKullanıcı"
+            Width="39"
+            Height="39"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Source="{Binding Tag.Resim, IsAsync=True, Converter={StaticResource ByteArrayToImageSource}, ConverterParameter=480, ElementName=window}">
+            <Image.ToolTip>
+                <ToolTip DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Self}}">
+                    <Image Height="480" ice:Freeze="True" Source="{Binding Source}" />
+                </ToolTip>
+            </Image.ToolTip>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding ResimKaydet, Source={StaticResource Kullanicilar}}" CommandParameter="{Binding Tag.Resim, ElementName=window}" />
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseRightButtonDown">
+                    <i:InvokeCommandAction Command="{Binding KullanıcıResimSil, Source={StaticResource Kullanicilar}}" CommandParameter="{Binding Tag, ElementName=window}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Image>
+        <TabControl d:DataContext="{d:DesignInstance {x:Type local:SinemaModel}}" DataContext="{StaticResource SinemaModel}">
+            <TabItem Header="SALON&#xA;OLUŞTUR">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="237" />
+
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10*" />
+                        <ColumnDefinition Width="3" />
+                        <ColumnDefinition Width="19*" />
+                        <ColumnDefinition Width="3" />
+                        <ColumnDefinition Width="10*" />
+                    </Grid.ColumnDefinitions>
+                    <GroupBox
+                        Header="SALON OLUŞTUR"
+                        Grid.Row="0"
+                        Margin="0,2,2,2"
+                        IsEnabled="{Binding Items.Count, ElementName=DgKoltukTürleri, Mode=OneWay}"
+                        Template="{StaticResource TintedGroupBox}">
+                        <AdornerDecorator>
+                            <Grid x:Name="GdSalonGirişleri" DataContext="{StaticResource Salonlar}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="SALON ADI" />
+                                    <TextBox Text="{Binding SalonAdi, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Grid.Row="0" Grid.Column="1" />
+                                    <TextBlock Text="{Binding Value, ElementName=Slddikey, StringFormat=DİKEY KOLTUK SAYI: \{0\}}" Grid.Row="1" />
+                                    <Slider
+                                        x:Name="Slddikey"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        AutoToolTipPlacement="TopLeft"
+                                        Maximum="60"
+                                        Minimum="0"
+                                        Value="{Binding Boy, Mode=TwoWay, TargetNullValue=0, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Text="{Binding Value, ElementName=Sldyatay, StringFormat=YATAY KOLTUK SAYI: \{0\}}" Grid.Row="2" />
+                                    <Slider
+                                        x:Name="Sldyatay"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        AutoToolTipPlacement="TopLeft"
+                                        Maximum="60"
+                                        Minimum="0"
+                                        Value="{Binding En, Mode=TwoWay, TargetNullValue=0, UpdateSourceTrigger=PropertyChanged}" />
+                                    <Button
+                                        Grid.Row="3"
+                                        Grid.ColumnSpan="2"
+                                        Command="{Binding Ekle, Mode=OneWay}"
+                                        CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}"
+                                        ToolTipService.InitialShowDelay="2500">
+                                        <Button.ToolTip>
+                                            <StackPanel>
+                                                <ContentControl Content="{StaticResource Sahne}" />
+                                                <ItemsControl Width="550" Height="350" ItemsSource="{Binding Toplamkoltuk}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Border
+                                                                Margin="1"
+                                                                BorderBrush="Black"
+                                                                BorderThickness="1"
+                                                                CornerRadius="1">
+                                                                <Viewbox>
+                                                                    <Grid>
+                                                                        <Image Opacity="0.15" RenderOptions.BitmapScalingMode="LowQuality" Source="Icons/cinema.png" />
+                                                                        <TextBlock
+                                                                            Text="{Binding}"
+                                                                            HorizontalAlignment="Center"
+                                                                            VerticalAlignment="Center"
+                                                                            FontSize="108" />
+                                                                    </Grid>
+                                                                </Viewbox>
+                                                            </Border>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <UniformGrid Columns="{Binding En, TargetNullValue=0}" Rows="{Binding Boy, TargetNullValue=0}" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </Button.ToolTip>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Width="16" ice:Freeze="True" Source="Icons/shell32_16785.png" />
+                                            <AccessText Text="OLUŞ_TUR" />
+                                        </StackPanel>
+                                    </Button>
+                                    <DataGrid
+                                        x:Name="DgSalonlar"
+                                        Grid.Row="4"
+                                        Grid.ColumnSpan="2"
+                                        AutoGenerateColumns="False"
+                                        CanUserAddRows="False"
+                                        ItemsSource="{Binding SalonlarCollection, Source={StaticResource SinemaModel}}">
+                                        <DataGrid.RowStyle>
+                                            <Style TargetType="{x:Type DataGridRow}">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <StackPanel>
+                                                            <TextBlock Text="{Binding DataContext.En, RelativeSource={RelativeSource Mode=Self}, StringFormat=' Yatay: \{0\} Koltuk Var'}" Foreground="Red" />
+                                                            <TextBlock Text="{Binding DataContext.Boy, RelativeSource={RelativeSource Mode=Self}, StringFormat=' Dikey: \{0\} Koltuk Var'}" Foreground="Red" />
+                                                        </StackPanel>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGrid.RowStyle>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Binding="{Binding SalonAdi}" Header="SALON&#xA;ADI" IsReadOnly="True" />
+                                            <DataGridTemplateColumn Header="AKTİF&#xA;Mİ">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <CheckBox HorizontalAlignment="Center" IsChecked="{Binding AktifMi, UpdateSourceTrigger=PropertyChanged}" />
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn Header="KOLTUK&#xA;DETAY">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <CheckBox HorizontalAlignment="Center" IsChecked="{Binding KoltukDetay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Bu Seçenek Salonlarda Koltukların Yanında Oturanlara Ait Simgeler Gösterir. Yüksek Performanslı Bilgisayarlarda Açılması Önerilir." />
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn>
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button x:Name="BtSalonGüncelle" Command="{Binding Güncelle, Mode=OneWay}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}">
+                                                            <i:Interaction.Triggers>
+                                                                <ei:DataTrigger Binding="{Binding IsEnabled, ElementName=BtSalonGüncelle}" Value="false">
+                                                                    <ei:ChangePropertyAction PropertyName="IsEnabled" TargetObject="{Binding ElementName=DgSalonlar}" Value="False" />
+                                                                </ei:DataTrigger>
+                                                            </i:Interaction.Triggers>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Width="16" ice:Freeze="True" Source="Icons/update.png" />
+                                                                <AccessText Text="GÜN_CELLE" />
+                                                            </StackPanel>
+                                                        </Button>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </Grid>
+                        </AdornerDecorator>
+                    </GroupBox>
+                    <GroupBox
+                        Header="FİLM EKLE"
+                        Grid.Row="1"
+                        Grid.RowSpan="3"
+                        Grid.Column="0"
+                        Margin="0,2,2,2"
+                        DataContext="{StaticResource Filmler}"
+                        Template="{StaticResource TintedGroupBox}">
+                        <UniformGrid x:Name="UnifGridFilmEkle" Columns="2" Rows="10">
+                            <TextBlock Text="FİLM ADI" />
+                            <TextBox x:Name="TxFilmAdi" Text="{Binding FilmAdi, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="FİLM TİPİ" />
+                            <ComboBox
+                                x:Name="CbFilmTipi"
+                                VerticalContentAlignment="Center"
+                                ItemsSource="{StaticResource FilmTipleri}"
+                                SelectedItem="{Binding FilmTipi, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="YÖNETMEN" />
+                            <TextBox x:Name="TxYönetmen" Text="{Binding Yonetmeni, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="OYUNCULAR" />
+                            <TextBox x:Name="TxOyuncular" Text="{Binding Oyuncular, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="SÜRE (Dakika)" />
+                            <TextBox x:Name="TxSüre" Text="{Binding Sure, TargetNullValue='', UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="DİLİ" />
+                            <ComboBox
+                                x:Name="CbFilmDili"
+                                VerticalContentAlignment="Center"
+                                ItemsSource="{StaticResource Diller}"
+                                SelectedItem="{Binding Dili, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="ÇEKİM TİPİ" />
+                            <ComboBox
+                                x:Name="CbFilmÇekimTipi"
+                                VerticalContentAlignment="Center"
+                                ItemsSource="{StaticResource ÇekimTipleri}"
+                                SelectedItem="{Binding CekimTipi, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="RESİM ÖNİZLEME" />
+                            <c1:C1FilePicker
+                                x:Name="C1ResimYolu"
+                                Background="{StaticResource FilePickerBackground}"
+                                Filter="Resim Dosyaları (*.jpg, *.png, *.bmp, *.tif)|*.jpg;*.png;*.bmp;*.tif|Tüm dosyalar (*.*)|*.*"
+                                IsTabStop="False"
+                                ToolTip="Çok Büyük Resim Yüklemek Menüleri Yavaşlatır. Seçilen Resmin Konumu Değiştirilirse Resim Görünmez." />
+                            <TextBlock Text="VİDEO ÖNİZLEME" />
+                            <c1:C1FilePicker
+                                x:Name="C1VideoYolu"
+                                Background="{StaticResource FilePickerBackground}"
+                                Filter="Video Dosyaları (*.mp4, *.wmv, *.asf, *.avi, *.mpg, *.mpeg, *.dvr-ms, *.m1v)|*.mp4;*.wmv;*.asf;*.avi;*.mpg;*.mpeg;*.dvr-ms;*.m1v|Tüm dosyalar (*.*)|*.*"
+                                IsTabStop="False"
+                                ToolTip="Seçilen Videonun Konumu Değiştirilirse Yürütme Gerçekleşmez. Video Seansın Üzerine Tıklayınca Yürütme Başlar Çıkmak İçin Esc Tuşu Kullanılır." />
+                            <TextBlock />
+                            <Button Command="{Binding Ekle, Mode=OneWay}" CommandParameter="{Binding ElementName=window, Mode=OneWay}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="16" ice:Freeze="True" Source="Icons/shell32_16785.png" />
+                                    <AccessText Text="F_İLM EKLE" />
+                                </StackPanel>
+                            </Button>
+                        </UniformGrid>
+                    </GroupBox>
+                    <GridSplitter
+                        Grid.RowSpan="4"
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        Background="{StaticResource Common_HeaderBackgroundColor}" />
+                    <GroupBox
+                        Header="KOLTUK-ÜRÜN AYARLA"
+                        Grid.Row="0"
+                        Grid.RowSpan="4"
+                        Grid.Column="2"
+                        Margin="2,2,2,0"
+                        Template="{StaticResource TintedGroupBox}">
+                        <UniformGrid Columns="1" Rows="3">
+                            <GroupBox Header="SALON KOLTUK AYARLA" Margin="0,0,0,2" Template="{StaticResource TintedGroupBox}">
+                                <DataGrid
+                                    x:Name="DgKoltukTipleri"
+                                    Margin="0,0,0,2"
+                                    AutoGenerateColumns="False"
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False"
+                                    ItemsSource="{Binding SalonlarCollection}"
+                                    RowStyle="{StaticResource PasifGrid}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding SalonAdi}" Header="SALON&#xA;ADI" IsReadOnly="True" />
+                                        <DataGridTemplateColumn Header="KOLTUK&#xA;BAŞLANGIÇ NO">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding Başlangıç, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Background="{x:Null}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Header="KOLTUK&#xA;BİTİŞ NO">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding Bitiş, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Background="{x:Null}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Header="KOLTUK&#xA;TÜRÜ">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <ComboBox ItemsSource="{Binding KoltukTipleriCollection, Source={StaticResource SinemaModel}}" SelectedItem="{Binding KoltukTipi, UpdateSourceTrigger=PropertyChanged}">
+                                                        <ComboBox.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                                                            </ItemsPanelTemplate>
+                                                        </ComboBox.ItemsPanel>
+                                                        <ComboBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Rectangle Width="16" Height="16" Fill="{Binding KoltukRenk, Converter={StaticResource IntToBrushConverter}}" />
+                                                                    <TextBlock Text="{Binding KoltukTipi}" />
+                                                                    <TextBlock Text="{Binding KoltukFiyati, StringFormat=' \{0:C\}'}" />
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </ComboBox.ItemTemplate>
+                                                    </ComboBox>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Header="KOLTUK UYGULAMA&#xA;SIRASI">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <RadioButton Content="YATAY" IsChecked="{Binding YatayUygula, UpdateSourceTrigger=PropertyChanged}">
+                                                            <RadioButton.ToolTip>
+                                                                <StackPanel Width="220" Height="200">
+                                                                    <TextBlock Text="Bunu Salondaki Koltukları Yatay Şekilde Ayarlamak İçin Kullanabilirsiniz." Foreground="Red" TextWrapping="Wrap" />
+                                                                    <ContentControl Content="{StaticResource Yatay}" />
+                                                                </StackPanel>
+                                                            </RadioButton.ToolTip>
+                                                        </RadioButton>
+                                                        <RadioButton Content="DİKEY" IsChecked="{Binding DikeyUygula, UpdateSourceTrigger=PropertyChanged}">
+                                                            <RadioButton.ToolTip>
+                                                                <StackPanel Width="220" Height="200">
+                                                                    <TextBlock Text="Bunu Salondaki Koltukları Dikey Şekilde Ayarlamak İçin Kullanabilirsiniz." Foreground="Red" TextWrapping="Wrap" />
+                                                                    <ContentControl Content="{StaticResource Dikey}" />
+                                                                </StackPanel>
+                                                            </RadioButton.ToolTip>
+                                                        </RadioButton>
+                                                        <RadioButton Content="KARE" IsChecked="{Binding Dikdörtgenuygula, UpdateSourceTrigger=PropertyChanged}">
+                                                            <RadioButton.ToolTip>
+                                                                <StackPanel Width="220" Height="200">
+                                                                    <TextBlock Text="Bunu Salondaki Koltukları Dikdörtgen Seklinde Ayarlamak İçin Kullanabilirsiniz. Başlangıç Sol Üst Bitiş Sağ Alt Buttonu Göstermektedir. İşlem Bu Aralıkta Oluşan Dikdörtgene Uygulanacaktır." Foreground="Red" TextWrapping="Wrap" />
+                                                                    <ContentControl Content="{StaticResource Kare}" />
+                                                                </StackPanel>
+                                                            </RadioButton.ToolTip>
+                                                        </RadioButton>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Header="KOLTUK&#xA;AKTİF Mİ">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox HorizontalAlignment="Center" IsChecked="{Binding KoltukEtkinMi, UpdateSourceTrigger=PropertyChanged}">
+                                                        <CheckBox.ToolTip>
+                                                            <StackPanel Width="220" Height="200">
+                                                                <TextBlock Text="Bunu Salondaki Koltukları Aktif Pasif Yapmak İçin Kullanabilirsiniz. Seçili Koltuk Aralığında Oturan Kişi Varsa Aktif Pasif İşlemi Bu Koltuklara Uygulanmayacaktır." Foreground="Red" TextWrapping="Wrap" />
+                                                                <ContentControl Content="{StaticResource Pasif}" />
+                                                            </StackPanel>
+                                                        </CheckBox.ToolTip>
+                                                    </CheckBox>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Header="KOLTUK&#xA;GÖRÜNMEZ Mİ">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox HorizontalAlignment="Center" IsChecked="{Binding KoltukGörünmez, UpdateSourceTrigger=PropertyChanged}">
+                                                        <CheckBox.ToolTip>
+                                                            <StackPanel Width="220" Height="200">
+                                                                <TextBlock Text="Bunu Salonda Koltuklar Arasında Bölme İzlenimi Oluşturmak İçin Kullanabilirsiniz. Seçili Koltuk Aralığında Oturan Kişi Varsa Gizleme İşlemi Bu Koltuklara Uygulanmayacaktır." Foreground="Red" TextWrapping="Wrap" />
+                                                                <ContentControl Content="{StaticResource Gizli}" />
+                                                            </StackPanel>
+                                                        </CheckBox.ToolTip>
+                                                    </CheckBox>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Command="{Binding Koltuklar/KoltukAyarla}" CommandParameter="{Binding Mode=OneWay}">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Width="16" ice:Freeze="True" Source="Icons/shell32_16802.png" />
+                                                            <AccessText Text="UYG_ULA" />
+                                                        </StackPanel>
+                                                    </Button>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </GroupBox>
+                            <GroupBox Header="KOLTUK EKLE" Margin="0,0,0,2" Template="{StaticResource TintedGroupBox}">
+                                <AdornerDecorator>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <DataGrid
+                                            x:Name="DgKoltukTürleri"
+                                            Margin="0,2,0,0"
+                                            AutoGenerateColumns="False"
+                                            CanUserAddRows="False"
+                                            CanUserDeleteRows="False"
+                                            ItemsSource="{Binding KoltukTipleriCollection}">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding KoltukTipi}" Header="TÜRÜ" IsReadOnly="True" />
+                                                <DataGridTextColumn Binding="{Binding KoltukFiyati, UpdateSourceTrigger=PropertyChanged}" Header="FİYATI" />
+                                                <DataGridTemplateColumn Header="RENGİ">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Slider
+                                                                AutoToolTipPlacement="TopLeft"
+                                                                Background="{Binding KoltukRenk, Converter={StaticResource IntToBrushConverter}}"
+                                                                SmallChange="1"
+                                                                Value="{Binding KoltukRenk, UpdateSourceTrigger=PropertyChanged}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button
+                                                                x:Name="BtKoltukGüncelle"
+                                                                Command="{Binding Güncelle, Mode=OneWay}"
+                                                                CommandParameter="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}"
+                                                                DataContext="{StaticResource Koltuklar}">
+                                                                <i:Interaction.Triggers>
+                                                                    <ei:DataTrigger Binding="{Binding IsEnabled, ElementName=BtKoltukGüncelle}" Value="false">
+                                                                        <ei:ChangePropertyAction PropertyName="IsEnabled" TargetObject="{Binding ElementName=DgKoltukTürleri}" Value="False" />
+                                                                    </ei:DataTrigger>
+                                                                </i:Interaction.Triggers>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image Width="16" ice:Freeze="True" Source="Icons/update.png" />
+                                                                    <AccessText Text="GÜN_CELLE" />
+                                                                </StackPanel>
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <UniformGrid
+                                            x:Name="UgKoltukGirişi"
+                                            Grid.Row="1"
+                                            Height="61"
+                                            Columns="2"
+                                            DataContext="{StaticResource KoltukTipleri}">
+                                            <TextBlock Text="KOLTUK TÜRÜ" />
+                                            <TextBox Text="{Binding KoltukTipi, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                            <TextBlock Text="KOLTUK FİYATI" />
+                                            <TextBox Text="{Binding KoltukFiyati, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                            <TextBlock />
+                                            <Button Command="{Binding Ekle, Mode=OneWay}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Width="16" ice:Freeze="True" Source="Icons/shell32_16785.png" />
+                                                    <AccessText Text="KOLTU_K EKLE" />
+                                                </StackPanel>
+                                            </Button>
+                                        </UniformGrid>
+                                    </Grid>
+                                </AdornerDecorator>
+                            </GroupBox>
+                            <GroupBox Header="ÜRÜN EKLE" Template="{StaticResource TintedGroupBox}">
+                                <AdornerDecorator>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <DataGrid
+                                            x:Name="DgÜrünler"
+                                            Grid.Row="0"
+                                            AutoGenerateColumns="False"
+                                            CanUserAddRows="False"
+                                            CanUserDeleteRows="False"
+                                            ItemsSource="{Binding UrunlerCollection}">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding UrunAdi}" Header="ADI" IsReadOnly="True" />
+                                                <DataGridTextColumn Binding="{Binding BirimFiyati, UpdateSourceTrigger=PropertyChanged}" Header="FİYATI" />
+                                                <DataGridTemplateColumn Header="SATILABİLİR Mİ">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <CheckBox HorizontalAlignment="Center" IsChecked="{Binding UrunSatilabilirmi, UpdateSourceTrigger=PropertyChanged}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button x:Name="BtÜrünGüncelle" Command="{Binding ÜrünGüncelle, Mode=OneWay}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}">
+                                                                <i:Interaction.Triggers>
+                                                                    <ei:DataTrigger Binding="{Binding IsEnabled, ElementName=BtÜrünGüncelle}" Value="false">
+                                                                        <ei:ChangePropertyAction PropertyName="IsEnabled" TargetObject="{Binding ElementName=DgÜrünler}" Value="False" />
+                                                                    </ei:DataTrigger>
+                                                                </i:Interaction.Triggers>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image Width="16" ice:Freeze="True" Source="Icons/update.png" />
+                                                                    <AccessText Text="GÜN_CELLE" />
+                                                                </StackPanel>
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <UniformGrid
+                                            Grid.Row="1"
+                                            Height="61"
+                                            Columns="2"
+                                            DataContext="{StaticResource Urunler}">
+                                            <TextBlock Text="ÜRÜN ADI" />
+                                            <TextBox x:Name="TxUrunAdi" Text="{Binding UrunAdi, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                            <TextBlock Text="BİRİM FİYATI" />
+                                            <c1:C1NumericBox
+                                                x:Name="C1UrunFiyati"
+                                                Background="{StaticResource FilePickerBackground}"
+                                                Format="C"
+                                                Minimum="0" />
+                                            <TextBlock />
+                                            <Button Command="{Binding ÜrünEkle, Mode=OneWay}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Width="16" ice:Freeze="True" Source="Icons/shell32_16785.png" />
+                                                    <AccessText Text="ÜR_ÜN EKLE" />
+                                                </StackPanel>
+                                            </Button>
+                                        </UniformGrid>
+                                    </Grid>
+                                </AdornerDecorator>
+                            </GroupBox>
+                        </UniformGrid>
+                    </GroupBox>
+                    <GridSplitter
+                        Grid.RowSpan="4"
+                        Grid.Column="3"
+                        HorizontalAlignment="Stretch"
+                        Background="{StaticResource Common_HeaderBackgroundColor}" />
+                    <GroupBox
+                        Header="SEANSLARI OLUŞTUR"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="4"
+                        Margin="2"
+                        DataContext="{StaticResource Seanslar}"
+                        Template="{StaticResource TintedGroupBox}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="SALONU SEÇ" Grid.Row="0" Grid.Column="0" />
+                                <ComboBox
+                                    x:Name="CbSalon"
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    VerticalContentAlignment="Center"
+                                    DisplayMemberPath="SalonAdi"
+                                    ItemsSource="{Binding SalonlarCollection, Source={StaticResource SinemaModel}}">
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
+                                </ComboBox>
+                                <TextBlock Text="FİLMİ SEÇ" Grid.Row="1" Grid.Column="0" />
+                                <ComboBox
+                                    x:Name="CbFilmler"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    VerticalContentAlignment="Center"
+                                    ItemsSource="{Binding FilmlerCollection, Source={StaticResource SinemaModel}}">
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Height="48" Source="{Binding ResimYolu, Converter={StaticResource PathToUriConverter}, IsAsync=True}" />
+                                                <TextBlock Text="{Binding FilmAdi}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <TextBlock Text="TARİHİ SEÇ" Grid.Row="2" Grid.Column="0" />
+                                <c1:C1DateTimePicker
+                                    x:Name="C1SeansTarih"
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Background="{StaticResource FilePickerBackground}"
+                                    CornerRadius="0"
+                                    FirstDayOfWeek="Monday"
+                                    MinDate="{x:Static System:DateTime.Now}"
+                                    TimeIncrement="0:30:0" />
+                                <Button
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    Command="{Binding Ekle, Mode=OneWay}"
+                                    CommandParameter="{Binding Mode=OneWay}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="16" ice:Freeze="True" Source="Icons/shell32_16785.png" />
+                                        <AccessText Text="EKL_E" />
+                                    </StackPanel>
+                                </Button>
+                                <Button
+                                    Grid.Row="4"
+                                    Grid.Column="1"
+                                    Command="{Binding Sil, Mode=OneWay}"
+                                    CommandParameter="{Binding Mode=OneWay}"
+                                    IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=DgSeanslar}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="16" ice:Freeze="True" Source="Icons/shell32_240.png" />
+                                        <AccessText Text="Sİ_L" />
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                            <DataGrid
+                                x:Name="DgSeanslar"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                IsReadOnly="True"
+                                ItemsSource="{Binding SeanslarCollection, Source={StaticResource SinemaModel}}"
+                                RowStyle="{StaticResource GridSeansEklemeEkranıStyle}"
+                                SelectionMode="Single">
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid Width="20" Height="20">
+                                                    <Ellipse Fill="{Binding Renk, Converter={StaticResource IntToColorConverter}}" />
+                                                    <TextBlock
+                                                        Text="{Binding Musteriler.Count}"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        TextAlignment="Center" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Binding="{Binding Salonlar.SalonAdi}" Header="SALON" />
+                                    <DataGridTextColumn Binding="{Binding Filmler.FilmAdi}" Header="FİLM&#xA;ADI" />
+                                    <DataGridTextColumn Binding="{Binding FilmSaati}" Header="GÖSTERİM&#xA;TARİHİ" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox
+                        Header="FİLMLER"
+                        Grid.Row="2"
+                        Grid.Column="4"
+                        Margin="2"
+                        Template="{StaticResource TintedGroupBox}">
+                        <DataGrid
+                            x:Name="DgFilmler"
+                            AutoGenerateColumns="False"
+                            CanUserAddRows="False"
+                            ItemsSource="{Binding FilmlerCollection}">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="FİLM&#xA;ADI">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding FilmAdi, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Background="{x:Null}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="FİLM&#xA;RESİM">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <c1:C1FilePicker
+                                                Background="{StaticResource FilePickerBackground}"
+                                                Filter="Resim Dosyaları (*.jpg, *.png, *.bmp, *.tif)|*.jpg;*.png;*.bmp;*.tif|Tüm dosyalar (*.*)|*.*"
+                                                IsTabStop="False"
+                                                Multiselect="False"
+                                                SelectedFile="{Binding DataContext.ResimYolu, Converter={StaticResource PathToFileInfoConverter}, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, UpdateSourceTrigger=PropertyChanged}"
+                                                ToolTip="Çok Büyük Resim Yüklemek Menüleri Yavaşlatır. Seçilen Resmin Konumu Değiştirilirse Resim Görünmez."
+                                                Watermark="Dosya Seç" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="FİLM&#xA;VİDEO">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <c1:C1FilePicker
+                                                Background="{StaticResource FilePickerBackground}"
+                                                Filter="Video Dosyaları (*.mp4, *.wmv, *.asf, *.avi, *.mpg, *.mpeg, *.dvr-ms, *.m1v)|*.mp4;*.wmv;*.asf;*.avi;*.mpg;*.mpeg;*.dvr-ms;*.m1v|Tüm dosyalar (*.*)|*.*"
+                                                IsTabStop="False"
+                                                Multiselect="False"
+                                                SelectedFile="{Binding DataContext.VideoYolu, Converter={StaticResource PathToFileInfoConverter}, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, UpdateSourceTrigger=PropertyChanged}"
+                                                ToolTip="Seçilen Videonun Konumu Değiştirilirse Yürütme Gerçekleşmez. Video Seansın Üzerine Tıklayınca Yürütme Başlar Çıkmak İçin Esc Tuşu Kullanılır."
+                                                Watermark="Dosya Seç" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="{Binding VideoResimGüncelle, Mode=OneWay}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}" DataContext="{StaticResource Filmler}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Width="16" ice:Freeze="True" Source="Icons/update.png" />
+                                                    <AccessText Text="GÜN_CELLE" />
+                                                </StackPanel>
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                    <Button
+                        Grid.Row="3"
+                        Grid.Column="4"
+                        Margin="2,2,2,2"
+                        Command="{Binding YöneticiEkranı}"
+                        CommandParameter="{Binding Mode=OneWay, Source={StaticResource SinemaModel}}"
+                        DataContext="{StaticResource Kullanicilar}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image ice:Freeze="True" Source="Icons/user.png" />
+                            <AccessText Text="_YÖNETİCİ İŞLEMLERİ" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="SALONLAR">
+                <DockPanel>
+                    <StatusBar Background="{StaticResource Common_HeaderBackgroundColor}" DockPanel.Dock="Bottom">
+                        <StatusBar.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+                            </ItemsPanelTemplate>
+                        </StatusBar.ItemsPanel>
+                        <StatusBarItem Grid.Column="0">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Width="24" Height="24" Data="{StaticResource FaceIcon}" Fill="Green" />
+                                <Slider
+                                    x:Name="SliderÖnizleme"
+                                    Width="70"
+                                    AutoToolTipPlacement="TopLeft"
+                                    DataContext="{StaticResource Koltuklar}"
+                                    Maximum="7"
+                                    Minimum="1"
+                                    SmallChange="1"
+                                    Value="{Binding KoltukÖnizlemeKolonSayısı, UpdateSourceTrigger=PropertyChanged}" />
+                                <Viewbox Width="12">
+                                    <Path Data="{StaticResource FaceIcon}" Fill="Green" />
+                                </Viewbox>
+                            </StackPanel>
+                        </StatusBarItem>
+                        <StatusBarItem Grid.Column="1">
+                            <c1:C1DropDownButton Header="SALON DURUMLARI" AutoClose="True" VerticalHeaderAlignment="Center">
+                                <c1:C1DropDownButton.Content>
+                                    <local:ResizablePanel
+                                        Width="660"
+                                        Height="480"
+                                        MinWidth="660"
+                                        MinHeight="480">
+                                        <GroupBox Header="SALONLAR" Template="{StaticResource TintedGroupBox}">
+                                            <c1:C1DataGrid
+                                                AutoGenerateColumns="False"
+                                                CanUserAddRows="False"
+                                                CanUserGroup="True"
+                                                CanUserResizeRows="False"
+                                                IsReadOnly="True"
+                                                ItemsSource="{Binding SeanslarCollection}"
+                                                RowStyle="{StaticResource GridSalonDurumlarıStyle}"
+                                                ShowGroupingPanel="True">
+                                                <c1:C1DataGrid.RowDetailsTemplate>
+                                                    <DataTemplate>
+                                                        <c1:C1DataGrid
+                                                            Height="450"
+                                                            AutoGenerateColumns="False"
+                                                            CanUserAddRows="False"
+                                                            CellStyle="{StaticResource MüşteriEkleCellStyle}"
+                                                            DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type c1:DataGridRowPresenter}}}"
+                                                            IsReadOnly="True"
+                                                            ItemsSource="{Binding Musteriler}"
+                                                            VirtualizingStackPanel.IsVirtualizing="True"
+                                                            VirtualizingStackPanel.VirtualizationMode="Recycling">
+                                                            <c1:C1DataGrid.Columns>
+                                                                <c1:DataGridTemplateColumn Header="RENK" Width="50px">
+                                                                    <c1:DataGridTemplateColumn.CellTemplate>
+                                                                        <DataTemplate>
+                                                                            <Rectangle Width="16" Height="16" Fill="{Binding Koltuklar.KoltukTipleri.KoltukRenk, Mode=OneWay, Converter={StaticResource IntToBrushConverter}}" />
+                                                                        </DataTemplate>
+                                                                    </c1:DataGridTemplateColumn.CellTemplate>
+                                                                </c1:DataGridTemplateColumn>
+                                                                <c1:DataGridTemplateColumn Header="RESİM" Width="50px">
+                                                                    <c1:DataGridTemplateColumn.CellTemplate>
+                                                                        <DataTemplate>
+                                                                            <Image Source="{Binding Resim, ConverterParameter=360, Converter={StaticResource ByteArrayToImageSource}, IsAsync=True, Mode=OneWay}" ToolTipService.ShowOnDisabled="true">
+                                                                                <Image.ToolTip>
+                                                                                    <ToolTip DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Self}}">
+                                                                                        <Image ice:Freeze="True" Source="{Binding Source}" />
+                                                                                    </ToolTip>
+                                                                                </Image.ToolTip>
+                                                                                <i:Interaction.Triggers>
+                                                                                    <i:EventTrigger EventName="MouseRightButtonDown">
+                                                                                        <i:InvokeCommandAction Command="{Binding ResimKaydet, Source={StaticResource Kullanicilar}}" CommandParameter="{Binding Resim}" />
+                                                                                    </i:EventTrigger>
+                                                                                </i:Interaction.Triggers>
+                                                                            </Image>
+                                                                        </DataTemplate>
+                                                                    </c1:DataGridTemplateColumn.CellTemplate>
+                                                                </c1:DataGridTemplateColumn>
+                                                                <c1:DataGridTextColumn Binding="{Binding MusteriAdi, Mode=OneWay}" Header="MÜŞTERİ ADI" />
+                                                                <c1:DataGridTextColumn Binding="{Binding MusteriSoyadi, Mode=OneWay}" Header="MÜŞTERİ SOYADI" />
+                                                                <c1:DataGridNumericColumn Binding="{Binding Koltuklar.KoltukNo, Mode=OneWay}" Header="KOLTUK NO" Width="80px" />
+                                                                <c1:DataGridTextColumn Binding="{Binding Kullanicilar.KullaniciAdi, Mode=OneWay}" Header="KAYIT EDEN" Width="80px" />
+                                                                <c1:DataGridTemplateColumn Width="45">
+                                                                    <c1:DataGridTemplateColumn.CellTemplate>
+                                                                        <DataTemplate>
+                                                                            <Button Command="{Binding MüşteriSil, IsAsync=True, Mode=OneWay}" CommandParameter="{Binding Path=Row.DataItem, IsAsync=True, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type c1:DataGridCellPresenter}}}">
+                                                                                <StackPanel Orientation="Horizontal">
+                                                                                    <Image Width="16" Source="Icons/shell32_240.png" />
+                                                                                    <AccessText Text="Sİ_L" />
+                                                                                </StackPanel>
+                                                                            </Button>
+                                                                        </DataTemplate>
+                                                                    </c1:DataGridTemplateColumn.CellTemplate>
+                                                                </c1:DataGridTemplateColumn>
+                                                            </c1:C1DataGrid.Columns>
+                                                            <c1:C1DataGrid.RowDetailsTemplate>
+                                                                <DataTemplate>
+                                                                    <StackPanel DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type c1:DataGridRowPresenter}}}" Orientation="Horizontal">
+                                                                        <c1:C1DataGrid
+                                                                            AutoGenerateColumns="False"
+                                                                            CanUserAddRows="False"
+                                                                            IsReadOnly="True"
+                                                                            ItemsSource="{Binding Tahsilatlar}"
+                                                                            VirtualizingStackPanel.IsVirtualizing="True"
+                                                                            VirtualizingStackPanel.VirtualizationMode="Recycling">
+                                                                            <c1:C1DataGrid.Columns>
+                                                                                <c1:DataGridNumericColumn Binding="{Binding Tutar, Mode=OneWay, StringFormat=\{0:C\}}" Header="BİLET TUTAR" />
+                                                                                <c1:DataGridDateTimeColumn Binding="{Binding TahsilatTarihi, Mode=OneWay}" Header="TAHSİLAT TARİHİ" />
+                                                                            </c1:C1DataGrid.Columns>
+                                                                        </c1:C1DataGrid>
+                                                                        <c1:C1DataGrid
+                                                                            AutoGenerateColumns="False"
+                                                                            CanUserAddRows="False"
+                                                                            IsReadOnly="True"
+                                                                            ItemsSource="{Binding Siparisler}"
+                                                                            VirtualizingStackPanel.IsVirtualizing="True"
+                                                                            VirtualizingStackPanel.VirtualizationMode="Recycling">
+                                                                            <c1:C1DataGrid.Columns>
+                                                                                <c1:DataGridTextColumn Binding="{Binding Urunler.UrunAdi, Mode=OneWay}" Header="ÜRÜN ADI" />
+                                                                                <c1:DataGridNumericColumn Binding="{Binding SiparisAdet, Mode=OneWay}" Header="ADET" />
+                                                                                <c1:DataGridNumericColumn Binding="{Binding ToplamTutar, Mode=OneWay, StringFormat=\{0:C\}}" Header="TOPLAM TUTAR">
+                                                                                    <c1:DataGridAggregate.AggregateFunctions>
+                                                                                        <c1:DataGridAggregatesCollection>
+                                                                                            <c1:DataGridAggregateSum ResultTemplate="{StaticResource Toplam}" />
+                                                                                        </c1:DataGridAggregatesCollection>
+                                                                                    </c1:DataGridAggregate.AggregateFunctions>
+                                                                                </c1:DataGridNumericColumn>
+                                                                            </c1:C1DataGrid.Columns>
+                                                                            <c1:C1DataGrid.BottomRows>
+                                                                                <c1:DataGridSummaryRow />
+                                                                            </c1:C1DataGrid.BottomRows>
+                                                                        </c1:C1DataGrid>
+                                                                    </StackPanel>
+                                                                </DataTemplate>
+                                                            </c1:C1DataGrid.RowDetailsTemplate>
+                                                        </c1:C1DataGrid>
+                                                    </DataTemplate>
+                                                </c1:C1DataGrid.RowDetailsTemplate>
+                                                <c1:C1DataGrid.Columns>
+                                                    <c1:DataGridTextColumn Binding="{Binding Salonlar.SalonAdi, Mode=OneWay}" Header="SALON ADI" />
+                                                    <c1:DataGridTextColumn Binding="{Binding Filmler.FilmAdi, Mode=OneWay}" Header="FİLM ADI" />
+                                                    <c1:DataGridDateTimeColumn Binding="{Binding FilmSaati}" Header="FİLM SAATİ" SortState="Descending" />
+                                                    <c1:DataGridNumericColumn Binding="{Binding Musteriler.Count, Mode=OneWay}" Header="MÜŞTERİ SAYISI" />
+                                                    <c1:DataGridNumericColumn Binding="{Binding Salonlar.Toplamkoltuk.Count, Mode=OneWay}" Header="TOPLAM KOLTUK" />
+                                                </c1:C1DataGrid.Columns>
+                                            </c1:C1DataGrid>
+                                        </GroupBox>
+
+                                    </local:ResizablePanel>
+
+                                </c1:C1DropDownButton.Content>
+                            </c1:C1DropDownButton>
+                        </StatusBarItem>
+                        <StatusBarItem Grid.Column="3">
+                            <c1:C1DropDownButton Header="TCMB KURLARI" AutoClose="True" VerticalHeaderAlignment="Center">
+                                <GroupBox Header="DÖVİZ" Template="{StaticResource TintedGroupBox}">
+                                    <DataGrid
+                                        Height="280"
+                                        AlternatingRowBackground="NavajoWhite"
+                                        AutoGenerateColumns="False"
+                                        DataContext="{DynamicResource Döviz}"
+                                        IsReadOnly="True"
+                                        ItemsSource="{Binding XPath=/Tarih_Date/Currency}"
+                                        VirtualizingStackPanel.IsVirtualizing="True"
+                                        VirtualizingStackPanel.VirtualizationMode="Recycling">
+                                        <DataGrid.Resources>
+                                            <XmlDataProvider
+                                                x:Key="Döviz"
+                                                IsAsynchronous="True"
+                                                IsInitialLoadEnabled="True"
+                                                Source="http://www.tcmb.gov.tr/kurlar/today.xml" />
+                                        </DataGrid.Resources>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Binding="{Binding XPath=Isim}" Header="DÖVİZ" Width="150" />
+                                            <DataGridTextColumn Binding="{Binding XPath=BanknoteBuying}" Header="ALIŞ" />
+                                            <DataGridTextColumn Binding="{Binding XPath=BanknoteSelling}" Header="SATIŞ" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </GroupBox>
+                            </c1:C1DropDownButton>
+                        </StatusBarItem>
+                        <StatusBarItem Grid.Column="4" HorizontalAlignment="Right">
+                            <TextBlock Text="{Binding Tag.KullaniciAdi, ElementName=window}" Tag="{Binding Tag.KullaniciYetkisi, ElementName=window}">
+                                <TextBlock.ToolTip>
+                                    <ToolTip DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Self}}">
+                                        <ListView ItemsSource="{Binding Tag, Converter={StaticResource YetkilerToListConverter}}">
+                                            <ListView.View>
+                                                <GridView>
+                                                    <GridViewColumn>
+                                                        <TextBlock Text="KULLANICI YETKİLERİ" Foreground="Red" />
+                                                    </GridViewColumn>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                    </ToolTip>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                        </StatusBarItem>
+                    </StatusBar>
+                    <TabControl Background="{StaticResource Common_HeaderBackgroundColor}" ItemsSource="{Binding SalonlarCollection}" SelectedIndex="0">
+                        <TabControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding SalonAdi}" />
+                            </DataTemplate>
+                        </TabControl.ItemTemplate>
+                        <TabControl.ContentTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.InputBindings>
+                                        <KeyBinding Key="Esc" Command="{Binding SeçimiKaldır}" CommandParameter="{Binding ElementName=DgFilmler}" />
+                                    </Grid.InputBindings>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="3.5*" />
+                                        <RowDefinition Height="3" />
+                                        <RowDefinition Height="6.5*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Grid.Column="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*" />
+                                            <ColumnDefinition Width="3" />
+                                            <ColumnDefinition Width="1*" />
+                                        </Grid.ColumnDefinitions>
+                                        <GridSplitter
+                                            Grid.Column="1"
+                                            Width="3"
+                                            HorizontalAlignment="Stretch"
+                                            Background="{StaticResource Common_HeaderBackgroundColor}" />
+                                        <Grid Grid.Row="0" Grid.Column="2">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <UniformGrid Grid.Row="1" Columns="1" Rows="2">
+                                                <Slider
+                                                    IsEnabled="{Binding IsChecked, ElementName=CbVideo}"
+                                                    LargeChange="100000000"
+                                                    Maximum="{Binding MediaDuration, ElementName=MediaPlayer, Mode=OneWay}"
+                                                    Value="{Binding MediaPosition, ElementName=MediaPlayer, Mode=TwoWay}" />
+                                                <StackPanel Orientation="Horizontal">
+                                                    <CheckBox
+                                                        x:Name="CbVideo"
+                                                        Content="OTOMATİK YÜRÜT "
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        ToolTip="Videoların Otomatik Yürütülmesi İçin İşaretleyin." />
+                                                    <CheckBox
+                                                        x:Name="CbSeans"
+                                                        Content="BİTMİŞ SEANSLARI GİZLE"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        IsChecked="True"
+                                                        ToolTip="Süresi Geçen Seansları Gizleyin." />
+                                                </StackPanel>
+                                            </UniformGrid>
+                                            <WPFMediaKit:MediaUriElement
+                                                x:Name="MediaPlayer"
+                                                Grid.Row="0"
+                                                Opacity="{Binding VideoŞeffaflık, Source={StaticResource Koltuklar}}"
+                                                Stretch="UniformToFill"
+                                                VideoRenderer="{Binding VideoRenderer, Converter={StaticResource VideoRendererConverter}, RelativeSource={RelativeSource Self}}"
+                                                Volume="{Binding SesYüksekliği, Source={StaticResource Salonlar}}">
+                                                <WPFMediaKit:MediaUriElement.Style>
+                                                    <Style TargetType="{x:Type WPFMediaKit:MediaUriElement}">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsChecked, ElementName=CbVideo}" Value="True">
+                                                                <Setter Property="Source" Value="{Binding SelectedItem.Filmler.VideoYolu, Converter={StaticResource PathToUriConverter}, ElementName=DgFilmler}" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding SelectedItem.Filmler.VideoYolu, Converter={StaticResource PathToUriConverter}, ElementName=DgFilmler}" Value="{x:Null}">
+                                                                <Setter Property="Visibility" Value="Hidden" />
+                                                                <Setter Property="Source" Value="{x:Null}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </WPFMediaKit:MediaUriElement.Style>
+                                            </WPFMediaKit:MediaUriElement>
+                                            <ProgressBar
+                                                x:Name="PbVolume"
+                                                Height="10"
+                                                Margin="15,0,15,10"
+                                                VerticalAlignment="Bottom"
+                                                Background="{x:Null}"
+                                                BorderBrush="{x:Null}"
+                                                Maximum="1"
+                                                SmallChange="1"
+                                                Visibility="Hidden"
+                                                Value="{Binding SesYüksekliği, Source={StaticResource Salonlar}}" />
+                                        </Grid>
+                                        <DataGrid
+                                            x:Name="DgFilmler"
+                                            Grid.Column="0"
+                                            Margin="0,0,2,0"
+                                            AutoGenerateColumns="False"
+                                            CanUserAddRows="False"
+                                            CanUserDeleteRows="False"
+                                            CanUserResizeRows="False"
+                                            IsReadOnly="True"
+                                            ItemsSource="{Binding Seanslar}"
+                                            SelectionMode="Single">
+                                            <DataGrid.Resources>
+                                                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                                                    <Setter Property="ContextMenu" Value="{StaticResource DataGridFilmlerHeaderContext}" />
+                                                </Style>
+                                            </DataGrid.Resources>
+                                            <DataGrid.RowStyle>
+                                                <StaticResource ResourceKey="GridSeansStyle" />
+                                            </DataGrid.RowStyle>
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Grid Width="20" Height="20">
+                                                                <Ellipse Fill="{Binding Renk, Converter={StaticResource IntToColorConverter}}" />
+                                                                <TextBlock
+                                                                    Text="{Binding Musteriler.Count}"
+                                                                    HorizontalAlignment="Center"
+                                                                    VerticalAlignment="Center"
+                                                                    TextAlignment="Center" />
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Binding="{Binding Filmler.FilmAdi}" Header="FİLM&#xA;ADI" />
+                                                <DataGridTextColumn Binding="{Binding Filmler.FilmTipi}" Header="FİLM&#xA;TİPİ" />
+                                                <DataGridTextColumn Binding="{Binding FilmSaati}" Header="TARİH" Width="125" />
+                                                <DataGridTextColumn Binding="{Binding Filmler.Yonetmeni}" Header="YÖNETMEN" Visibility="Collapsed" />
+                                                <DataGridTextColumn Binding="{Binding Filmler.Oyuncular}" Header="OYUNCULAR" Visibility="Collapsed" />
+                                                <DataGridTextColumn Binding="{Binding Filmler.Sure}" Header="SÜRE" Visibility="Collapsed" />
+                                                <DataGridTextColumn Binding="{Binding Filmler.Dili}" Header="DİLİ" Visibility="Collapsed" />
+                                                <DataGridTextColumn Binding="{Binding Filmler.CekimTipi}" Header="ÇEKİM&#xA;TİPİ" Visibility="Collapsed" />
+                                                <DataGridTemplateColumn Width="172" CanUserReorder="False" CanUserResize="False">
+                                                    <DataGridTemplateColumn.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Orientation="Horizontal">
+                                                                <Image VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor" Source="Icons/video.png" />
+                                                                <Slider
+                                                                    Width="50"
+                                                                    VerticalAlignment="Center"
+                                                                    LargeChange="0.05"
+                                                                    Maximum="1"
+                                                                    Minimum="0"
+                                                                    Value="{Binding VideoŞeffaflık, Source={StaticResource Koltuklar}, UpdateSourceTrigger=PropertyChanged}" />
+                                                                <Image VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor" Source="Icons/volume.png">
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                                            <ei:ChangePropertyAction PropertyName="SesYüksekliği" TargetObject="{Binding Mode=OneWay, Source={StaticResource Salonlar}}" />
+                                                                            <ei:ChangePropertyAction PropertyName="Visibility" TargetObject="{Binding ElementName=PbVolume}" Value="Hidden" />
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                </Image>
+                                                                <Slider
+                                                                    Height="30"
+                                                                    LargeChange="0.05"
+                                                                    Maximum="1"
+                                                                    Orientation="Vertical"
+                                                                    SmallChange="0.05"
+                                                                    Value="{Binding SesYüksekliği, Source={StaticResource Salonlar}, UpdateSourceTrigger=PropertyChanged}">
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger EventName="ValueChanged">
+                                                                            <ei:ChangePropertyAction PropertyName="Visibility" TargetObject="{Binding ElementName=PbVolume}" Value="Visible" />
+                                                                        </i:EventTrigger>
+                                                                        <i:EventTrigger EventName="PreviewMouseUp">
+                                                                            <ei:ChangePropertyAction PropertyName="Visibility" TargetObject="{Binding ElementName=PbVolume}" Value="Hidden" />
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                </Slider>
+                                                                <Image
+                                                                    Height="32"
+                                                                    VerticalAlignment="Center"
+                                                                    DataContext="{StaticResource Salonlar}"
+                                                                    RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                                                    Source="Icons/save.png">
+                                                                    <Image.ToolTip>
+                                                                        <TextBlock Text="Yetkiniz Varsa Şu Anda Yürütülen Görüntü Resimler Klasörüne Kaydedilir." />
+                                                                    </Image.ToolTip>
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                                            <i:InvokeCommandAction Command="{Binding VideoResimKaydet}" CommandParameter="{Binding ElementName=MediaPlayer, Mode=OneWay}" />
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                </Image>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.HeaderTemplate>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <c1:C1DropDownButton
+                                                                x:Name="C1SeansDrop"
+                                                                AutoClose="False"
+                                                                HorizontalHeaderAlignment="Center"
+                                                                VerticalHeaderAlignment="Center">
+                                                                <c1:C1DropDownButton.Header>
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <TextBlock>
+                                                                            <TextBlock.Text>
+                                                                                <MultiBinding StringFormat="SEANSLAR {0}/{1}">
+                                                                                    <Binding Path="Musteriler.Count" />
+                                                                                    <Binding Path="Salonlar.Toplamkoltuk.Count" />
+                                                                                </MultiBinding>
+                                                                            </TextBlock.Text>
+                                                                        </TextBlock>
+                                                                    </StackPanel>
+                                                                </c1:C1DropDownButton.Header>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <c1:C1DropDownButton AutoClose="True">
+                                                                        <c1:C1DropDownButton.Header>
+                                                                            <StackPanel Orientation="Horizontal">
+                                                                                <Image
+                                                                                    Width="16"
+                                                                                    Height="16"
+                                                                                    ice:Freeze="True"
+                                                                                    Source="Icons/shell32_269.png" />
+                                                                                <TextBlock Text="GÖSTER" />
+                                                                            </StackPanel>
+                                                                        </c1:C1DropDownButton.Header>
+                                                                        <local:ResizablePanel
+                                                                            Width="650"
+                                                                            Height="300"
+                                                                            MinWidth="650"
+                                                                            MinHeight="300">
+                                                                            <GroupBox Header="MÜŞTERİLER" Template="{StaticResource TintedGroupBox}">
+                                                                                <c1:C1DataGrid
+                                                                                    AutoGenerateColumns="False"
+                                                                                    CanUserAddRows="False"
+                                                                                    CanUserGroup="True"
+                                                                                    CanUserResizeRows="False"
+                                                                                    IsReadOnly="True"
+                                                                                    ItemsSource="{Binding Musteriler}"
+                                                                                    ShowGroupingPanel="True"
+                                                                                    VirtualizingStackPanel.IsVirtualizing="True"
+                                                                                    VirtualizingStackPanel.VirtualizationMode="Recycling">
+                                                                                    <c1:C1DataGrid.RowDetailsTemplate>
+                                                                                        <DataTemplate>
+                                                                                            <DataGrid
+                                                                                                AutoGenerateColumns="False"
+                                                                                                CanUserAddRows="False"
+                                                                                                CanUserDeleteRows="False"
+                                                                                                DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type c1:DataGridRowPresenter}}}"
+                                                                                                IsReadOnly="True"
+                                                                                                ItemsSource="{Binding Siparisler}"
+                                                                                                VirtualizingStackPanel.IsVirtualizing="True"
+                                                                                                VirtualizingStackPanel.VirtualizationMode="Recycling">
+                                                                                                <DataGrid.Columns>
+                                                                                                    <DataGridTextColumn Binding="{Binding Urunler.UrunAdi}" Header="ÜRÜN ADI" />
+                                                                                                    <DataGridTextColumn Binding="{Binding SiparisAdet}" Header="ÜRÜN ADETİ" />
+                                                                                                    <DataGridTextColumn Binding="{Binding SiparisBirimFiyat, StringFormat=\{0:C\}}" Header="BİRİM FİYATI" />
+                                                                                                    <DataGridTextColumn Binding="{Binding ToplamTutar, StringFormat=\{0:C\}}" Header="TOPLAM TUTAR" />
+                                                                                                </DataGrid.Columns>
+                                                                                            </DataGrid>
+                                                                                        </DataTemplate>
+                                                                                    </c1:C1DataGrid.RowDetailsTemplate>
+                                                                                    <c1:C1DataGrid.Columns>
+                                                                                        <c1:DataGridTemplateColumn Width="25px">
+                                                                                            <c1:DataGridTemplateColumn.CellTemplate>
+                                                                                                <DataTemplate>
+                                                                                                    <Rectangle Width="16" Height="16" Fill="{Binding Koltuklar.KoltukTipleri.KoltukRenk, Converter={StaticResource IntToBrushConverter}}" />
+                                                                                                </DataTemplate>
+                                                                                            </c1:DataGridTemplateColumn.CellTemplate>
+                                                                                        </c1:DataGridTemplateColumn>
+                                                                                        <c1:DataGridTextColumn Binding="{Binding MusteriAdi}" Header="ADI" Width="70px" />
+                                                                                        <c1:DataGridTextColumn Binding="{Binding MusteriSoyadi}" Header="SOYADI" Width="70px" />
+                                                                                        <c1:DataGridNumericColumn Binding="{Binding Koltuklar.KoltukNo}" Header="KOLTUK NO" Width="75px" />
+                                                                                        <c1:DataGridTextColumn Binding="{Binding Koltuklar.KoltukTipleri.KoltukTipi}" Header="KOLTUK TİPİ" Width="80px" />
+                                                                                        <c1:DataGridNumericColumn
+                                                                                            Binding="{Binding Tahsilatlar/Tutar, StringFormat=\{0:C\}}"
+                                                                                            Header="TAHSİLAT"
+                                                                                            Width="70px"
+                                                                                            CanUserFilter="False" />
+                                                                                        <c1:DataGridTemplateColumn Width="190px">
+                                                                                            <c1:DataGridTemplateColumn.Header>
+                                                                                                <StackPanel Orientation="Horizontal">
+                                                                                                    <Button Content="TÜM BİLETLER" Command="{Binding Musteriler/SeansBilet}" CommandParameter="{Binding}" />
+                                                                                                    <Button Content="SALON BİLETLER" Command="{Binding Musteriler/SalonBilet}" />
+                                                                                                </StackPanel>
+                                                                                            </c1:DataGridTemplateColumn.Header>
+                                                                                            <c1:DataGridTemplateColumn.CellTemplate>
+                                                                                                <DataTemplate>
+                                                                                                    <Button Command="{Binding MüşteriBilet, Mode=OneWay, IsAsync=True}" CommandParameter="{Binding Row.DataItem, IsAsync=True, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type c1:DataGridCellPresenter}}}">
+                                                                                                        <StackPanel Orientation="Horizontal">
+                                                                                                            <Image Width="24" ice:Freeze="True" Source="Icons/print.png" />
+                                                                                                            <AccessText Text="_BİLET" />
+                                                                                                        </StackPanel>
+                                                                                                    </Button>
+                                                                                                </DataTemplate>
+                                                                                            </c1:DataGridTemplateColumn.CellTemplate>
+                                                                                        </c1:DataGridTemplateColumn>
+                                                                                    </c1:C1DataGrid.Columns>
+                                                                                    <c1:C1DataGrid.ContextMenu>
+                                                                                        <ContextMenu>
+                                                                                            <MenuItem Header="ÇIKTI AL">
+                                                                                                <i:Interaction.Triggers>
+                                                                                                    <i:EventTrigger EventName="Click">
+                                                                                                        <i:InvokeCommandAction Command="{Binding Yazdır, Mode=OneWay}" CommandParameter="{Binding PlacementTarget, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}, Mode=FindAncestor}}" />
+                                                                                                    </i:EventTrigger>
+                                                                                                </i:Interaction.Triggers>
+                                                                                            </MenuItem>
+                                                                                        </ContextMenu>
+                                                                                    </c1:C1DataGrid.ContextMenu>
+                                                                                </c1:C1DataGrid>
+                                                                            </GroupBox>
+                                                                        </local:ResizablePanel>
+                                                                    </c1:C1DropDownButton>
+                                                                    <c1:C1DropDownButton AutoClose="True" IsTabStop="False">
+                                                                        <c1:C1DropDownButton.Header>
+                                                                            <StackPanel Orientation="Horizontal">
+                                                                                <Image
+                                                                                    Width="16"
+                                                                                    Height="16"
+                                                                                    ice:Freeze="True"
+                                                                                    Source="Icons/ball.png" />
+                                                                                <TextBlock Text="TOPLU GİRİŞ" />
+                                                                            </StackPanel>
+                                                                        </c1:C1DropDownButton.Header>
+                                                                        <c1:C1DropDownButton.IsEnabled>
+                                                                            <MultiBinding Converter="{StaticResource SeansTarihAndSalonAktifConverter}">
+                                                                                <Binding Converter="{StaticResource SeansTarihGeçtiConverter}" Path="FilmSaati" />
+                                                                                <Binding Path="Salonlar.AktifMi" />
+                                                                            </MultiBinding>
+                                                                        </c1:C1DropDownButton.IsEnabled>
+                                                                        <local:ResizablePanel
+                                                                            Width="450"
+                                                                            Height="200"
+                                                                            MinWidth="450"
+                                                                            MinHeight="200">
+                                                                            <GroupBox Header="TOPLU GİRİŞ" Template="{StaticResource TintedGroupBox}">
+                                                                                <Grid>
+                                                                                    <Grid.ColumnDefinitions>
+                                                                                        <ColumnDefinition />
+                                                                                        <ColumnDefinition />
+                                                                                        <ColumnDefinition Width="2*" />
+                                                                                    </Grid.ColumnDefinitions>
+                                                                                    <Grid.RowDefinitions>
+                                                                                        <RowDefinition Height="Auto" />
+                                                                                        <RowDefinition Height="25" />
+                                                                                        <RowDefinition Height="*" />
+                                                                                    </Grid.RowDefinitions>
+                                                                                    <TextBlock
+                                                                                        Text="BAŞLANGIÇ&#xA;KOLTUK"
+                                                                                        Grid.Row="0"
+                                                                                        Grid.Column="0"
+                                                                                        HorizontalAlignment="Center"
+                                                                                        VerticalAlignment="Center" />
+                                                                                    <TextBlock
+                                                                                        Text="BİTİŞ&#xA;KOLTUK"
+                                                                                        Grid.Row="0"
+                                                                                        Grid.Column="1"
+                                                                                        HorizontalAlignment="Center"
+                                                                                        VerticalAlignment="Center" />
+                                                                                    <TextBlock
+                                                                                        Text="İSİM LİSTESİ&#xA;(AD SOYAD YAŞ)"
+                                                                                        Grid.Row="0"
+                                                                                        Grid.Column="2"
+                                                                                        HorizontalAlignment="Center"
+                                                                                        VerticalAlignment="Center" />
+                                                                                    <ComboBox
+                                                                                        x:Name="CbBaşlangıç"
+                                                                                        Grid.Row="1"
+                                                                                        Grid.Column="0"
+                                                                                        DisplayMemberPath="KoltukNo"
+                                                                                        IsTabStop="False"
+                                                                                        ItemContainerStyle="{StaticResource ComboboxKoltukStyle}"
+                                                                                        ItemsSource="{Binding Salonlar.Koltuklar}"
+                                                                                        SelectedItem="{Binding Başlangıç, UpdateSourceTrigger=PropertyChanged}" />
+                                                                                    <ComboBox
+                                                                                        x:Name="CbBitiş"
+                                                                                        Grid.Row="1"
+                                                                                        Grid.Column="1"
+                                                                                        DisplayMemberPath="KoltukNo"
+                                                                                        IsTabStop="False"
+                                                                                        ItemContainerStyle="{StaticResource ComboboxKoltukStyle}"
+                                                                                        ItemsSource="{Binding Salonlar.Koltuklar}"
+                                                                                        SelectedItem="{Binding Bitiş, UpdateSourceTrigger=PropertyChanged}" />
+                                                                                    <TextBox
+                                                                                        x:Name="TbTopluListe"
+                                                                                        Text="{Binding TopluListe, UpdateSourceTrigger=PropertyChanged}"
+                                                                                        Grid.Row="1"
+                                                                                        Grid.RowSpan="7"
+                                                                                        Grid.Column="2"
+                                                                                        VerticalContentAlignment="Top"
+                                                                                        AcceptsReturn="True"
+                                                                                        TextWrapping="Wrap"
+                                                                                        ToolTipService.ShowDuration="15000"
+                                                                                        VerticalScrollBarVisibility="Auto">
+                                                                                        <TextBox.ToolTip>
+                                                                                            <StackPanel Width="300" Orientation="Vertical">
+                                                                                                <TextBlock TextWrapping="Wrap"><Run
+                                                                                                        Text="UYARILAR"
+                                                                                                        FontSize="16"
+                                                                                                        FontWeight="Bold"
+                                                                                                        Foreground="Red" /><LineBreak /><Run Text="BU EKRANDA AD SOYAD VE YAŞI ARADA BİR BOŞLUK BIRAKARAK GİRİN. AYNI ŞEKİLDE ALT ALTA İSİMLERİ YAZIN İSİMLERİN YAZILMA SIRASINA GÖRE KOLTUK DİZİLİMİ YAPILACAKTIR. (İKİ İSMİ TEK İSİM GİRİN)" Foreground="Red" /><LineBreak /><Run Text="ÖRNEK:" Foreground="Blue" /><LineBreak /><Run Text="GÖKŞEN PASLI 61" /><LineBreak /><Run Text="PASLI GÖKŞEN 16" /></TextBlock>
+                                                                                            </StackPanel>
+                                                                                        </TextBox.ToolTip>
+                                                                                    </TextBox>
+                                                                                    <Button
+                                                                                        Grid.Row="2"
+                                                                                        Grid.RowSpan="6"
+                                                                                        Grid.Column="0"
+                                                                                        Grid.ColumnSpan="2"
+                                                                                        Command="{Binding TopluGirişYap}"
+                                                                                        CommandParameter="{Binding Mode=OneWay}"
+                                                                                        IsTabStop="False">
+                                                                                        <Button.IsEnabled>
+                                                                                            <MultiBinding Converter="{StaticResource BooleanAllNotNullConverter}">
+                                                                                                <Binding ElementName="CbBaşlangıç" Path="SelectedItem" />
+                                                                                                <Binding ElementName="CbBitiş" Path="SelectedItem" />
+                                                                                            </MultiBinding>
+                                                                                        </Button.IsEnabled>
+                                                                                        <StackPanel Orientation="Horizontal">
+                                                                                            <Image
+                                                                                                Width="38"
+                                                                                                Height="38"
+                                                                                                ice:Freeze="True"
+                                                                                                Source="Icons/ball.png" />
+                                                                                            <AccessText Text="TO_PLU&#xA;GİRİŞ&#xA;YAP" />
+                                                                                        </StackPanel>
+                                                                                    </Button>
+                                                                                </Grid>
+                                                                            </GroupBox>
+                                                                        </local:ResizablePanel>
+                                                                    </c1:C1DropDownButton>
+                                                                    <c1:C1DropDownButton AutoClose="True" IsTabStop="False">
+                                                                        <c1:C1DropDownButton.Header>
+                                                                            <StackPanel Orientation="Horizontal">
+                                                                                <Image
+                                                                                    Width="16"
+                                                                                    Height="16"
+                                                                                    ice:Freeze="True"
+                                                                                    Source="Icons/shell32_15.png" />
+                                                                                <TextBlock Text="WEB ARA" />
+                                                                            </StackPanel>
+                                                                        </c1:C1DropDownButton.Header>
+                                                                        <i:Interaction.Triggers>
+                                                                            <i:EventTrigger EventName="IsDropDownOpenChanged">
+                                                                                <ei:CallMethodAction MethodName="FilmBilgileri" TargetObject="{Binding WebdenGetir}" />
+                                                                            </i:EventTrigger>
+                                                                        </i:Interaction.Triggers>
+                                                                        <GroupBox Header="FİLM BİLGİLERİ (OMDB APINİN GÜNLÜK 1000 SORGU LİMİTİ VARDIR)" Template="{StaticResource TintedGroupBox}">
+                                                                            <DataGrid
+                                                                                x:Name="DgMovieDetails"
+                                                                                AutoGenerateColumns="False"
+                                                                                DataContext="{DynamicResource Film}"
+                                                                                IsReadOnly="True"
+                                                                                ItemsSource="{Binding Mode=OneWay, XPath=/root}"
+                                                                                RowHeight="150"
+                                                                                VirtualizingStackPanel.IsVirtualizing="True"
+                                                                                VirtualizingStackPanel.VirtualizationMode="Recycling">
+                                                                                <DataGrid.Resources>
+                                                                                    <XmlDataProvider x:Key="Film" IsAsynchronous="True" IsInitialLoadEnabled="True" />
+                                                                                </DataGrid.Resources>
+                                                                                <DataGrid.Columns>
+                                                                                    <DataGridTextColumn Binding="{Binding XPath=/root/movie/@title}" Header="AD" Width="60">
+                                                                                        <DataGridTextColumn.ElementStyle>
+                                                                                            <Style>
+                                                                                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                                                                                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                                                            </Style>
+                                                                                        </DataGridTextColumn.ElementStyle>
+                                                                                    </DataGridTextColumn>
+                                                                                    <DataGridTextColumn Binding="{Binding XPath=/root/movie/@language}" Header="DİL" Width="60">
+                                                                                        <DataGridTextColumn.ElementStyle>
+                                                                                            <Style>
+                                                                                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                                                                                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                                                            </Style>
+                                                                                        </DataGridTextColumn.ElementStyle>
+                                                                                    </DataGridTextColumn>
+                                                                                    <DataGridTextColumn Binding="{Binding XPath=/root/movie/@year}" Header="YIL" />
+                                                                                    <DataGridTextColumn Binding="{Binding XPath=/root/movie/@runtime}" Header="SÜRE" />
+                                                                                    <DataGridTextColumn Binding="{Binding XPath=/root/movie/@director}" Header="YÖNETMEN" />
+                                                                                    <DataGridTextColumn Binding="{Binding XPath=/root/movie/@country}" Header="ÜLKE" Width="80">
+                                                                                        <DataGridTextColumn.ElementStyle>
+                                                                                            <Style>
+                                                                                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                                                                                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                                                            </Style>
+                                                                                        </DataGridTextColumn.ElementStyle>
+                                                                                    </DataGridTextColumn>
+                                                                                    <DataGridTextColumn Binding="{Binding XPath=/root/movie/@actors}" Header="OYUNCULAR" Width="100">
+                                                                                        <DataGridTextColumn.ElementStyle>
+                                                                                            <Style>
+                                                                                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                                                                                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                                                            </Style>
+                                                                                        </DataGridTextColumn.ElementStyle>
+                                                                                    </DataGridTextColumn>
+                                                                                    <DataGridTextColumn Binding="{Binding XPath=/root/movie/@plot}" Header="ÖZET" Width="150">
+                                                                                        <DataGridTextColumn.ElementStyle>
+                                                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                                                <Setter Property="ToolTip">
+                                                                                                    <Setter.Value>
+                                                                                                        <StackPanel Width="150">
+                                                                                                            <TextBlock Text="{Binding Converter={StaticResource EnglishtoTurkishTranslateConverter}, XPath=/root/movie/@plot}" TextWrapping="Wrap" />
+                                                                                                        </StackPanel>
+                                                                                                    </Setter.Value>
+                                                                                                </Setter>
+                                                                                                <Setter Property="TextWrapping" Value="Wrap" />
+                                                                                                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                                                            </Style>
+                                                                                        </DataGridTextColumn.ElementStyle>
+                                                                                    </DataGridTextColumn>
+                                                                                    <DataGridTemplateColumn Header="RESİM">
+                                                                                        <DataGridTemplateColumn.CellTemplate>
+                                                                                            <DataTemplate>
+                                                                                                <Image Width="80" Source="{Binding IsAsync=True, XPath=/root/movie/@poster}">
+                                                                                                    <Image.ToolTip>
+                                                                                                        <ToolTip DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Self}}">
+                                                                                                            <Image ice:Freeze="True" Source="{Binding Source}" />
+                                                                                                        </ToolTip>
+                                                                                                    </Image.ToolTip>
+                                                                                                    <i:Interaction.Triggers>
+                                                                                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                                                                            <i:InvokeCommandAction Command="{Binding DataContext.FilmPosterAç, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type GroupBox}}}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}" />
+                                                                                                        </i:EventTrigger>
+                                                                                                    </i:Interaction.Triggers>
+                                                                                                </Image>
+                                                                                            </DataTemplate>
+                                                                                        </DataGridTemplateColumn.CellTemplate>
+                                                                                    </DataGridTemplateColumn>
+                                                                                    <DataGridTemplateColumn Header="SKOR">
+                                                                                        <DataGridTemplateColumn.CellTemplate>
+                                                                                            <DataTemplate>
+                                                                                                <ProgressBar Height="{Binding RowHeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Orientation="Vertical" Value="{Binding XPath=/root/movie/@metascore}" />
+                                                                                            </DataTemplate>
+                                                                                        </DataGridTemplateColumn.CellTemplate>
+                                                                                    </DataGridTemplateColumn>
+                                                                                </DataGrid.Columns>
+                                                                            </DataGrid>
+                                                                        </GroupBox>
+                                                                    </c1:C1DropDownButton>
+                                                                </StackPanel>
+                                                            </c1:C1DropDownButton>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+                                    <GridSplitter
+                                        Grid.Row="1"
+                                        Height="3"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        Background="{StaticResource Common_HeaderBackgroundColor}" />
+                                    <ScrollViewer
+                                        Grid.Row="2"
+                                        IsEnabled="{Binding AktifMi}"
+                                        ScrollViewer.IsDeferredScrollingEnabled="True"
+                                        VerticalScrollBarVisibility="Auto">
+                                        <ItemsControl ItemsSource="{Binding Koltuklar}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Visibility="{Binding KoltukGorunmezMi, Converter={StaticResource SeansButtonVisibilityConverter}}">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="7*" />
+                                                            <ColumnDefinition Width="2*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Viewbox Grid.Column="1" Visibility="{Binding Salonlar.KoltukDetay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                            <ListBox ItemsSource="{Binding Musteriler}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" SelectionMode="Single">
+                                                                <ListBox.Resources>
+                                                                    <Style TargetType="{x:Type ListBox}">
+                                                                        <Setter Property="BorderBrush" Value="{x:Null}" />
+                                                                        <Setter Property="Foreground" Value="{x:Null}" />
+                                                                        <Setter Property="Background" Value="{x:Null}" />
+                                                                    </Style>
+                                                                </ListBox.Resources>
+                                                                <ListBox.ItemContainerStyle>
+                                                                    <Style TargetType="{x:Type ListBoxItem}">
+                                                                        <Setter Property="Padding" Value="0" />
+                                                                        <Setter Property="BorderThickness" Value="0" />
+                                                                        <Setter Property="Visibility" Value="{Binding Seanslar.FilmSaati, Mode=OneWay, Converter={StaticResource SeansTarihGeçtiVisibilityConverter}}" />
+                                                                    </Style>
+                                                                </ListBox.ItemContainerStyle>
+                                                                <ListBox.ItemsPanel>
+                                                                    <ItemsPanelTemplate>
+                                                                        <UniformGrid Columns="{Binding KoltukÖnizlemeKolonSayısı}" DataContext="{Binding DataContext, ElementName=SliderÖnizleme}" />
+                                                                    </ItemsPanelTemplate>
+                                                                </ListBox.ItemsPanel>
+                                                                <ListBox.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <Path Width="24" Height="24" Data="{StaticResource FaceIcon}" Fill="{Binding Seanslar.Renk, Mode=OneWay, Converter={StaticResource IntToColorConverter}}">
+                                                                            <!--<Path.ToolTip>
+                                                                                <StackPanel>
+                                                                                    <TextBlock Text="{Binding MusteriAdi, Mode=OneWay}" />
+                                                                                    <TextBlock Text="{Binding MusteriSoyadi, Mode=OneWay}" />
+                                                                                    <ListView Margin="5" ItemsSource="{Binding Siparisler, IsAsync=True}">
+                                                                                        <ListView.View>
+                                                                                            <GridView>
+                                                                                                <GridViewColumn Header="ÜRÜN ADI" DisplayMemberBinding="{Binding Urunler.UrunAdi, Mode=OneWay}" />
+                                                                                                <GridViewColumn Header="SİPARİŞ ADETİ" DisplayMemberBinding="{Binding SiparisAdet, Mode=OneWay}" />
+                                                                                                <GridViewColumn Header="TOPLAM TUTAR" DisplayMemberBinding="{Binding ToplamTutar, Mode=OneWay, StringFormat=\{0:C\}}" />
+                                                                                            </GridView>
+                                                                                        </ListView.View>
+                                                                                    </ListView>
+                                                                                </StackPanel>
+                                                                            </Path.ToolTip>-->
+                                                                        </Path>
+                                                                    </DataTemplate>
+                                                                </ListBox.ItemTemplate>
+                                                            </ListBox>
+                                                        </Viewbox>
+                                                        <Button
+                                                            Content="{Binding Converter={StaticResource KoltukNoSıraConverter}, Mode=OneWay}"
+                                                            Grid.Column="0"
+                                                            Command="{Binding MüşteriDialog, Mode=OneWay}"
+                                                            CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Mode=Self}}"
+                                                            ContextMenuService.ShowOnDisabled="{Binding Salonlar.AktifMi}"
+                                                            IsEnabled="{Binding KoltukAktifMi}"
+                                                            Style="{StaticResource GridButtonRenkleriStyle}">
+                                                            <Button.ToolTip>
+                                                                <StackPanel>
+                                                                    <TextBlock Text="{Binding KoltukNo, Mode=OneWay, StringFormat=Koltuk No: \{0\}}" />
+                                                                    <TextBlock Text="{Binding KoltukTipleri.KoltukTipi, Mode=OneWay, StringFormat=Koltuk Tipi: \{0\}}" />
+                                                                    <TextBlock Text="{Binding KoltukTipleri.KoltukFiyati, Mode=OneWay, StringFormat=Koltuk Fiyatı: \{0:C\}}" />
+                                                                    <ListView Margin="5" ItemsSource="{Binding Musteriler, IsAsync=True}">
+                                                                        <ListView.ItemContainerStyle>
+                                                                            <Style TargetType="{x:Type ListViewItem}">
+                                                                                <Setter Property="Visibility" Value="{Binding Seanslar.FilmSaati, Mode=OneWay, Converter={StaticResource SeansTarihGeçtiVisibilityConverter}}" />
+                                                                            </Style>
+                                                                        </ListView.ItemContainerStyle>
+                                                                        <ListView.View>
+                                                                            <GridView>
+                                                                                <GridViewColumn>
+                                                                                    <GridViewColumn.CellTemplate>
+                                                                                        <DataTemplate>
+                                                                                            <Ellipse Width="16" Height="16" Fill="{Binding Seanslar.Renk, Mode=OneWay, Converter={StaticResource IntToColorConverter}}" />
+                                                                                        </DataTemplate>
+                                                                                    </GridViewColumn.CellTemplate>
+                                                                                </GridViewColumn>
+                                                                                <GridViewColumn Header="ADI" DisplayMemberBinding="{Binding MusteriAdi, Mode=OneWay}" />
+                                                                                <GridViewColumn Header="SOYADI" DisplayMemberBinding="{Binding MusteriSoyadi, Mode=OneWay}" />
+                                                                                <GridViewColumn Header="FİLM" DisplayMemberBinding="{Binding Seanslar.Filmler.FilmAdi, Mode=OneWay}" />
+                                                                                <GridViewColumn Header="TARİH" Width="125" DisplayMemberBinding="{Binding Seanslar.FilmSaati, Mode=OneWay}" />
+                                                                                <GridViewColumn Header="TAHSİLAT" DisplayMemberBinding="{Binding Tahsilatlar/Tutar, Mode=OneWay, StringFormat=\{0:C\}}" />
+                                                                                <GridViewColumn Header="RESİM" Width="80">
+                                                                                    <GridViewColumn.CellTemplate>
+                                                                                        <DataTemplate>
+                                                                                            <Image Source="{Binding Resim, ConverterParameter=120, Mode=OneWay, Converter={StaticResource ByteArrayToImageSource}, IsAsync=True}" Visibility="{Binding Resim, Converter={StaticResource NullToCollapsedVisibilityConverter}}" />
+                                                                                        </DataTemplate>
+                                                                                    </GridViewColumn.CellTemplate>
+                                                                                </GridViewColumn>
+                                                                            </GridView>
+                                                                        </ListView.View>
+                                                                    </ListView>
+                                                                </StackPanel>
+                                                            </Button.ToolTip>
+                                                            <Button.ContextMenu>
+                                                                <ContextMenu IsEnabled="{Binding Salonlar.AktifMi}">
+                                                                    <MenuItem
+                                                                        Header="KOLTUK GİZLE"
+                                                                        Command="{Binding KoltukDurum, Mode=OneWay}"
+                                                                        IsCheckable="True"
+                                                                        IsChecked="{Binding KoltukGorunmezMi}">
+                                                                        <MenuItem.ToolTip>
+                                                                            <TextBlock Text="Gizlenmiş Koltuğu Göstermek İçin Salon Oluşturma Ekranına Bakın." />
+                                                                        </MenuItem.ToolTip>
+                                                                    </MenuItem>
+                                                                    <MenuItem
+                                                                        Header="KOLTUK ETKİN"
+                                                                        Command="{Binding KoltukDurum}"
+                                                                        IsCheckable="True"
+                                                                        IsChecked="{Binding KoltukAktifMi}" />
+                                                                    <MenuItem Header="KOLTUK TİPİNİ DEĞİŞTİR">
+                                                                        <MenuItem.Resources>
+                                                                            <StackPanel x:Key="MenuItemHeader" x:Shared="false" Orientation="Horizontal">
+                                                                                <TextBlock Text="{Binding KoltukTipi}" />
+                                                                                <TextBlock Text="{Binding KoltukFiyati, StringFormat=' \{0:C\}'}" />
+                                                                            </StackPanel>
+                                                                        </MenuItem.Resources>
+                                                                        <MenuItem.ItemsSource>
+                                                                            <Binding Path="KoltukTipleriCollection" Source="{StaticResource SinemaModel}" />
+                                                                        </MenuItem.ItemsSource>
+                                                                        <MenuItem.Icon>
+                                                                            <Rectangle Width="16" Height="16" Fill="{Binding KoltukTipleri.KoltukRenk, Converter={StaticResource IntToBrushConverter}}" />
+                                                                        </MenuItem.Icon>
+                                                                        <MenuItem.ItemContainerStyle>
+                                                                            <Style TargetType="{x:Type MenuItem}">
+                                                                                <Setter Property="Icon" Value="{StaticResource ContextRectangle}" />
+                                                                                <Setter Property="Header" Value="{StaticResource MenuItemHeader}" />
+                                                                                <Setter Property="Command" Value="{Binding DataContext.KoltukTipiDeğiştir, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" />
+                                                                                <Setter Property="CommandParameter">
+                                                                                    <Setter.Value>
+                                                                                        <MultiBinding Converter="{StaticResource CloneConverter}">
+                                                                                            <Binding Path="DataContext" RelativeSource="{RelativeSource AncestorType={x:Type Button}}" />
+                                                                                            <Binding />
+                                                                                        </MultiBinding>
+                                                                                    </Setter.Value>
+                                                                                </Setter>
+                                                                            </Style>
+                                                                        </MenuItem.ItemContainerStyle>
+                                                                    </MenuItem>
+                                                                </ContextMenu>
+                                                            </Button.ContextMenu>
+                                                        </Button>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <UniformGrid x:Name="UgKoltuklar" Columns="{Binding En}" Rows="{Binding Boy}" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </Grid>
+                            </DataTemplate>
+                        </TabControl.ContentTemplate>
+                    </TabControl>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

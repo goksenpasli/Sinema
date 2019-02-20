@@ -1,0 +1,224 @@
+﻿<Window
+    x:Class="Sinema.GirişWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:ice="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    xmlns:local="clr-namespace:Sinema"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="WdGiriş"
+    Title="Giriş"
+    Width="494"
+    Height="276"
+    AllowsTransparency="True"
+    Background="{x:Null}"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <local:YetkilerToListConverter x:Key="YetkilerToListConverter" />
+        <local:ByteArrayToImageSource x:Key="ByteArrayToImageSource" />
+        <local:ObjectToBoolConverter x:Key="ObjectToBoolConverter" />
+        <local:Kullanicilar x:Key="Kullanicilar" />
+        <local:SinemaModel x:Key="SinemaModel" />
+        <PopupAnimation x:Key="{x:Static SystemParameters.ToolTipPopupAnimationKey}">Fade</PopupAnimation>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource Kullanicilar}">
+        <GroupBox Template="{StaticResource TintedGroupBox}">
+            <GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="GİRİŞ" Grid.Column="0" />
+                    <Image
+                        x:Name="ImgClose"
+                        Grid.Column="1"
+                        Width="24"
+                        HorizontalAlignment="Right"
+                        MouseLeftButtonDown="ImgClose_MouseLeftButtonDown"
+                        Source="Icons/shell32_240.png" />
+                </Grid>
+            </GroupBox.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="207.197" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Text="KULLANICI ADI"
+                    Grid.Row="0"
+                    Grid.Column="0" />
+                <ComboBox
+                    x:Name="CbKullaniciAdi"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    VerticalContentAlignment="Center"
+                    ItemContainerStyle="{StaticResource ComboboxKullanıcıGirişStyle}"
+                    ItemsSource="{Binding KullanicilarCollection, Source={StaticResource SinemaModel}}">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" Tag="{Binding KullaniciYetkisi}">
+                                <StackPanel.ToolTip>
+                                    <ToolTip DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Self}}">
+                                        <ListView ItemsSource="{Binding Tag, Converter={StaticResource YetkilerToListConverter}}">
+                                            <ListView.View>
+                                                <GridView>
+                                                    <GridViewColumn>
+                                                        <GridViewColumn.Header>
+                                                            <TextBlock Text="KULLANICI YETKİLERİ" Foreground="Red" />
+                                                        </GridViewColumn.Header>
+                                                    </GridViewColumn>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+
+                                    </ToolTip>
+                                </StackPanel.ToolTip>
+                                <TextBlock Text="{Binding KullaniciAdi}" />
+                                <TextBlock Text="{Binding KullaniciTc}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Image
+                    Grid.RowSpan="10"
+                    Grid.Column="2"
+                    Margin="4,0,0,0"
+                    ice:Freeze="True"
+                    RenderOptions.BitmapScalingMode="LowQuality"
+                    RenderOptions.CachingHint="Cache"
+                    Source="{Binding SelectedItem.Resim, IsAsync=True, Converter={StaticResource ByteArrayToImageSource}, ConverterParameter=480, ElementName=CbKullaniciAdi}">
+                    <Image.ToolTip>
+                        <ToolTip DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Self}}">
+                            <Image
+                                Height="480"
+                                ice:Freeze="True"
+                                Source="{Binding Source}" />
+                        </ToolTip>
+                    </Image.ToolTip>
+                    <Image.OpacityMask>
+                        <VisualBrush>
+                            <VisualBrush.Visual>
+                                <Border
+                                    Name="Mask"
+                                    BorderBrush="#FF3B5998"
+                                    BorderThickness="1"
+                                    CornerRadius="0.02" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Image.OpacityMask>
+                </Image>
+                <TextBlock
+                    Text="KULLANICI ŞİFRE "
+                    Grid.Row="1"
+                    Grid.Column="0" />
+                <local:ShowCapLock Grid.Row="1" Grid.Column="1">
+                    <PasswordBox x:Name="PbKullaniciSifre" IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbKullaniciAdi}" />
+                </local:ShowCapLock>
+                <Button
+                    Content="GİRİŞ YAP"
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Command="{Binding GirişYap}"
+                    CommandParameter="{Binding ElementName=WdGiriş, Mode=OneWay}"
+                    IsDefault="True"
+                    IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbKullaniciAdi}" />
+                <TextBlock
+                    Text="YENİ ŞİFRE OLUŞTUR"
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Center" />
+                <local:ShowCapLock
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2">
+                    <PasswordBox x:Name="PbKullaniciYeniŞifre" IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbKullaniciAdi}" />
+                </local:ShowCapLock>
+                <Button
+                    x:Name="BtŞifreDeğiştir"
+                    Content="ŞİFRE DEĞİŞTİR"
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Command="{Binding ŞifreDeğiştir}"
+                    CommandParameter="{Binding ElementName=WdGiriş, Mode=OneWay}"
+                    IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbKullaniciAdi}" />
+                <TextBlock
+                    Text="RESİM EKLE"
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Center" />
+                <c1:C1FilePicker
+                    x:Name="C1ResimYükle"
+                    Grid.Row="7"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    AllowDrop="True"
+                    Background="{StaticResource FilePickerBackground}"
+                    Filter="Resim Dosyaları (*.webp, *.jpg, *.png, *.bmp, *.tif)|*.webp;*.jpg;*.png;*.bmp;*.tif|Tüm dosyalar (*.*)|*.*"
+                    IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbKullaniciAdi}"
+                    IsTabStop="False"
+                    Multiselect="False"
+                    ToolTip="Çok Büyük Resim Yüklemek Menüleri Yavaşlatır.">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Drop">
+                            <ei:CallMethodAction MethodName="Drop" TargetObject="{Binding ResimDrop}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </c1:C1FilePicker>
+                <Button
+                    x:Name="BtKullanıcıResimYükle"
+                    Content="YÜKLE"
+                    Grid.Row="8"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Command="{Binding KullanıcıResimYükle}"
+                    CommandParameter="{Binding ElementName=WdGiriş, Mode=OneWay}"
+                    IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbKullaniciAdi}" />
+                <Slider
+                    Grid.Row="9"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    AutoToolTipPlacement="TopLeft"
+                    IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbKullaniciAdi}"
+                    Maximum="100"
+                    SmallChange="1"
+                    TickFrequency="5"
+                    TickPlacement="TopLeft"
+                    Value="{Binding Path=Kalite, UpdateSourceTrigger=PropertyChanged, ElementName=WdGiriş, Mode=TwoWay}">
+                    <Slider.ToolTip>
+                        <TextBlock Text="Kaydedilecek Resmin Kalitesini Ayarlamak İçin Sağa-Sola Kaydırın. 0=(En Kötü En Az Boyut), 100=(En İyi En Fazla Boyut)&#xA;Kalite Arttıkça Dosya Boyutu Ve Yüklenme Süresi Uzar." />
+                    </Slider.ToolTip>
+                </Slider>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>

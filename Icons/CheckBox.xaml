@@ -1,0 +1,159 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
+    <LinearGradientBrush x:Key="InnerBorderBrush" StartPoint="0 0" EndPoint="1 1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#FF86BEDE" />
+            <GradientStop Offset="1" Color="White" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <DrawingBrush x:Key="CheckBrush" Stretch="Uniform">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <DrawingGroup.Children>
+                    <GeometryDrawing Geometry="F1 M 37.6788,74.5751C 35.9537,73.6522 34.6461,72.8656 33.7561,72.2154C 32.8662,71.5651 32.4212,70.9323 32.4212,70.317C 32.4212,69.534 33.1674,68.7474 34.6598,67.9573C 36.1522,67.1672 38.0759,66.468 40.4309,65.8597C 42.7859,65.2514 45.3531,64.7584 48.1325,64.3809C 50.912,64.0033 53.5887,63.8145 56.1628,63.8145C 58.9012,63.8145 61.1466,64.0033 62.8992,64.3809C 64.6517,64.7584 66.3358,65.3807 67.9514,66.2477C 74.5509,69.7857 80.5274,73.4005 85.8809,77.0923C 91.2344,80.784 96.4715,84.6016 101.592,88.5451C 106.549,81.7629 111.683,75.2149 116.996,68.9012C 122.308,62.5874 127.935,56.4031 133.878,50.348C 139.82,44.293 146.193,38.3288 152.998,32.4556C 159.803,26.5823 167.19,20.6741 175.158,14.731C 178.061,12.4935 182.36,10.8504 188.056,9.80164C 193.752,8.75283 201.05,8.22844 209.949,8.22844C 212.606,8.22844 214.741,8.42772 216.357,8.82626C 217.973,9.2248 218.781,9.75269 218.781,10.4099C 218.781,10.9693 218.527,11.5322 218.021,12.0985C 217.514,12.6648 216.74,13.3256 215.7,14.0807C 196.285,27.9248 178.616,42.4296 162.692,57.5952C 146.768,72.7607 132.947,88.7549 121.226,105.578C 120.46,106.808 118.577,107.728 115.578,108.336C 112.58,108.944 108.178,109.248 102.373,109.248C 99.6343,109.248 97.3204,109.206 95.4309,109.122C 93.5415,109.039 91.9601,108.874 90.6867,108.629C 89.4134,108.385 88.3454,108.088 87.4828,107.738C 86.6202,107.388 85.8877,106.955 85.2853,106.438C 81.6159,103.375 78.0492,100.522 74.5851,97.8794C 71.1211,95.2364 67.527,92.6703 63.8028,90.1812C 60.0786,87.6921 56.1012,85.1785 51.8704,82.6404C 47.6396,80.1023 42.9091,77.4139 37.6788,74.5751 Z ">
+                        <GeometryDrawing.Pen>
+                            <Pen
+                                Brush="#FF007ACC"
+                                EndLineCap="Round"
+                                LineJoin="Round"
+                                StartLineCap="Round"
+                                Thickness="26" />
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                </DrawingGroup.Children>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <Style x:Key="EmptyCheckBoxFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle
+                        Margin="1"
+                        SnapsToDevicePixels="true"
+                        Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                        StrokeDashArray="1 2"
+                        StrokeThickness="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="CheckRadioFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle
+                        Margin="14,0,0,0"
+                        SnapsToDevicePixels="true"
+                        Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                        StrokeDashArray="1 2"
+                        StrokeThickness="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type CheckBox}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyCheckBoxFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <BulletDecorator
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        Background="Transparent"
+                        SnapsToDevicePixels="true">
+                        <BulletDecorator.Bullet>
+                            <Grid Width="18" Height="12">
+                                <Border
+                                    Name="OutBorder"
+                                    Width="12"
+                                    Height="12"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="#FFE6F5FD"
+                                    BorderBrush="#FF609BBD"
+                                    BorderThickness="1">
+                                    <Border
+                                        Name="InnerBorder"
+                                        Width="8"
+                                        Height="8"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Background="{StaticResource InnerBorderBrush}"
+                                        BorderBrush="#FF7DB6D8"
+                                        BorderThickness="1" />
+                                </Border>
+                                <Canvas x:Name="CheckPath" Background="{StaticResource CheckBrush}" Opacity="0" />
+                            </Grid>
+                        </BulletDecorator.Bullet>
+                        <ContentPresenter
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            RecognizesAccessKey="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </BulletDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="OutBorder" Storyboard.TargetProperty="BorderBrush.Color">
+                                        <ColorAnimation To="#016DB6" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color">
+                                        <ColorAnimation To="#FF66AFDA" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[0].Color">
+                                        <ColorAnimation To="#FF74C6F5" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="OutBorder" Storyboard.TargetProperty="BorderBrush.Color">
+                                        <ColorAnimation To="#FF609BBD" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color">
+                                        <ColorAnimation To="#FF7DB6D8" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[0].Color">
+                                        <ColorAnimation To="#FF5FAAD4" Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="CheckPath" Storyboard.TargetProperty="Opacity">
+                                        <DoubleAnimation To="1" Duration="0:0:0.4" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="CheckPath" Storyboard.TargetProperty="Opacity">
+                                        <DoubleAnimation To="0" Duration="0:0:0.4" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

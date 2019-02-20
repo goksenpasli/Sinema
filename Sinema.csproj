@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D3480B34-45C5-4E4E-8FDF-8B30BC5F3F4D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Sinema</RootNamespace>
+    <AssemblyName>Sinema</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Sinema.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Application.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="C1.WPF.4, Version=4.0.20181.587, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Desktop\Yeni klasör (2)\C1.WPF.4.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.WPF.DataGrid.4, Version=4.0.20181.587, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Desktop\Yeni klasör (2)\C1.WPF.DataGrid.4.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.WPF.DataGrid.Summaries.4, Version=4.0.20181.587, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Desktop\Yeni klasör (2)\C1.WPF.DataGrid.Summaries.4.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.WPF.DateTimeEditors.4, Version=4.0.20181.587, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Desktop\Yeni klasör (2)\C1.WPF.DateTimeEditors.4.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.WPF.Input.4, Version=4.0.20181.587, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Desktop\Yeni klasör (2)\C1.WPF.Input.4.dll</HintPath>
+    </Reference>
+    <Reference Include="DirectShowLib-2005, Version=2.1.0.26626, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WPFMediaKit.2.2.0\build\DirectShowLib-2005.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.2.0\lib\net40\EntityFramework.SqlServerCompact.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\FastReport\FastReport.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport.SqlCe">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\FastReport\Extras\Connections\FastReport.SqlCe\bin\Release\FastReport.SqlCe.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFMediaKit, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFMediaKit.2.2.0\lib\WPFMediaKit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="ExtendGlass.cs" />
+    <Compile Include="FilmPosterAç.cs" />
+    <Compile Include="IconExtractor.cs" />
+    <Compile Include="KoltukGrupla.cs" />
+    <Compile Include="ResimYakala.cs" />
+    <Compile Include="ResizablePanel.cs" />
+    <Compile Include="Resizer.cs" />
+    <Compile Include="TahsilatGrafik.cs" />
+    <Compile Include="Converter.cs" />
+    <Compile Include="FilmEkle.cs" />
+    <Compile Include="Filmler.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FilmVideoResimGüncelle.cs" />
+    <Compile Include="GirişWindow.xaml.cs">
+      <DependentUpon>GirişWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GirişYap.cs" />
+    <Compile Include="MüşteriKoltukNoDeğiştir.cs" />
+    <Compile Include="Hakkında.xaml.cs">
+      <DependentUpon>Hakkında.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="KoltukEkle.cs" />
+    <Compile Include="KoltukGüncelle.cs" />
+    <Compile Include="Koltuklar.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KoltukTipiDeğiştir.cs" />
+    <Compile Include="KoltukTipleri.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KoltukAyarla.cs" />
+    <Compile Include="Kullanicilar.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KullanıcıEkle.cs" />
+    <Compile Include="KullanıcıGüncelle.cs" />
+    <Compile Include="KullanıcıSil.cs" />
+    <Compile Include="Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Musteriler.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MüşteriBilet.cs" />
+    <Compile Include="MüşteriDialogShow.cs" />
+    <Compile Include="MüşteriEkle.cs" />
+    <Compile Include="MüşteriEkleWindow.xaml.cs">
+      <DependentUpon>MüşteriEkleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MüşteriSil.cs" />
+    <Compile Include="Raporla.cs" />
+    <Compile Include="ResimDrop.cs" />
+    <Compile Include="ResimKaydet.cs" />
+    <Compile Include="KullanıcıResimSil.cs" />
+    <Compile Include="KullanıcıResimYükle.cs" />
+    <Compile Include="SalonEkle.cs" />
+    <Compile Include="SalonGüncelle.cs" />
+    <Compile Include="KoltukDurumKaydet.cs" />
+    <Compile Include="Salonlar.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Notify.cs" />
+    <Compile Include="SalonHarfleri.cs" />
+    <Compile Include="SeansBilet.cs" />
+    <Compile Include="SeansEkle.cs" />
+    <Compile Include="Seanslar.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SeansSil.cs" />
+    <Compile Include="SeçimiKaldır.cs" />
+    <Compile Include="ShowCapLock.cs" />
+    <Compile Include="SinemaModel.cs" />
+    <Compile Include="Siparisler.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SiparisSil.cs" />
+    <Compile Include="Tahsilatlar.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GridYazdır.cs" />
+    <Compile Include="TopluGirişVerileri.cs" />
+    <Compile Include="TopluGirişYap.cs" />
+    <Compile Include="TümMüşteriResimleriniKaydet.cs" />
+    <Compile Include="TümMüşteriResimleriniSil.cs" />
+    <Compile Include="Urunler.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Validation.cs" />
+    <Compile Include="VideoResimKaydet.cs" />
+    <Compile Include="WebCamResimKaydet.cs" />
+    <Compile Include="WebdenGetir.cs" />
+    <Compile Include="WebpWrapper.cs" />
+    <Compile Include="WindowExtensions.cs" />
+    <Compile Include="YetkiGöster.cs" />
+    <Compile Include="Yetkilendirme.cs" />
+    <Compile Include="Yönetici.xaml.cs">
+      <DependentUpon>Yönetici.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="YöneticiEkranı.cs" />
+    <Compile Include="SiparişEkle.cs" />
+    <Compile Include="ÜrünEkle.cs" />
+    <Compile Include="ÜrünGüncelle.cs" />
+    <Compile Include="ÜrünSil.cs" />
+    <Compile Include="İlaveKoltuk.cs" />
+    <Compile Include="ŞifreDeğiştir.cs" />
+    <Page Include="GirişWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Hakkında.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\CheckBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Icons\ComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Icons\Common.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Icons\DataGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Icons\HeaderedItemsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Icons\Icon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\RadioButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Icons\ScrollBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Icons\Slider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="MüşteriEkleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Yönetici.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Reference Include="DeployLX.Licensing.v5">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\XHEO\DeployLX\v5.0\Redistributable\.NET 4.0 Client Profile\Any CPU\DeployLX.Licensing.v5.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <EmbeddedResource Include="Rapor\bilet.frx" />
+    <EmbeddedResource Include="Rapor\Turkish.frl" />
+    <EmbeddedResource Include="Rapor\seansbilet.frx" />
+    <EmbeddedResource Include="Rapor\aylıkgrafik.frx" />
+    <EmbeddedResource Include="Rapor\günlükgrafik.frx" />
+    <EmbeddedResource Include="Rapor\salonbilet.frx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="splash.png" />
+    <Resource Include="Icons\update.png" />
+    <Resource Include="Icons\shell32_16802.png" />
+    <Resource Include="Icons\shell32_240.png" />
+    <Resource Include="Icons\shell32_16785.png" />
+    <Resource Include="Icons\cinema.png" />
+    <Resource Include="Application.ico" />
+    <Resource Include="Icons\user.png" />
+    <Resource Include="Icons\move.png" />
+    <Resource Include="Icons\print.png" />
+    <Resource Include="Icons\video.png" />
+    <Resource Include="Icons\volume.png" />
+    <Resource Include="Icons\save.png" />
+    <Resource Include="Icons\product.png" />
+    <Resource Include="Icons\ball.png" />
+    <Resource Include="Icons\rapor.png" />
+    <Resource Include="Icons\shell32_15.png" />
+    <Resource Include="Icons\shell32_269.png" />
+    <Content Include="libwebp_x64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libwebp_x86.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\WPFMediaKit.2.2.0\build\WPFMediaKit.targets" Condition="Exists('..\packages\WPFMediaKit.2.2.0\build\WPFMediaKit.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\WPFMediaKit.2.2.0\build\WPFMediaKit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WPFMediaKit.2.2.0\build\WPFMediaKit.targets'))" />
+  </Target>
+  <ItemGroup>
+    <Compile Include="DeployLXKeys.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="_LicenseHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="runtime.lic" />
+  </ItemGroup>
+</Project>

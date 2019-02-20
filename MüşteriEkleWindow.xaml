@@ -1,0 +1,428 @@
+﻿<Window
+    x:Class="Sinema.MüşteriEkleWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="clr-namespace:WPFMediaKit.DirectShow.Controls;assembly=WPFMediaKit"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:ice="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    xmlns:local="clr-namespace:Sinema"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Müşteri Ekle"
+    Width="800"
+    Height="520"
+    MinHeight="520"
+    d:DataContext="{d:DesignInstance {x:Type local:Koltuklar}}"
+    ShowInTaskbar="False"
+    UseLayoutRounding="True"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <local:ByteArrayToImageSource x:Key="ByteArrayToImageSource" />
+        <local:PathToUriConverter x:Key="PathToUriConverter" />
+        <local:MüşterilerKoltukNoSıraConverter x:Key="MüşterilerKoltukNoSıraConverter" />
+        <local:ObjectToBoolConverter x:Key="ObjectToBoolConverter" />
+        <local:ComboBoxKişiKoltukMultiValueConverter x:Key="ComboBoxKişiKoltukMultiValueConverter" />
+        <local:CloneConverter x:Key="CloneConverter" />
+        <local:Urunler x:Key="Urunler" />
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="Close" Executed="OnCloseExecuted" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="Close" />
+    </Window.InputBindings>
+    <Grid>
+        <GroupBox Header="KİŞİ GİRİŞİ" Grid.RowSpan="2" Template="{StaticResource TintedGroupBox}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="147" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140*" />
+                    <ColumnDefinition Width="3" />
+                    <ColumnDefinition Width="177*" />
+                    <ColumnDefinition Width="145" />
+                </Grid.ColumnDefinitions>
+                <UniformGrid
+                    x:Name="UgKişiBilgileri"
+                    Grid.Column="0"
+                    Margin="0,0,0,2"
+                    Columns="2"
+                    Rows="14">
+                    <TextBlock Text="SALON ADI" />
+                    <TextBox x:Name="TxSalonAdı" Text="{Binding Salonlar.SalonAdi}" IsEnabled="False" />
+                    <TextBlock Text="FİLM ADI" />
+                    <ComboBox x:Name="CbFilmAdı" ItemContainerStyle="{StaticResource ComboboxSeansStyle}" ItemsSource="{Binding Salonlar.Seanslar}">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="48" Source="{Binding Filmler.ResimYolu, Converter={StaticResource PathToUriConverter}}" />
+                                    <TextBlock Text="{Binding Filmler.FilmAdi}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock Text="SEANS TARİHİ" />
+                    <TextBox x:Name="TxSeansTarihi" Text="{Binding SelectedItem.FilmSaati, ElementName=CbFilmAdı}" IsEnabled="False" />
+                    <TextBlock Text="KOLTUK NO" />
+                    <UniformGrid Columns="2">
+                        <TextBox x:Name="TxKoltukSıra" Text="{Binding Mode=OneWay, Converter={StaticResource MüşterilerKoltukNoSıraConverter}}" IsEnabled="False" />
+                        <TextBox x:Name="TxKoltukNo" Text="{Binding KoltukNo}" IsEnabled="False" />
+                    </UniformGrid>
+                    <TextBlock Text="KOLTUK ID" />
+                    <TextBox x:Name="TxKoltukID" Text="{Binding KoltukID}" IsEnabled="False" />
+                    <TextBlock Text="KOLTUK TİPİ" />
+                    <TextBox x:Name="TxKoltukTipi" Text="{Binding KoltukTipleri.KoltukTipi}" IsEnabled="False" />
+                    <TextBlock Text="KOLTUK FİYATI" />
+                    <TextBox x:Name="TxKoltukFiyatı" Text="{Binding KoltukTipleri.KoltukFiyati, StringFormat=\{0:C\}}" IsEnabled="False" />
+                    <TextBlock Text="MÜŞTERİ ADI" />
+                    <TextBox x:Name="TxAdı" Text="{Binding MusteriAdi, Mode=OneWay}">
+                        <TextBox.DataContext>
+                            <MultiBinding Converter="{StaticResource ComboBoxKişiKoltukMultiValueConverter}">
+                                <Binding
+                                    ElementName="CbFilmAdı"
+                                    Mode="TwoWay"
+                                    Path="SelectedItem"
+                                    UpdateSourceTrigger="PropertyChanged" />
+                                <Binding ElementName="TxKoltukID" Path="Text" UpdateSourceTrigger="PropertyChanged" />
+                            </MultiBinding>
+                        </TextBox.DataContext>
+                    </TextBox>
+                    <TextBlock Text="MÜŞTERİ SOYADI" />
+                    <TextBox x:Name="TxSoyadı" Text="{Binding MusteriSoyadi, Mode=OneWay}">
+                        <TextBox.DataContext>
+                            <MultiBinding Converter="{StaticResource ComboBoxKişiKoltukMultiValueConverter}">
+                                <Binding
+                                    ElementName="CbFilmAdı"
+                                    Mode="TwoWay"
+                                    Path="SelectedItem"
+                                    UpdateSourceTrigger="PropertyChanged" />
+                                <Binding ElementName="TxKoltukID" Path="Text" UpdateSourceTrigger="PropertyChanged" />
+                            </MultiBinding>
+                        </TextBox.DataContext>
+                    </TextBox>
+                    <TextBlock Text="MÜŞTERİ YAŞI" />
+                    <TextBox x:Name="TxYaşı" Text="{Binding MusteriYasi, Mode=OneWay}">
+                        <TextBox.DataContext>
+                            <MultiBinding Converter="{StaticResource ComboBoxKişiKoltukMultiValueConverter}">
+                                <Binding
+                                    ElementName="CbFilmAdı"
+                                    Mode="TwoWay"
+                                    Path="SelectedItem"
+                                    UpdateSourceTrigger="PropertyChanged" />
+                                <Binding ElementName="TxKoltukID" Path="Text" UpdateSourceTrigger="PropertyChanged" />
+                            </MultiBinding>
+                        </TextBox.DataContext>
+                    </TextBox>
+                    <TextBlock Text="BİLET FİYATI" />
+                    <StackPanel Orientation="Horizontal">
+                        <c1:C1NumericBox
+                            x:Name="C1TahsilEdilen"
+                            Background="{StaticResource FilePickerBackground}"
+                            Culture="tr-TR"
+                            Format="C"
+                            Minimum="0"
+                            Value="{Binding KoltukTipleri.KoltukFiyati}" />
+                        <c1:C1DropDownButton
+                            Header="TCMB KUR"
+                            AutoClose="True"
+                            KeyboardNavigation.TabNavigation="None"
+                            VerticalHeaderAlignment="Center">
+                            <GroupBox Header="DÖVİZ" Height="280" Template="{StaticResource TintedGroupBox}">
+                                <DataGrid
+                                    AlternatingRowBackground="NavajoWhite"
+                                    AutoGenerateColumns="False"
+                                    DataContext="{DynamicResource Döviz}"
+                                    IsReadOnly="True"
+                                    ItemsSource="{Binding XPath=/Tarih_Date/Currency}"
+                                    VirtualizingStackPanel.IsVirtualizing="True"
+                                    VirtualizingStackPanel.VirtualizationMode="Recycling">
+                                    <DataGrid.Resources>
+                                        <XmlDataProvider
+                                            x:Key="Döviz"
+                                            IsAsynchronous="True"
+                                            IsInitialLoadEnabled="True"
+                                            Source="http://www.tcmb.gov.tr/kurlar/today.xml" />
+                                    </DataGrid.Resources>
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding XPath=Isim}" Header="DÖVİZ" Width="150" />
+                                        <DataGridTextColumn Binding="{Binding XPath=BanknoteBuying}" Header="ALIŞ" />
+                                        <DataGridTextColumn Binding="{Binding XPath=BanknoteSelling}" Header="SATIŞ" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </GroupBox>
+                        </c1:C1DropDownButton>
+                    </StackPanel>
+                    <TextBlock Text="RESİM YÜKLE" />
+                    <c1:C1FilePicker
+                        x:Name="C1MüşteriResimYükle"
+                        Background="{StaticResource FilePickerBackground}"
+                        Filter="Resim Dosyaları (*.webp, *.jpg, *.png, *.bmp, *.tif)|*.webp;*.jpg;*.png;*.bmp;*.tif|Tüm dosyalar (*.*)|*.*"
+                        IsTabStop="False"
+                        Multiselect="False" />
+                    <TextBlock />
+                    <c1:C1DropDownButton
+                        Header="WEBCAM"
+                        AutoClose="False"
+                        KeyboardNavigation.TabNavigation="None"
+                        VerticalHeaderAlignment="Center">
+                        <GroupBox Header="WEBCAM" Template="{StaticResource TintedGroupBox}">
+                            <Grid Width="320" Height="240" Background="White">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="9*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Controls:VideoCaptureElement
+                                    x:Name="videoElement"
+                                    Grid.Row="0"
+                                    DesiredPixelHeight="240"
+                                    DesiredPixelWidth="320"
+                                    FPS="30"
+                                    Stretch="Fill"
+                                    VideoCaptureDevice="{Binding Path=SelectedItem, ElementName=videoCapDevices}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding WebCamResimKaydet}" CommandParameter="{Binding ElementName=videoElement, Mode=OneWay}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Controls:VideoCaptureElement.ToolTip>
+                                        <TextBlock Text="Videoya Tıklayınca Yetkiniz Varsa Görüntü Resimler Klasörüne Kaydedilir." Foreground="Red" />
+                                    </Controls:VideoCaptureElement.ToolTip>
+                                </Controls:VideoCaptureElement>
+                                <UniformGrid Grid.Row="1" Columns="2">
+                                    <ComboBox x:Name="videoCapDevices" DisplayMemberPath="Name" ItemsSource="{Binding Source={x:Static Controls:MultimediaUtil.VideoInputDevices}}" />
+                                    <Button
+                                        Content="ÖZELLİKLER"
+                                        Command="Controls:VideoCaptureElement.ShowPropertyPagesCommand"
+                                        CommandTarget="{Binding ElementName=videoElement}"
+                                        IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=videoCapDevices}" />
+                                </UniformGrid>
+                            </Grid>
+                        </GroupBox>
+                    </c1:C1DropDownButton>
+                    <TextBlock />
+                    <Button
+                        x:Name="BtMusteriEkle"
+                        Command="{Binding MüşteriEkle, Mode=OneWay}"
+                        CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MüşteriEkleWindow}}}"
+                        IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbFilmAdı}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="16" Source="Icons/shell32_16785.png" />
+                            <AccessText Text="KİŞİYİ EKL_E" />
+                        </StackPanel>
+                    </Button>
+                </UniformGrid>
+                <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="{StaticResource Common_HeaderBackgroundColor}" />
+                <GroupBox
+                    Header="KİŞİLER"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Margin="2,0,0,0"
+                    Template="{StaticResource TintedGroupBox}">
+                    <c1:C1DataGrid
+                        x:Name="C1MusteriKayıtlar"
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        CanUserResizeRows="False"
+                        CellStyle="{StaticResource MüşteriEkleCellStyle}"
+                        IsReadOnly="True">
+                        <c1:C1DataGrid.Columns>
+                            <c1:DataGridTextColumn Binding="{Binding MusteriAdi}" Header="ADI" DefaultAutoWidth="50" />
+                            <c1:DataGridTextColumn Binding="{Binding MusteriSoyadi}" Header="SOYADI" DefaultAutoWidth="50" />
+                            <c1:DataGridDateTimeColumn
+                                Binding="{Binding Seanslar.FilmSaati}"
+                                Header="SEANS TARİHİ"
+                                DefaultAutoWidth="50"
+                                SortState="Descending" />
+                            <c1:DataGridTextColumn Binding="{Binding Seanslar.Filmler.FilmAdi}" Header="FİLM ADI" DefaultAutoWidth="50" />
+                            <c1:DataGridTemplateColumn>
+                                <c1:DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <c1:C1DropDownButton AutoClose="True" IsEnabled="{Binding Row.IsSelected, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type c1:DataGridRowPresenter}}}">
+                                            <c1:C1DropDownButton.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image
+                                                        Width="24"
+                                                        ice:Freeze="True"
+                                                        RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                                        Source="Icons/move.png" />
+                                                    <AccessText Text="_MÜŞTERİ TAŞI" />
+                                                </StackPanel>
+                                            </c1:C1DropDownButton.Header>
+                                            <Border
+                                                Height="72"
+                                                Background="White"
+                                                BorderBrush="Blue"
+                                                BorderThickness="1">
+                                                <UniformGrid Columns="2" Rows="3">
+                                                    <TextBlock Text="FİLM ADI " />
+                                                    <TextBlock Text="{Binding Seanslar.Filmler.FilmAdi}" />
+                                                    <TextBlock Text="KOLTUK NO " />
+                                                    <ComboBox
+                                                        x:Name="CbKoltuk"
+                                                        DisplayMemberPath="KoltukNo"
+                                                        ItemContainerStyle="{StaticResource ComboboxKoltukStyle}"
+                                                        ItemsSource="{Binding Row.DataItem.Seanslar.Salonlar.Koltuklar, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type c1:DataGridRowPresenter}}}" />
+                                                    <TextBlock />
+                                                    <Button Command="{Binding MüşteriKoltukNoDeğiştir}" CommandParameter="{Binding ElementName=CbKoltuk}" IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbKoltuk}">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image
+                                                                Width="24"
+                                                                ice:Freeze="True"
+                                                                RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                                                Source="Icons/move.png" />
+                                                            <AccessText Text="_TAŞI" />
+                                                        </StackPanel>
+                                                    </Button>
+                                                </UniformGrid>
+                                            </Border>
+                                        </c1:C1DropDownButton>
+                                    </DataTemplate>
+                                </c1:DataGridTemplateColumn.CellTemplate>
+                            </c1:DataGridTemplateColumn>
+                            <c1:DataGridTemplateColumn>
+                                <c1:DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <c1:C1DropDownButton AutoClose="True" IsEnabled="{Binding Row.IsSelected, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type c1:DataGridRowPresenter}}}">
+                                            <c1:C1DropDownButton.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image
+                                                        Width="24"
+                                                        ice:Freeze="True"
+                                                        RenderOptions.BitmapScalingMode="LowQuality"
+                                                        Source="Icons/product.png" />
+                                                    <AccessText Text="_ÜRÜN SAT" />
+                                                </StackPanel>
+                                            </c1:C1DropDownButton.Header>
+                                            <Border
+                                                Height="96"
+                                                Background="White"
+                                                BorderBrush="Blue"
+                                                BorderThickness="1">
+                                                <UniformGrid Columns="2" Rows="4">
+                                                    <TextBlock Text="FİLM ADI" />
+                                                    <TextBlock Text="{Binding Seanslar.Filmler.FilmAdi}" />
+                                                    <TextBlock Text="{Binding ElementName=CbÜrünler, Path=SelectedItem.BirimFiyati, StringFormat=BİRİM FİYAT \{0:C\}}" />
+                                                    <ComboBox
+                                                        x:Name="CbÜrünler"
+                                                        DisplayMemberPath="UrunAdi"
+                                                        ItemContainerStyle="{StaticResource ComboboxÜrünStyle}"
+                                                        ItemsSource="{Binding UrunlerCollection, Source={StaticResource Urunler}}" />
+                                                    <TextBlock Text="ADET" />
+                                                    <c1:C1NumericBox
+                                                        x:Name="C1NumericAdet"
+                                                        Background="{StaticResource FilePickerBackground}"
+                                                        Minimum="1"
+                                                        Value="1" />
+                                                    <TextBlock />
+                                                    <Button Command="{Binding SiparişEkle}" IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbÜrünler}">
+                                                        <Button.CommandParameter>
+                                                            <MultiBinding Converter="{StaticResource CloneConverter}">
+                                                                <Binding ElementName="CbÜrünler" />
+                                                                <Binding ElementName="C1NumericAdet" />
+                                                            </MultiBinding>
+                                                        </Button.CommandParameter>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image
+                                                                Width="24"
+                                                                ice:Freeze="True"
+                                                                RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                                                Source="Icons/product.png" />
+                                                            <AccessText Text="_EKLE" />
+                                                        </StackPanel>
+                                                    </Button>
+                                                </UniformGrid>
+                                            </Border>
+                                        </c1:C1DropDownButton>
+                                    </DataTemplate>
+                                </c1:DataGridTemplateColumn.CellTemplate>
+                            </c1:DataGridTemplateColumn>
+                            <c1:DataGridTemplateColumn DefaultAutoWidth="50">
+                                <c1:DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Command="{Binding MüşteriSil, IsAsync=True, Mode=OneWay}" CommandParameter="{Binding Path=Row.DataItem, IsAsync=True, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type c1:DataGridCellPresenter}}}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Width="16" Source="Icons/shell32_240.png" />
+                                                <AccessText Text="Sİ_L" />
+                                            </StackPanel>
+                                        </Button>
+                                    </DataTemplate>
+                                </c1:DataGridTemplateColumn.CellTemplate>
+                            </c1:DataGridTemplateColumn>
+                            <c1:DataGridTemplateColumn DefaultAutoWidth="50">
+                                <c1:DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Command="{Binding MüşteriBilet, IsAsync=True, Mode=OneWay}" CommandParameter="{Binding Path=Row.DataItem, IsAsync=True, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type c1:DataGridCellPresenter}}}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Width="24" ice:Freeze="True" Source="Icons/print.png" />
+                                                <AccessText Text="_BİLET" />
+                                            </StackPanel>
+                                        </Button>
+                                    </DataTemplate>
+                                </c1:DataGridTemplateColumn.CellTemplate>
+                            </c1:DataGridTemplateColumn>
+                            <c1:DataGridTextColumn Binding="{Binding Kullanicilar.KullaniciAdi}" Header="KAYIT EDEN" DefaultAutoWidth="50" />
+                        </c1:C1DataGrid.Columns>
+                    </c1:C1DataGrid>
+
+                </GroupBox>
+                <c1:C1DataGrid
+                    x:Name="C1Urunler"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="0,2,2,0"
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False"
+                    IsEnabled="{Binding SelectedItem.Seanslar.FilmSaati, Converter={StaticResource SeansTarihGeçtiConverter}, ElementName=C1MusteriKayıtlar}"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding SelectedItem.Siparisler, UpdateSourceTrigger=PropertyChanged, ElementName=C1MusteriKayıtlar}">
+                    <c1:C1DataGrid.Columns>
+                        <c1:DataGridTextColumn Binding="{Binding Urunler.UrunAdi}" Header="ÜRÜN ADI" DefaultAutoWidth="50" />
+                        <c1:DataGridNumericColumn Binding="{Binding SiparisAdet}" Header="ÜRÜN ADETİ" DefaultAutoWidth="50" />
+                        <c1:DataGridNumericColumn Binding="{Binding SiparisBirimFiyat, StringFormat=\{0:C\}}" Header="BİRİM FİYATI" DefaultAutoWidth="50" />
+                        <c1:DataGridNumericColumn Binding="{Binding ToplamTutar, StringFormat=\{0:C\}}" Header="TOPLAM TUTAR" DefaultAutoWidth="50">
+                            <c1:DataGridAggregate.AggregateFunctions>
+                                <c1:DataGridAggregatesCollection>
+                                    <c1:DataGridAggregateSum ResultTemplate="{StaticResource Toplam}" />
+                                </c1:DataGridAggregatesCollection>
+                            </c1:DataGridAggregate.AggregateFunctions>
+                        </c1:DataGridNumericColumn>
+                        <c1:DataGridTemplateColumn>
+                            <c1:DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="{Binding SiparisSil, Mode=OneWay}" CommandParameter="{Binding Path=Row.DataItem, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type c1:DataGridCellPresenter}}}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Width="16" Source="Icons/shell32_240.png" />
+                                            <AccessText Text="Sİ_L" />
+                                        </StackPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </c1:DataGridTemplateColumn.CellTemplate>
+                        </c1:DataGridTemplateColumn>
+                    </c1:C1DataGrid.Columns>
+                    <c1:C1DataGrid.BottomRows>
+                        <c1:DataGridSummaryRow />
+                    </c1:C1DataGrid.BottomRows>
+                </c1:C1DataGrid>
+                <GroupBox
+                    Header="RESİM"
+                    Grid.Row="1"
+                    Grid.Column="4"
+                    Margin="2,2,0,0"
+                    Template="{StaticResource TintedGroupBox}">
+                    <Image Source="{Binding SelectedItem.Resim, IsAsync=True, ConverterParameter=160, Converter={StaticResource ByteArrayToImageSource}, ElementName=C1MusteriKayıtlar}" />
+                </GroupBox>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>
